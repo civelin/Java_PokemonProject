@@ -13,7 +13,7 @@ public abstract class Pokemon {
     protected double hp;
 
     // defaultAttackPoints is package private
-    static double defaultAttackPoints = 25;
+    static double defaultAttackPoints = 15;
     protected double attackPoints;
 
     // defaultDefencePoints is package private
