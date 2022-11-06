@@ -15,7 +15,7 @@ public class AttackOrder extends PokemonAttack {
     public double highCriticalHitRatio(Pokemon userPokemon, Pokemon enemyPokemon) {
         // High critical hit ratio
         Random rnd = new Random();
-        double critChance = rnd.nextDouble(9 + 1);
+        int critChance = rnd.nextInt(9 + 1);
         double finalInfclictedDmg;
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints()*0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints() ;
