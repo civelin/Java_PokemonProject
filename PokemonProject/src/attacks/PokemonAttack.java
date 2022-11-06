@@ -1,5 +1,9 @@
 package attacks;
 
-public class PokemonAttack {
+public abstract class PokemonAttack implements AttackProperty {
+    protected String type;
+    protected double attackPower = 20;
+
+
 
 }
