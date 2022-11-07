@@ -14,11 +14,11 @@ public class LeechLife  extends PokemonAttack {
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints()*0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints() ;
         double finalInflictedDmg = (pokemonAttackPower + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
-        String descriptiveText = userPokemon.getName()+" is using 'Leech Life' ability against "+enemyPokemon.getName()+".";
-        System.out.println(descriptiveText);
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
         userPokemon.setHp(userPokemon.getHp() + finalInflictedDmg/2);
         return finalInflictedDmg;
     }
+
+
 
 }

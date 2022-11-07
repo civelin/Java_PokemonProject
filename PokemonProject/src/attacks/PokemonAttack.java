@@ -1,6 +1,8 @@
 package attacks;
 
-public abstract class PokemonAttack  {
+
+public abstract class PokemonAttack {
+
     //    TODO: create field description
     protected String type;
     protected double attackPower = 10;
