@@ -16,9 +16,10 @@ public class FirstImpression extends PokemonAttack {
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints()*0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints();
         double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) -dmgReductionAccordingToEnemyPokemonDefencePoints;
-        String descriptiveText = userPokemon.getName()+" is using 'First Impression' ability against "+enemyPokemon.getName()+".";
-        System.out.println(descriptiveText);
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
         return   finalInflictedDmg;
     }
+
+
+
 }
