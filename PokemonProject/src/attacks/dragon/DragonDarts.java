@@ -13,8 +13,9 @@ public class DragonDarts extends PokemonAttack {
     public double dragonDarts(Pokemon userPokemon , Pokemon enemyPokemon){
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints()*0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints() ;
-        double finalInflictedDmg = pokemonAttackPower - dmgReductionAccordingToEnemyPokemonDefencePoints;
-        return finalInflictedDmg*2;
+        double finalInflictedDmg =2* (pokemonAttackPower - dmgReductionAccordingToEnemyPokemonDefencePoints);
+        enemyPokemon.setHp(enemyPokemon.getHp()-finalInflictedDmg);
+        return finalInflictedDmg;
 
     }
 }

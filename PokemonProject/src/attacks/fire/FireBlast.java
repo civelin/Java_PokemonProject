@@ -1,4 +1,7 @@
 package attacks.fire;
 
-public class FireBlast {
+import attacks.PokemonAttack;
+
+public class FireBlast extends PokemonAttack {
+
 }

@@ -12,8 +12,10 @@ public class Charge extends PokemonAttack {
 
     //Raises user's Special Defense and next Electric move's power increases.
 
-    public double charge(){
+    public double charge(Pokemon userPokemon){
         double boostPokemonDefenceAndAttack =this.attackPower;
+        userPokemon.setAttackPoints(userPokemon.getAttackPoints()+boostPokemonDefenceAndAttack);
+        userPokemon.setDefencePoints(userPokemon.getDefencePoints()+boostPokemonDefenceAndAttack);
         return boostPokemonDefenceAndAttack;
     }
 }

@@ -12,8 +12,9 @@ public class ClangingScales extends PokemonAttack {
         this.attackPower =0;
     }
     //Lowers user's Defense
-    public double clangingScales(){
+    public double clangingScales(Pokemon enemyPokemon){
         double lowerEnemyPokemonDefence = 25;
+        enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints()-lowerEnemyPokemonDefence);
         return lowerEnemyPokemonDefence;
     }
 }

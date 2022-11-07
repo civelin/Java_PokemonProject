@@ -77,7 +77,15 @@ public abstract class Pokemon {
         return defencePoints;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setDefencePoints(double defencePoints) {
         this.defencePoints = defencePoints;
     }
+
+    abstract public double returnInitialHP();
+    abstract public double returnInitialAttackPoints();
+    abstract public double returnInitialDefencePoints();
 }

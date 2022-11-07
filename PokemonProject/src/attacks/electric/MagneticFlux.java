@@ -12,6 +12,7 @@ public class MagneticFlux extends PokemonAttack {
 
     public double magneticFlux(Pokemon userPokemon , Pokemon enemyPokemon){
         double attackPower = (userPokemon.getAttackPoints()+this.attackPower) - enemyPokemon.getDefencePoints()*0.4;
+        enemyPokemon.setHp(enemyPokemon.getHp()-attackPower);
         return attackPower;
     }
 }

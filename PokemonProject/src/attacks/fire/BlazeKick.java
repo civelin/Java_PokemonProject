@@ -19,10 +19,12 @@ public class BlazeKick extends PokemonAttack {
 
         if(chance==0){
             attackPower = (userPokemon.getAttackPoints()+this.attackPower) - enemyPokemon.getDefencePoints()*0.3;
-            return attackPower;
+
         }else {
             attackPower = (userPokemon.getAttackPoints()+this.attackPower+7) - enemyPokemon.getDefencePoints()*0.3;
-            return attackPower;
+
         }
+        enemyPokemon.setHp(enemyPokemon.getHp()-attackPower);
+        return attackPower;
     }
 }
