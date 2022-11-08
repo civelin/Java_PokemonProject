@@ -14,10 +14,36 @@ public class PCUser extends User {
         this.currentPokemons = new ArrayList<>();
     }
 
-    public void generateCurrentThreePokemonsFromAvailableList() {
+
+
+
+    @Override
+    public void addPokemonToCurrentList(Pokemon pokemon) {
+        this.currentPokemons.add(pokemon);
     }
 
-    void removePokemonFromCurrentList(Pokemon pokemon) {
+    @Override
+    public void addPokemonToAvailableList(Pokemon pokemon) {
+
+    }
+
+    @Override
+    public void addPokemonToDeadList(Pokemon pokemon) {
+
+    }
+
+    @Override
+    public void removePokemonFromCurrentList(Pokemon pokemon) {
+        this.currentPokemons.remove(pokemon);
+    }
+
+    @Override
+    public void removePokemonFromAvailableList(Pokemon pokemon) {
+
+    }
+
+    @Override
+    public void removePokemonFromDeadList(Pokemon pokemon) {
 
     }
 }

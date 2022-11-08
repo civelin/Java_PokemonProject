@@ -48,7 +48,7 @@ public class PokemonFactory {
     }
 
     // available user's small pokemons (on level1)
-    private static List<Pokemon> getUserSmallPokemons() {
+    public static List<Pokemon> getUserSmallPokemons() {
         List<Pokemon> userSmallPokemons = new ArrayList<>();
         userSmallPokemons.add(new SmallPokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
         userSmallPokemons.add(new SmallPokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))));
@@ -59,7 +59,7 @@ public class PokemonFactory {
     }
 
     // available user's normal pokemons (on level2)
-    private static List<Pokemon> getUserNormalPokemons() {
+    public static List<Pokemon> getUserNormalPokemons() {
         List<Pokemon> userNormalPokemons = new ArrayList<>();
         userNormalPokemons.add(new NormalPokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
         userNormalPokemons.add(new NormalPokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))));
@@ -70,7 +70,7 @@ public class PokemonFactory {
     }
 
     // available user's large pokemons (on level3)
-    private static List<Pokemon> getUserLargePokemons() {
+    public static List<Pokemon> getUserLargePokemons() {
         List<Pokemon> userLargePokemons = new ArrayList<>();
         userLargePokemons.add(new LargePokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
         userLargePokemons.add(new LargePokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))));
