@@ -3,10 +3,17 @@ package attacks;
 
 public abstract class PokemonAttack {
 
-    //    TODO: create field description
+    // fields
     protected String type;
+    protected String description;
     protected double attackPower = 10;
 
+    // methods
+    public void showDescription(){
+        System.out.println(this.description);
+    }
+
+    // getters and setters
     public String getType() {
         return type;
     }
@@ -22,4 +29,5 @@ public abstract class PokemonAttack {
     public void setAttackPower(double attackPower) {
         this.attackPower = attackPower;
     }
+
 }

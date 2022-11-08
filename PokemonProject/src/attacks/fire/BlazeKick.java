@@ -7,24 +7,24 @@ import java.util.Random;
 
 public class BlazeKick extends PokemonAttack {
 
-    public BlazeKick(){
+    public BlazeKick() {
         this.type = "fire";
-        this.attackPower =1.2*super.attackPower;
+        this.attackPower = 0.7 * super.attackPower;
     }
 
-    public double blazeKick(Pokemon userPokemon, Pokemon enemyPokemon){
-        Random chanceToBurnOpponentForExtraDmg=new Random();
+    public double blazeKick(Pokemon userPokemon, Pokemon enemyPokemon) {
+        Random chanceToBurnOpponentForExtraDmg = new Random();
         double attackPower;
-        int chance = chanceToBurnOpponentForExtraDmg.nextInt(1+1);
+        int chance = chanceToBurnOpponentForExtraDmg.nextInt(2);
 
-        if(chance==0){
-            attackPower = (userPokemon.getAttackPoints()+this.attackPower) - enemyPokemon.getDefencePoints()*0.3;
+        if (chance == 0) {
+            attackPower = (userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.3;
 
-        }else {
-            attackPower = (userPokemon.getAttackPoints()+this.attackPower+7) - enemyPokemon.getDefencePoints()*0.3;
+        } else {
+            attackPower = (userPokemon.getAttackPoints() + this.attackPower + 7) - enemyPokemon.getDefencePoints() * 0.3;
 
         }
-        enemyPokemon.setHp(enemyPokemon.getHp()-attackPower);
+        enemyPokemon.setHp(enemyPokemon.getHp() - attackPower);
         return attackPower;
     }
 }
