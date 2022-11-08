@@ -1,5 +1,7 @@
 package pokemons;
 import attacks.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Pokemon {
@@ -19,7 +21,7 @@ public abstract class Pokemon {
     // defaultDefencePoints is package private
     static double defaultDefencePoints = 50;
     protected double defencePoints = 50;
-    protected List<PokemonAttack> attacks;
+    protected List<PokemonAttack> attacks = new ArrayList<>();
     protected boolean isPokemonFighting = false;
 
     // methods
