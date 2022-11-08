@@ -4,15 +4,15 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
 public class Leer extends PokemonAttack {
-    public Leer(){
+    public Leer() {
         this.type = "normal";
-        this.attackPower = 0;
+        this.description = "Leer attack lowers opponent's defence.";
     }
 
-    public double leer(Pokemon userPokemon, Pokemon enemyPokemon){
-        double lowerEnemyPokemonDefence = 25;
+    public double leer(Pokemon userPokemon, Pokemon enemyPokemon) {
+        double lowerEnemyPokemonDefence = 15;
 
-        enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints()-lowerEnemyPokemonDefence);
+        enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence);
         return lowerEnemyPokemonDefence;
     }
 
