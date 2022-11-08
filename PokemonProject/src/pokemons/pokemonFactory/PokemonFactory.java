@@ -1,8 +1,5 @@
-package pokemons.factory;
+package pokemons.pokemonFactory;
 
-import attacks.PokemonAttack;
-import attacks.bug.FirstImpression;
-import attacks.normal.MegaPunch;
 import pokemons.LargePokemon;
 import pokemons.NormalPokemon;
 import pokemons.Pokemon;
