@@ -5,7 +5,9 @@ import pokemons.NormalPokemon;
 import pokemons.Pokemon;
 import pokemons.SmallPokemon;
 
+
 import java.util.*;
+
 
 public class PokemonFactory {
 
@@ -32,6 +34,7 @@ public class PokemonFactory {
         return pokemonPcUser2List;
     }
 
+
     // available pokemons of pcUser3 on (level3)
     public static List<Pokemon> PCUser3Pokemons() {
         List<Pokemon> pokemonPcUser3List = new ArrayList<>();
@@ -44,7 +47,7 @@ public class PokemonFactory {
 
     }
 
-    // available user's pokemons (on level1)
+    // available user's small pokemons (on level1)
     private static List<Pokemon> getUserSmallPokemons() {
         List<Pokemon> userSmallPokemons = new ArrayList<>();
         userSmallPokemons.add(new SmallPokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
@@ -55,7 +58,7 @@ public class PokemonFactory {
         return userSmallPokemons;
     }
 
-    // available user's pokemons (on level2)
+    // available user's normal pokemons (on level2)
     private static List<Pokemon> getUserNormalPokemons() {
         List<Pokemon> userNormalPokemons = new ArrayList<>();
         userNormalPokemons.add(new NormalPokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
@@ -66,7 +69,7 @@ public class PokemonFactory {
         return userNormalPokemons;
     }
 
-    // available user's pokemons (on level3)
+    // available user's large pokemons (on level3)
     private static List<Pokemon> getUserLargePokemons() {
         List<Pokemon> userLargePokemons = new ArrayList<>();
         userLargePokemons.add(new LargePokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
@@ -78,4 +81,5 @@ public class PokemonFactory {
     }
 
     //TODO: method that fill all pokemon's attack using the AttackFactory class
+
 }

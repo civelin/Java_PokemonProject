@@ -7,7 +7,7 @@ public class MagneticFlux extends PokemonAttack {
 
     public MagneticFlux() {
         this.type = "electric";
-        this.description = "Megnetic Flux attack decreases opponent's hp";
+        this.description = "Magnetic Flux attack decreases opponent's hp";
     }
 
     public double magneticFlux(Pokemon userPokemon, Pokemon enemyPokemon) {

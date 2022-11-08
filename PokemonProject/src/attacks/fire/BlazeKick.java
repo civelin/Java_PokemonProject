@@ -9,7 +9,8 @@ public class BlazeKick extends PokemonAttack {
 
     public BlazeKick() {
         this.type = "fire";
-        this.attackPower = 0.7 * super.attackPower;
+        this.attackPower = 1.1 * super.attackPower;
+        this.description = "Blaze kick attack has a chance to burn the opponent for additional extra damage.";
     }
 
     public double blazeKick(Pokemon userPokemon, Pokemon enemyPokemon) {
