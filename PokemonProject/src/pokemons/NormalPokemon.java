@@ -1,15 +1,19 @@
 package pokemons;
 
+import attacks.PokemonAttack;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class NormalPokemon extends Pokemon {
 
-    public NormalPokemon(String name, List<String> types) {
+    public NormalPokemon(String name, List<String> types ) {
         this.name = name;
         this.types = types;
         this.hp = this.returnInitialHP(); // can do it because defaultHp is package private
         this.attackPoints = this.returnInitialAttackPoints();
         this.defencePoints = this.returnInitialDefencePoints();
+
 
     }
 
