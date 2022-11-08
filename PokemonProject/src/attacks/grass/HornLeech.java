@@ -14,7 +14,7 @@ public class HornLeech extends PokemonAttack {
         if (userPokemon.getHp() < 25) {
             userPokemon.setHp(25);
         }
-        System.out.println(userPokemon.getName() + " hp after the attack is " + userPokemon.getHp());
+        System.out.println(userPokemon.getName() + " hp after the ability is " + userPokemon.getHp());
         return userPokemon.getHp();
     }
 }

@@ -7,7 +7,8 @@ public class FirstImpression extends PokemonAttack {
 
     public FirstImpression() {
         this.type = "bug";
-        this.description = "First Impression attack only works the first turn the user is in battle./n It increases enemy's hp. ";
+        this.description = "First Impression attack only works the first turn the user is in battle.\n It decreases enemy's hp. ";
+        this.attackPower = 1.9* super.attackPower;
     }
 
     //Although this move has great power, it only works the first turn the user is in battle.
