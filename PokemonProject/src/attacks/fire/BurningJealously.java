@@ -9,6 +9,8 @@ public class BurningJealously extends PokemonAttack {
 
     public BurningJealously() {
         this.type = "fire";
+        this.attackPower = 0.5 * super.attackPower;
+        this.description = "Burning jealously attack hits all opponents.";
     }
 
     //Hits all opponents
