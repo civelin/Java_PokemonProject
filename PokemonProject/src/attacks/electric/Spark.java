@@ -7,23 +7,23 @@ import java.util.Random;
 
 public class Spark extends PokemonAttack {
 
-    public Spark(){
+    public Spark() {
         this.type = "electric";
-        this.attackPower = 1.6*super.attackPower;
+        this.description = "Spark attack has equal chances to hit opponent's hp or miss the target.";
     }
 
-    public double spark(Pokemon userPokemon, Pokemon enemyPokemon){
+
+    public double spark(Pokemon userPokemon, Pokemon enemyPokemon) {
+
         Random randomChance = new Random();
-        int critChance = randomChance.nextInt(1+1);
-        double attackPower;
-        if(critChance==0){
-            attackPower=(userPokemon.getAttackPoints()+this.attackPower)*1.1 - enemyPokemon.getDefencePoints()*0.3;
+        int critChance = randomChance.nextInt(2); //return 0 or 1
 
-        }else {
-            attackPower=((userPokemon.getAttackPoints()+this.attackPower)*1.5) - enemyPokemon.getDefencePoints()*0.2;
-
+        double finalAttackPower = critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3);
+        if (finalAttackPower < 0) {
+            finalAttackPower = this.attackPower;
         }
-        enemyPokemon.setHp(enemyPokemon.getHp()-attackPower);
-        return  attackPower;
+        enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+
+        return critChance;
     }
 }

@@ -4,22 +4,19 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
 public class FirstImpression extends PokemonAttack {
-    // bug
 
-    public FirstImpression(){
+    public FirstImpression() {
         this.type = "bug";
-        this.attackPower=3.2*super.attackPower;
-
+        this.description = "First Impression attack only works the first turn the user is in battle./n It increases enemy's hp. ";
     }
+
     //Although this move has great power, it only works the first turn the user is in battle.
-    public double firstImpression(Pokemon userPokemon, Pokemon enemyPokemon){
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints()*0.3;
+    public double firstImpression(Pokemon userPokemon, Pokemon enemyPokemon) {
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints();
-        double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) -dmgReductionAccordingToEnemyPokemonDefencePoints;
+        double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
-        return   finalInflictedDmg;
+        return finalInflictedDmg;
     }
-
-
 
 }
