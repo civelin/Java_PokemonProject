@@ -8,6 +8,7 @@ import java.util.Random;
 public class MegaPunch extends PokemonAttack {
 
     public MegaPunch() {
+        this.name = "MegaPunch";
         this.type = "normal";
         this.attackPower = 1.4 * super.attackPower;
         this.description = "Mega punch attack deals damage to the opponent's pokemon.";

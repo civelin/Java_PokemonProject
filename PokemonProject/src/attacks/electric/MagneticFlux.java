@@ -6,6 +6,7 @@ import pokemons.Pokemon;
 public class MagneticFlux extends PokemonAttack {
 
     public MagneticFlux() {
+        this.name = "MagneticFlux";
         this.type = "electric";
         this.description = "Magnetic Flux attack decreases opponent's hp";
     }

@@ -5,6 +5,7 @@ import pokemons.Pokemon;
 
 public class HornLeech extends PokemonAttack {
     public HornLeech() {
+        this.name = "HornLeech";
         this.type = "grass";
         this.description = "Horn Leech attack increases pokemon's hp up to 25 points if it's under 25 points.";
     }

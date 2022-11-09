@@ -6,6 +6,7 @@ import pokemons.Pokemon;
 public class LeechLife extends PokemonAttack {
 
     public LeechLife() {
+        this.name = "LeechLife";
         this.type = "bug";
         this.description = "Leech Life attack recovers half the hp inflicted on opponent";
     }
