@@ -19,34 +19,43 @@ public class HumanUser extends User implements Removable, Addable {
         this.deadPokemonList = new ArrayList<>();
     }
 
+    public void addCrystals(){
+        this.crystals++;
+    }
+
+    public void removeCrystals() {
+        if (this.crystals > 0) {
+            this.crystals--;
+        }
+    }
     //interfaces
     @Override
     public void addPokemonToCurrentList(Pokemon pokemon) {
-
+        this.currentPokemons.add(pokemon);
     }
 
     @Override
     public void addPokemonToAvailableList(Pokemon pokemon) {
-
+        this.availablePokemons.add(pokemon);
     }
 
     @Override
     public void addPokemonToDeadList(Pokemon pokemon) {
-
+        this.deadPokemonList.add(pokemon);
     }
 
     @Override
     public void removePokemonFromCurrentList(Pokemon pokemon) {
-
+        this.currentPokemons.remove(pokemon);
     }
 
     @Override
     public void removePokemonFromAvailableList(Pokemon pokemon) {
-
+        this.availablePokemons.remove(pokemon);
     }
 
     @Override
     public void removePokemonFromDeadList(Pokemon pokemon) {
-
+        this.deadPokemonList.remove(pokemon);
     }
 }
