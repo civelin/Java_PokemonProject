@@ -8,6 +8,7 @@ import java.util.Random;
 public class Spark extends PokemonAttack {
 
     public Spark() {
+        this.name = "Spark";
         this.type = "electric";
         this.description = "Spark attack has equal chances to hit opponent's hp or miss the target.";
     }

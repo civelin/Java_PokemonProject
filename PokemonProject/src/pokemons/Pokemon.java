@@ -1,7 +1,7 @@
 package pokemons;
+
 import attacks.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Pokemon {
@@ -21,7 +21,7 @@ public abstract class Pokemon {
     // defaultDefencePoints is package private
     static double defaultDefencePoints = 50;
     protected double defencePoints = 50;
-    protected List<PokemonAttack> attacks = new ArrayList<>();
+    protected PokemonAttack[] attacks = new PokemonAttack[2];
     protected boolean isPokemonFighting = false;
 
     // methods
@@ -33,7 +33,6 @@ public abstract class Pokemon {
 
 
     // getters & setters
-
 
     public static double getDefaultHp() {
         return defaultHp;
@@ -87,7 +86,27 @@ public abstract class Pokemon {
         this.defencePoints = defencePoints;
     }
 
+    public List<String> getTypes() {
+        return types;
+    }
+
+    public PokemonAttack[] getAttacks() {
+        return attacks;
+    }
+
     abstract public double returnInitialHP();
+
     abstract public double returnInitialAttackPoints();
+
     abstract public double returnInitialDefencePoints();
+
+    public void addAttackToPokemon(PokemonAttack attack, int index) {
+        if (attacks[index] == null) {
+            attacks[index] = attack;
+        }
+    }
+
+    public boolean isThereAttackOnConcreteIndex(int index) {
+        return attacks[index] != null ? true : false;
+    }
 }

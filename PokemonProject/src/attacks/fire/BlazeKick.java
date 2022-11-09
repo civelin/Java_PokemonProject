@@ -8,6 +8,7 @@ import java.util.Random;
 public class BlazeKick extends PokemonAttack {
 
     public BlazeKick() {
+        this.name = "BlazeKick";
         this.type = "fire";
         this.attackPower = 1.1 * super.attackPower;
         this.description = "Blaze kick attack has a chance to burn the opponent for additional extra damage.";

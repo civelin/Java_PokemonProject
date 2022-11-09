@@ -4,6 +4,7 @@ package attacks;
 public abstract class PokemonAttack {
 
     // fields
+    protected String name;
     protected String type;
     protected String description;
     protected double attackPower = 10;
@@ -11,6 +12,10 @@ public abstract class PokemonAttack {
     // methods
     public void showDescription(){
         System.out.println(this.description);
+    }
+
+    public String getName() {
+        return name;
     }
 
     // getters and setters
