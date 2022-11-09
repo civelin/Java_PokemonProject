@@ -19,43 +19,68 @@ public class HumanUser extends User implements Removable, Addable {
         this.deadPokemonList = new ArrayList<>();
     }
 
-    public void addCrystals(){
+    public void addCrystals() {
         this.crystals++;
     }
 
     public void removeCrystals() {
         if (this.crystals > 0) {
             this.crystals--;
+            System.out.println("-> Available crystals: " + this.crystals);
         }
     }
+
     //interfaces
     @Override
-    public void addPokemonToCurrentList(Pokemon pokemon) {
-        this.currentPokemons.add(pokemon);
+    public boolean addPokemonToCurrentList(Pokemon pokemon) {
+        if (!currentPokemons.contains(pokemon)) {
+            this.currentPokemons.add(pokemon);
+            System.out.println("->" + pokemon.getName() + " has been successfully chosen.");
+            return true;
+        } else {
+            System.out.println("->" + this.name + " has been already chosen.");
+            return false;
+        }
     }
 
-    @Override
-    public void addPokemonToAvailableList(Pokemon pokemon) {
-        this.availablePokemons.add(pokemon);
+    public boolean addPokemonToAvailableList(Pokemon pokemon) {
+        if (!availablePokemons.contains(pokemon)) {
+            this.availablePokemons.add(pokemon);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    @Override
-    public void addPokemonToDeadList(Pokemon pokemon) {
+
+    private void addPokemonToDeadList(Pokemon pokemon) {
         this.deadPokemonList.add(pokemon);
     }
 
     @Override
-    public void removePokemonFromCurrentList(Pokemon pokemon) {
-        this.currentPokemons.remove(pokemon);
+    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
+        if (this.currentPokemons.contains(pokemon)) {
+            this.currentPokemons.remove(pokemon);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void removePokemonFromAvailableList(Pokemon pokemon) {
-        this.availablePokemons.remove(pokemon);
+    public boolean removePokemonFromAvailableList(Pokemon pokemon) {
+        if (this.availablePokemons.contains(pokemon)) {
+            this.availablePokemons.remove(pokemon);
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public void removePokemonFromDeadList(Pokemon pokemon) {
-        this.deadPokemonList.remove(pokemon);
+
+    public boolean removePokemonFromDeadList(Pokemon pokemon) {
+        if (this.deadPokemonList.contains(pokemon)) {
+            this.deadPokemonList.remove(pokemon);
+            return true;
+        }
+        return false;
     }
 }

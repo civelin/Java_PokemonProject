@@ -15,35 +15,60 @@ public class PCUser extends User {
     }
 
 
-        //TODO: make PC-user to think logically.
+    //TODO: make PC-user to think logically.
 
     @Override
-    public void addPokemonToCurrentList(Pokemon pokemon) {
-        this.currentPokemons.add(pokemon);
+    public boolean addPokemonToCurrentList(Pokemon pokemon) {
+        if (!currentPokemons.contains(pokemon)) {
+            this.currentPokemons.add(pokemon);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
+        if (this.currentPokemons.contains(pokemon)) {
+            this.currentPokemons.remove(pokemon);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void addPokemonToAvailableList(Pokemon pokemon) {
-
+    public boolean removePokemonFromAvailableList(Pokemon pokemon) {
+        if (this.availablePokemons.contains(pokemon)) {
+            this.availablePokemons.remove(pokemon);
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public void addPokemonToDeadList(Pokemon pokemon) {
-
+    public void choosePokemonsFromAvailableListToCurrentList() {
+        Random randomPokemonGenerator = new Random();
+        int size = this.availablePokemons.size(); //5
+        boolean flag = false;
+        for (int i = 0; i < 3; i++) {
+            int index = randomPokemonGenerator.nextInt(size);
+            Pokemon pokemon = this.availablePokemons.get(index);
+            while(!flag){
+                // add pokemon to current list
+                flag = addPokemonToCurrentList(pokemon);
+            }
+            flag = false;
+        }
     }
 
-    @Override
-    public void removePokemonFromCurrentList(Pokemon pokemon) {
-        this.currentPokemons.remove(pokemon);
+    public Pokemon choosePokemonForBattleFromCurrentList() {
+        Random randomPokemonGenerator = new Random();
+        int size = this.currentPokemons.size();
+        int index = randomPokemonGenerator.nextInt(size);
+        Pokemon pokemonForBattle = this.currentPokemons.get(index);
+        return pokemonForBattle;
     }
 
-    @Override
-    public void removePokemonFromAvailableList(Pokemon pokemon) {
+//    TODO: public Attack chooseAttackForTheCurrentTurn(){};
 
-    }
-
-    @Override
-    public void removePokemonFromDeadList(Pokemon pokemon) {
-
-    }
 }
