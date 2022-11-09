@@ -15,7 +15,7 @@ public class PCUser extends User {
     }
 
 
-
+        //TODO: make PC-user to think logically.
 
     @Override
     public void addPokemonToCurrentList(Pokemon pokemon) {
