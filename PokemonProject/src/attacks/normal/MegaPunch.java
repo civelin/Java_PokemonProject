@@ -14,7 +14,7 @@ public class MegaPunch extends PokemonAttack {
         this.description = "Mega punch attack deals damage to the opponent's pokemon.";
     }
 
-    public double megaPunch(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
         // High critical hit ratio
         Random rnd = new Random();
         int critChance = rnd.nextInt(3)+1;

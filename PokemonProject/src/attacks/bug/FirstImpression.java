@@ -13,7 +13,7 @@ public class FirstImpression extends PokemonAttack {
     }
 
     //Although this move has great power, it only works the first turn the user is in battle.
-    public double firstImpression(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints();
         double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;

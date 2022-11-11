@@ -2,9 +2,7 @@ package users;
 
 import pokemons.Pokemon;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 public class HumanUser extends User implements Removable, Addable {
 
@@ -38,7 +36,7 @@ public class HumanUser extends User implements Removable, Addable {
             System.out.println("->" + pokemon.getName() + " has been successfully chosen.");
             return true;
         } else {
-            System.out.println("->" + this.name + " has been already chosen.");
+            System.out.println("->" + this.name + " has been already chosen. Please choose another pokemon!");
             return false;
         }
     }
@@ -84,10 +82,20 @@ public class HumanUser extends User implements Removable, Addable {
         return false;
     }
 
+
     public void printAvailablePokemons(){
         for(int i = 0; i < this.availablePokemons.size(); i++){
             this.availablePokemons.get(0).printAttacks();
             System.out.println("    --> TYPE" + i+1 + " TO CHOOSE IT FOR THE BATTLE!");
         }
+
+    public Pokemon choosePokemonForBattleFromCurrentList() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please choose a pokemon for this turn: ");
+        int index = sc.nextInt();
+        Pokemon pokemonForBattle = this.currentPokemons.get(index);
+        System.out.println("You chose "+pokemonForBattle.getName()+"!");
+        return pokemonForBattle;
+
     }
 }
