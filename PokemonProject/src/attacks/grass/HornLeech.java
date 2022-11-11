@@ -11,7 +11,7 @@ public class HornLeech extends PokemonAttack {
     }
 
     // Increase hp up to 25 points if it's under 25 points
-    public double hornLeech(Pokemon userPokemon) {
+    public double attack(Pokemon userPokemon) {
         if (userPokemon.getHp() < 25) {
             userPokemon.setHp(25);
         }
