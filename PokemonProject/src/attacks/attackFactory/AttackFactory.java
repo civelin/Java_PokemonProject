@@ -16,7 +16,7 @@ import attacks.normal.MegaPunch;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class AttackFactory {
     private static List<PokemonAttack> bugAttacks = fillBugAttacks();
@@ -43,7 +43,7 @@ public class AttackFactory {
     private static boolean contains(List<PokemonAttack> attacks, PokemonAttack newAttack) {
         List<PokemonAttack> duplicates = attacks
                 .stream()
-                .filter(attack -> attack.getName().equals(newAttack.getName()))
+                .filter(attack -> attack.compare(newAttack))
                 .toList();
         return duplicates.size() > 0 ? true : false;
     }

@@ -35,4 +35,8 @@ public abstract class PokemonAttack {
         this.attackPower = attackPower;
     }
 
+    public boolean compare(PokemonAttack attack){
+        return this.getName().equals(attack.getName());
+    }
+
 }
