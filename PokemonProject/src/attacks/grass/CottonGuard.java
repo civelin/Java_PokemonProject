@@ -12,7 +12,7 @@ public class CottonGuard extends PokemonAttack {
     }
 
     //Drastically raises(with 50%) user's defense and decreases enemy's defence with 15 percent
-    public double cottonGuard(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
 
         enemyPokemon.setDefencePoints(0.85 * enemyPokemon.getDefencePoints());
 

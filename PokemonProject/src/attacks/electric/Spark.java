@@ -14,7 +14,7 @@ public class Spark extends PokemonAttack {
     }
 
 
-    public double spark(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
 
         Random randomChance = new Random();
         int critChance = randomChance.nextInt(2); //return 0 or 1

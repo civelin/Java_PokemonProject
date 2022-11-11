@@ -10,7 +10,7 @@ public class Leer extends PokemonAttack {
         this.description = "Leer attack lowers opponent's defence.";
     }
 
-    public double leer(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
         double lowerEnemyPokemonDefence = 15;
 
         enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence);

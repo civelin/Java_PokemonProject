@@ -14,7 +14,7 @@ public class BlazeKick extends PokemonAttack {
         this.description = "Blaze kick attack has a chance to burn the opponent for additional extra damage.";
     }
 
-    public double blazeKick(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
         Random chanceToBurnOpponentForExtraDmg = new Random();
         double attackPower;
         int chance = chanceToBurnOpponentForExtraDmg.nextInt(2);

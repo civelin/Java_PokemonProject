@@ -16,7 +16,7 @@ public class BurningJealously extends PokemonAttack {
 
     //Hits all opponents
 
-    public double burningJealously(Pokemon userPokemon, List<Pokemon> enemyPokemons) {
+    public double attack(Pokemon userPokemon, List<Pokemon> enemyPokemons) {
         double attackPower = userPokemon.getAttackPoints() + this.attackPower;
         for (Pokemon pokemon : enemyPokemons) {
             pokemon.setHp(pokemon.getHp() - (attackPower - pokemon.getDefencePoints()));

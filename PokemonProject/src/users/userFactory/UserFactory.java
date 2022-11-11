@@ -22,4 +22,9 @@ public class UserFactory {
         User pcUser3 = new PCUser("James", PokemonFactory.PCUser3Pokemons());
         return pcUser3;
     }
+
+    public static User humanUser(){
+        User humanUser = new HumanUser("Az", PokemonFactory.getUserSmallPokemons());
+        return humanUser;
+    }
 }
