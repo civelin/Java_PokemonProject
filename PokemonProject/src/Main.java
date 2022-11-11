@@ -1,3 +1,8 @@
+import attacks.attackFactory.AttackFactory;
+import menus.LoginMenu;
+import pokemons.Pokemon;
+import pokemons.pokemonFactory.PokemonFactory;
+import users.userFactory.UserFactory;
 import pokemons.Pokemon;
 import users.HumanUser;
 import users.PCUser;
@@ -63,10 +68,6 @@ public class Main {
     }
     public static void main(String[] args) {
 
-
-
-
-
 //        List<PokemonAttack> bugAttacks = AttackFactory.getBugAttacks();
 //        bugAttacks.forEach(System.out::println);
 //        System.out.println();
@@ -122,5 +123,11 @@ public class Main {
 //        for (PokemonAttack attack: largePokemon3.getAttacks()) {
 //            System.out.println(attack);
 //        }
+
+//        PokemonFactory.getUserLargePokemons().forEach(pokemon -> pokemon.printAttacks());
+
+        LoginMenu.print();
+        String userName = LoginMenu.enterUserName();
+
     }
 }

@@ -81,6 +81,14 @@ public class HumanUser extends User implements Removable, Addable {
         }
         return false;
     }
+
+
+    public void printAvailablePokemons(){
+        for(int i = 0; i < this.availablePokemons.size(); i++){
+            this.availablePokemons.get(0).printAttacks();
+            System.out.println("    --> TYPE" + i+1 + " TO CHOOSE IT FOR THE BATTLE!");
+        }
+
     public Pokemon choosePokemonForBattleFromCurrentList() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Please choose a pokemon for this turn: ");
@@ -88,5 +96,6 @@ public class HumanUser extends User implements Removable, Addable {
         Pokemon pokemonForBattle = this.currentPokemons.get(index);
         System.out.println("You chose "+pokemonForBattle.getName()+"!");
         return pokemonForBattle;
+
     }
 }
