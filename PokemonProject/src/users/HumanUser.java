@@ -83,4 +83,11 @@ public class HumanUser extends User implements Removable, Addable {
         }
         return false;
     }
+
+    public void printAvailablePokemons(){
+        for(int i = 0; i < this.availablePokemons.size(); i++){
+            this.availablePokemons.get(0).printAttacks();
+            System.out.println("    --> TYPE" + i+1 + " TO CHOOSE IT FOR THE BATTLE!");
+        }
+    }
 }

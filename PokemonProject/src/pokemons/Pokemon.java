@@ -2,6 +2,7 @@ package pokemons;
 
 import attacks.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Pokemon {
@@ -108,5 +109,12 @@ public abstract class Pokemon {
 
     public boolean isThereAttackOnConcreteIndex(int index) {
         return attacks[index] != null ? true : false;
+    }
+
+    public void printAttacks(){
+        System.out.println("-> " + this.name + "'s attacks:");
+        for (PokemonAttack attack: this.attacks) {
+            attack.showDescription();
+        }
     }
 }

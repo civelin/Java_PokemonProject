@@ -11,7 +11,7 @@ public abstract class PokemonAttack {
 
     // methods
     public void showDescription(){
-        System.out.println(this.description);
+        System.out.println("    -> " + this.description);
     }
 
     public String getName() {

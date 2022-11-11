@@ -10,4 +10,5 @@ public abstract class User implements Addable, Removable{
     protected List<Pokemon> currentPokemons;
     protected List<Pokemon> availablePokemons;
 
+
 }
