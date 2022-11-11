@@ -12,7 +12,7 @@ public class LeechLife extends PokemonAttack {
     }
 
     //User recovers half the HP inflicted on opponent.
-    public double leechLife(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
 
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints();
