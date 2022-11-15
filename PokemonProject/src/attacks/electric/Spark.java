@@ -3,6 +3,7 @@ package attacks.electric;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
 import java.util.Random;
 
 public class Spark extends PokemonAttack {
@@ -13,8 +14,9 @@ public class Spark extends PokemonAttack {
         this.description = "Spark attack has equal chances to hit opponent's hp or miss the target.";
     }
 
-
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
 
         Random randomChance = new Random();
         int critChance = randomChance.nextInt(2); //return 0 or 1

@@ -1,45 +1,37 @@
 package users;
 
+import attacks.PokemonAttack;
 import pokemons.Pokemon;
+import validators.Validator;
 
 import java.util.*;
 
-public class HumanUser extends User implements Removable, Addable {
+public class HumanUser extends User implements IHumanUser {
 
     private int crystals;
     private List<Pokemon> deadPokemonList;
 
-    public HumanUser(String name, List<Pokemon> availablePokemons) {
+    public HumanUser(String name) {
         this.name = name;
         this.crystals = 0;
-        this.availablePokemons = availablePokemons;
+        this.availablePokemons = new ArrayList<>();
         this.currentPokemons = new ArrayList<>();
         this.deadPokemonList = new ArrayList<>();
     }
 
-    public void addCrystals() {
-        this.crystals++;
+    public int addCrystals() {
+        return ++this.crystals;
     }
 
-    public void removeCrystals() {
+    public int removeCrystals() {
         if (this.crystals > 0) {
             this.crystals--;
             System.out.println("-> Available crystals: " + this.crystals);
         }
+        return this.crystals;
     }
 
     //interfaces
-    @Override
-    public boolean addPokemonToCurrentList(Pokemon pokemon) {
-        if (!currentPokemons.contains(pokemon)) {
-            this.currentPokemons.add(pokemon);
-            System.out.println("->" + pokemon.getName() + " has been successfully chosen.");
-            return true;
-        } else {
-            System.out.println("->" + this.name + " has been already chosen. Please choose another pokemon!");
-            return false;
-        }
-    }
 
     public boolean addPokemonToAvailableList(Pokemon pokemon) {
         if (!availablePokemons.contains(pokemon)) {
@@ -50,9 +42,13 @@ public class HumanUser extends User implements Removable, Addable {
         }
     }
 
-
-    private void addPokemonToDeadList(Pokemon pokemon) {
-        this.deadPokemonList.add(pokemon);
+    @Override
+    public boolean addPokemonToDeadList(Pokemon pokemon) {
+        if (pokemon.isPokemonDead()) {
+            this.deadPokemonList.add(pokemon);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -65,6 +61,19 @@ public class HumanUser extends User implements Removable, Addable {
     }
 
     @Override
+    public PokemonAttack chooseAttack(Pokemon pokemon) {
+        Scanner scan = new Scanner(System.in);
+        pokemon.printAttacks();
+        System.out.println("\uD83D\uDC49 Please select attack:");
+        System.out.println("\uD83D\uDC49");
+        String choice = scan.next();
+        while(!Validator.enterChoice(2, choice)){
+            System.out.println("\uD83D\uDC49");
+            choice = scan.next();
+        }
+        return pokemon.getAttacks()[Integer.parseInt(choice) - 1];
+    }
+
     public boolean removePokemonFromAvailableList(Pokemon pokemon) {
         if (this.availablePokemons.contains(pokemon)) {
             this.availablePokemons.remove(pokemon);
@@ -72,7 +81,6 @@ public class HumanUser extends User implements Removable, Addable {
         }
         return false;
     }
-
 
     public boolean removePokemonFromDeadList(Pokemon pokemon) {
         if (this.deadPokemonList.contains(pokemon)) {
@@ -82,20 +90,76 @@ public class HumanUser extends User implements Removable, Addable {
         return false;
     }
 
-
-    public void printAvailablePokemons(){
-        for(int i = 0; i < this.availablePokemons.size(); i++){
-            this.availablePokemons.get(0).printAttacks();
-            System.out.println("    --> TYPE" + i+1 + " TO CHOOSE IT FOR THE BATTLE!");
+    @Override
+    public boolean addPokemonToCurrentList(Pokemon pokemon) {
+        if (!currentPokemons.contains(pokemon)) {
+            this.currentPokemons.add(pokemon);
+            System.out.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
+            return true;
+        } else {
+            System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
+            return false;
         }
+    }
+
+    public void printAvailablePokemons() {
+        for (int i = 0; i < availablePokemons.size(); i++) {
+            System.out.println(" " + (i + 1) + ". " + availablePokemons.get(i).getName());
+        }
+        System.out.println();
+    }
+
+    public void printCurrentPokemons() {
+        for (int i = 0; i < currentPokemons.size(); i++) {
+            System.out.println(" " + (i + 1) + ". " + currentPokemons.get(i).getName());
+        }
+    }
+
+    @Override
+    public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
+        List<Pokemon> pokemons = new ArrayList<>();
+        Pokemon pokemon = null;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\u2757 Please select the pokemons with which you want to play. You have to to choose 3 pokemons.");
+        printAvailablePokemons();
+
+        for (int i = 1; i <= 3; i++) {
+            boolean isAdded = false;
+            System.out.println("\uD83D\uDC49 Please enter your choice");
+
+            while (!isAdded) {
+                System.out.print("\uD83D\uDC49");
+                String choice = scan.next();
+
+                // entering choice until it falls within the interval
+                while (!Validator.enterChoice(availablePokemons.size(), choice)) {
+                    System.out.println("\u274C Choice must be between 1 and " + availablePokemons.size());
+                    System.out.print("\uD83D\uDC49");
+                    choice = scan.next();
+                }
+                pokemon = availablePokemons.get(Integer.parseInt(choice) - 1);
+                isAdded = this.addPokemonToCurrentList(pokemon);
+            }
+            pokemons.add(pokemon);
+        }
+        return pokemons;
+    }
 
     public Pokemon choosePokemonForBattleFromCurrentList() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Please choose a pokemon for this turn: ");
-        int index = sc.nextInt();
-        Pokemon pokemonForBattle = this.currentPokemons.get(index);
-        System.out.println("You chose "+pokemonForBattle.getName()+"!");
+        System.out.println("❗ Please choose your pokemon for this turn:");
+        this.printCurrentPokemons();
+        System.out.print("\n\uD83D\uDC49 ");
+        String index = sc.next();
+        // entering choice until it falls within the interval
+        while (!Validator.enterChoice(currentPokemons.size(), index)) {
+            System.out.println("\u274C Choice must be between 1 and " + currentPokemons.size());
+            System.out.print("\uD83D\uDC49");
+            index = sc.next();
+        }
+        Pokemon pokemonForBattle = this.currentPokemons.get(Integer.parseInt(index) - 1);
+        pokemonForBattle.changeIsPokemonFightingStatus();
+        System.out.println("✔ You chose " + pokemonForBattle.getName() + "!");
         return pokemonForBattle;
-
     }
 }

@@ -3,6 +3,8 @@ package attacks.grass;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
+
 public class HornLeech extends PokemonAttack {
     public HornLeech() {
         this.name = "HornLeech";
@@ -11,7 +13,9 @@ public class HornLeech extends PokemonAttack {
     }
 
     // Increase hp up to 25 points if it's under 25 points
-    public double attack(Pokemon userPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
         if (userPokemon.getHp() < 25) {
             userPokemon.setHp(25);
         }

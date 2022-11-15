@@ -16,12 +16,16 @@ public class BurningJealously extends PokemonAttack {
 
     //Hits all opponents
 
-    public double attack(Pokemon userPokemon, List<Pokemon> enemyPokemons) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
         double attackPower = userPokemon.getAttackPoints() + this.attackPower;
-        for (Pokemon pokemon : enemyPokemons) {
+        for (Pokemon pokemon : enemyCurrentPokemons) {
             pokemon.setHp(pokemon.getHp() - (attackPower - pokemon.getDefencePoints()));
         }
 
         return attackPower;
     }
+
+
 }

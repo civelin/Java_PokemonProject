@@ -3,6 +3,8 @@ package attacks.bug;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
+
 public class LeechLife extends PokemonAttack {
 
     public LeechLife() {
@@ -12,11 +14,13 @@ public class LeechLife extends PokemonAttack {
     }
 
     //User recovers half the HP inflicted on opponent.
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
 
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.6;
         double pokemonAttackPower = userPokemon.getAttackPoints();
-        double finalInflictedDmg = (pokemonAttackPower + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        double finalInflictedDmg = 0.8 * (pokemonAttackPower + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
 
         if (finalInflictedDmg <= 0) {
             finalInflictedDmg = this.attackPower;

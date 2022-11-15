@@ -3,6 +3,8 @@ package attacks.bug;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
+
 public class FirstImpression extends PokemonAttack {
 
     public FirstImpression() {
@@ -13,7 +15,10 @@ public class FirstImpression extends PokemonAttack {
     }
 
     //Although this move has great power, it only works the first turn the user is in battle.
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
         double pokemonAttackPower = userPokemon.getAttackPoints();
         double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;

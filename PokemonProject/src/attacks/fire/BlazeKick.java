@@ -3,6 +3,7 @@ package attacks.fire;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlazeKick extends PokemonAttack {
@@ -14,7 +15,10 @@ public class BlazeKick extends PokemonAttack {
         this.description = "Blaze kick attack has a chance to burn the opponent for additional extra damage.";
     }
 
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
         Random chanceToBurnOpponentForExtraDmg = new Random();
         double attackPower;
         int chance = chanceToBurnOpponentForExtraDmg.nextInt(2);

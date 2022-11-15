@@ -3,6 +3,7 @@ package attacks.normal;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
 import java.util.Random;
 
 public class MegaPunch extends PokemonAttack {
@@ -14,7 +15,11 @@ public class MegaPunch extends PokemonAttack {
         this.description = "Mega punch attack deals damage to the opponent's pokemon.";
     }
 
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
+
         // High critical hit ratio
         Random rnd = new Random();
         int critChance = rnd.nextInt(3)+1;
