@@ -1,68 +1,19 @@
 import attacks.PokemonAttack;
 import attacks.attackFactory.AttackFactory;
 import menus.LoginMenu;
+//import menus.MenuInbetweenTheBattles;
 import pokemons.Pokemon;
 import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
 import users.userFactory.PCUserFactory;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    //    public static boolean battleLogic(HumanUser humanUser, PCUser pcUser1) {
-//        Scanner sc = new Scanner(System.in);
-//        Random rnd = new Random();
-//        int randomPokemonForPCuser;
-//        System.out.println("The pokemon tournament is about to begin." +
-//                "\n First opponent is " + pcUser1.getName() + ". Her pokemons are --->");
-//        System.out.println("1 - " + pcUser1.getAvailablePokemons().get(0).getName());
-//        System.out.println("2 - " + pcUser1.getAvailablePokemons().get(1).getName());
-//        System.out.println("3 - " + pcUser1.getAvailablePokemons().get(2).getName());
-//        System.out.println("4 - " + pcUser1.getAvailablePokemons().get(3).getName());
-//        System.out.println("5 - " + pcUser1.getAvailablePokemons().get(4).getName());
-//        System.out.println();
-//        System.out.println("Choose 3 pokemons from your list to enter the battle!");
-//        boolean flag = false;
-//        int userPokemons = humanUser.getAvailablePokemons().size();
-//        int userPokemonChoice;
-//
-//        for (int i = 0; i < userPokemons; i++) {
-//            System.out.println((i + 1) + ".Pokemon - " + humanUser.getAvailablePokemons().get(i).getName());
-//        }
-//        do {
-//        for (int i = 0; i < 3; i++) {
-//            do {
-//                System.out.print("Pokemon " + (i + 1) + " : ");
-//                userPokemonChoice = sc.nextInt();
-//
-//                  flag = humanUser.addPokemonToCurrentList(humanUser.getAvailablePokemons().get(userPokemonChoice - 1));
-//                    humanUser.removePokemonFromAvailableList(humanUser.getAvailablePokemons().get(userPokemonChoice - 1));
-//
-//
-//            } while (!flag);
-//            flag = false;
-//
-//        pcUser1.choosePokemonsFromAvailableListToCurrentList();
-//
-//        }
-//
-//       }while(humanUser.getCurrentPokemons().size()!=3&&pcUser1.getCurrentPokemons().size()!=3);
-//       boolean userTurns= true;
-//        Pokemon pcCurrentPokemonForBattle = pcUser1.choosePokemonForBattleFromCurrentList();
-//        System.out.println(pcUser1.getName()+" chose "+ pcCurrentPokemonForBattle.getName()+" this turn.");
-//        Pokemon humanUserCurrentPokemonForBattle = humanUser.choosePokemonForBattleFromCurrentList();
-//        do{
-//            if(userTurns) {
-//
-//
-//            }
-//            System.out.println();
-//        } while(pcUser1.getCurrentPokemons().size()>0||humanUser.getCurrentPokemons().size()>0);
-//
-//        return true;
-//    }
+
     public static void main(String[] args) {
 //
 //        List<PokemonAttack> bugAttacks = AttackFactory.getBugAttacks();
@@ -136,7 +87,6 @@ public class Main {
 
 
         for (int level = 1; level <= 3; level++) {
-
             //initialize opponent and human's pokemons according to current level
             if (level == 1) {
                 pcUser = PCUserFactory.pcUser1();
@@ -144,11 +94,19 @@ public class Main {
             } else if (level == 2) {
                 pcUser = PCUserFactory.pcUser2();
                 humanUserPokemons = PokemonFactory.getUserNormalPokemons();
+//                    MenuInbetweenTheBattles.printTextAfterFirstBattle(pcUser);
+
             } else if (level == 3) {
                 pcUser = PCUserFactory.pcUser3();
                 humanUserPokemons = PokemonFactory.getUserLargePokemons();
             }
             human.setAvailablePokemons(humanUserPokemons);
+            if (human.getAvailablePokemons().size() < 3) {
+
+                System.out.println("You can't continue the tournament , since you don't meet the requirements!" +
+                        "\nBetter luck next time!");
+                break;
+            }
 
             // the user must choose pokemons for the current battle
             human.choosePokemonsFromAvailableListToCurrentList();
@@ -163,14 +121,69 @@ public class Main {
             // human choose pokemon fot the battle
             Pokemon humanUserPokemonForCurrentBattle = human.choosePokemonForBattleFromCurrentList();
 
-            // pc user choose attack for the turn
-           PokemonAttack pcAttackForCurrentTurn =  pcUser.chooseAttack(pcUserCurrentPokemonForCurrentBattle);
+            PokemonAttack pcAttackForCurrentTurn;
 
-           // human user choose attack for the turn
-            PokemonAttack humanAttackForCurrentTurn = human.chooseAttack(humanUserPokemonForCurrentBattle);
+            PokemonAttack humanUserAttackForCurrentTurn;
+
+            boolean checkIfPokemonIsDead;
+
+            while (true) {
+                System.out.println("It's " + pcUser.getName() + " turn!");
+                int pcUserChoice = pcUser.userChoiceOptionAfterEachTurn();
+                //TODO: проверка колко покемона са останали в текущият лист , ако е 1 , да няма право да сменя покемоните !
+                if (pcUserChoice < 4) {
+                    pcAttackForCurrentTurn = pcUser.chooseAttack(pcUserCurrentPokemonForCurrentBattle);
+                    pcAttackForCurrentTurn.attack( pcUser.getCurrentPokemons(),human.getCurrentPokemons());
+                    checkIfPokemonIsDead = humanUserPokemonForCurrentBattle.isPokemonDead();
+                    if (checkIfPokemonIsDead) {
+                        human.addPokemonToDeadList(humanUserPokemonForCurrentBattle);
+                        human.removePokemonFromCurrentList(humanUserPokemonForCurrentBattle);
+                        human.removePokemonFromAvailableList(humanUserPokemonForCurrentBattle);
+                        if (human.getCurrentPokemons().size() == 0) {
+                            System.out.println("You have been defeated " + human.getName() + " !");
+                            break;
+                        } else {
+                            human.choosePokemonForBattleFromCurrentList();
+                        }
+                    }
+                } else {
+                    pcUserCurrentPokemonForCurrentBattle.changeIsPokemonFightingStatus();
+                    pcUserCurrentPokemonForCurrentBattle = pcUser.choosePokemonForBattleFromCurrentList();
+                    pcUser.choosePokemonForBattleFromCurrentList();
+                }
+                System.out.println(human.getName() + " it's your turn !");
+                int humanUserChoice = human.userChoiceOptionAfterEachTurn();
+                if (humanUserChoice == 1) {
+                    humanUserAttackForCurrentTurn = human.chooseAttack(humanUserPokemonForCurrentBattle);
+                    humanUserAttackForCurrentTurn.attack(human.getCurrentPokemons(), pcUser.getCurrentPokemons());
+                    checkIfPokemonIsDead = pcUserCurrentPokemonForCurrentBattle.isPokemonDead();
+                    if (checkIfPokemonIsDead) {
+                        pcUser.removePokemonFromCurrentList(pcUserCurrentPokemonForCurrentBattle);
+                        if (pcUser.getCurrentPokemons().size() == 0) {
+//                            MenuInbetweenTheBattles.printVictoriousTextAfterSuccessfulBattle(pcUser);
+                            break;
+                        }else {
+                            pcUser.choosePokemonForBattleFromCurrentList();
+                        }
+                    }
+                } else if (humanUserChoice == 2) {
+                    humanUserPokemonForCurrentBattle.changeIsPokemonFightingStatus();
+                    humanUserPokemonForCurrentBattle = human.choosePokemonForBattleFromCurrentList();
+                } else if (humanUserChoice == 3) {
+                    System.out.println("You have forfeit! " + pcUser.getName() + " has won the battle!");
+                    break;
+                }
+
+
+            }
+            // pc user choose attack for the turn
+
+
+            // human user choose attack for the turn
+
             // проверка и за двата покемона дали някой не е умрял ??
 
-           pcAttackForCurrentTurn.attack(human.getCurrentPokemons(),pcUser.getCurrentPokemons());
+
             break;
 
 

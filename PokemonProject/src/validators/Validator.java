@@ -1,5 +1,6 @@
 package validators;
 
+import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,8 +22,13 @@ public abstract class Validator {
     public static boolean enterChoice(int upperBound, String choice) {
         try {
             int integerChoice = Integer.parseInt(choice);
-            return integerChoice >= 1 && integerChoice <= upperBound;
+             if(integerChoice >= 1 && integerChoice <= upperBound){
+                return true;
+            } else {
+                 throw new InputMismatchException();
+             }
         } catch (Exception e){
+            System.out.println("\u274C Choice must be between 1 and "+upperBound);
             return false;
         }
     }

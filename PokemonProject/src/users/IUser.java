@@ -19,4 +19,5 @@ public interface IUser {
     boolean removePokemonFromCurrentList(Pokemon pokemon);
 
     PokemonAttack chooseAttack(Pokemon pokemon);
+    int userChoiceOptionAfterEachTurn();
 }

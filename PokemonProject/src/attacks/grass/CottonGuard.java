@@ -31,8 +31,8 @@ public class CottonGuard extends PokemonAttack {
             userPokemon.setDefencePoints(newDefencePoints);
         }
 
-        System.out.println("Enemy's pokemon " + enemyPokemon.getName() + " now has " + enemyPokemon.getDefencePoints() + " defence points.");
-        System.out.println("Your pokemon " + userPokemon.getName() + " now has " + userPokemon.getDefencePoints() + " defence points.");
+        System.out.println(enemyPokemon.getName() + " now has " + enemyPokemon.getDefencePoints() + " defence points.");
+        System.out.println(userPokemon.getName() + " now has " + userPokemon.getDefencePoints() + " defence points.");
         return userPokemon.getDefencePoints();
     }
 }

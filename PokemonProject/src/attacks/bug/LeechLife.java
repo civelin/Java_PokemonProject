@@ -32,6 +32,9 @@ public class LeechLife extends PokemonAttack {
         } else {
             userPokemon.setHp(userPokemon.returnInitialHP());
         }
+        System.out.println(userPokemon.getName()+" has attacked "+enemyPokemon.getName());
+        System.out.println(enemyPokemon.getName()+" new hp ----> "+enemyPokemon.getHp());
+        System.out.println(userPokemon.getName()+" has recovered "+finalInflictedDmg/2+" hp!New hp---> "+userPokemon.getHp());
 
         return finalInflictedDmg;
     }

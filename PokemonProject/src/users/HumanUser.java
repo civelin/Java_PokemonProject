@@ -54,6 +54,7 @@ public class HumanUser extends User implements IHumanUser {
     @Override
     public boolean removePokemonFromCurrentList(Pokemon pokemon) {
         if (this.currentPokemons.contains(pokemon)) {
+            pokemon.changeIsPokemonFightingStatus();
             this.currentPokemons.remove(pokemon);
             return true;
         }
@@ -67,7 +68,7 @@ public class HumanUser extends User implements IHumanUser {
         System.out.println("\uD83D\uDC49 Please select attack:");
         System.out.println("\uD83D\uDC49");
         String choice = scan.next();
-        while(!Validator.enterChoice(2, choice)){
+        while (!Validator.enterChoice(2, choice)) {
             System.out.println("\uD83D\uDC49");
             choice = scan.next();
         }
@@ -80,6 +81,21 @@ public class HumanUser extends User implements IHumanUser {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int userChoiceOptionAfterEachTurn() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please choose what you want to do.");
+        System.out.println("1---->Attack");
+        System.out.println("2---->Change pokemon");
+        System.out.println("3---->Forfeit (in case you forfeit , you lose the battle!)");
+        String choice = sc.next();
+        while (!Validator.enterChoice(3, choice)) {
+
+            choice = sc.next();
+        }
+        return Integer.parseInt(choice);
     }
 
     public boolean removePokemonFromDeadList(Pokemon pokemon) {
@@ -120,7 +136,7 @@ public class HumanUser extends User implements IHumanUser {
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
         Scanner scan = new Scanner(System.in);
-        System.out.println("\u2757 Please select the pokemons with which you want to play. You have to to choose 3 pokemons.");
+        System.out.println("\u2757 Please select the pokemons with which you want to play. You have to choose 3 pokemons.");
         printAvailablePokemons();
 
         for (int i = 1; i <= 3; i++) {
@@ -162,4 +178,6 @@ public class HumanUser extends User implements IHumanUser {
         System.out.println("✔ You chose " + pokemonForBattle.getName() + "!");
         return pokemonForBattle;
     }
+
+
 }

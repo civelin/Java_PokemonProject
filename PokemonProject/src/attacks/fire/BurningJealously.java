@@ -18,11 +18,14 @@ public class BurningJealously extends PokemonAttack {
 
     public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
         Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
-
+        System.out.println(userPokemon.getName() + " has attacked all the enemy pokemons!");
         double attackPower = userPokemon.getAttackPoints() + this.attackPower;
-        for (Pokemon pokemon : enemyCurrentPokemons) {
-            pokemon.setHp(pokemon.getHp() - (attackPower - pokemon.getDefencePoints()));
+        for (Pokemon enemyPokemon : enemyCurrentPokemons) {
+            enemyPokemon.setHp(enemyPokemon.getHp() - (attackPower - enemyPokemon.getDefencePoints()));
+
+            System.out.println(enemyPokemon.getName() + " new hp ----> " + enemyPokemon.getHp());
         }
+
 
         return attackPower;
     }

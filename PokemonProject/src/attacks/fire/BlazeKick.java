@@ -31,6 +31,9 @@ public class BlazeKick extends PokemonAttack {
 
         }
         enemyPokemon.setHp(enemyPokemon.getHp() - attackPower);
+
+        System.out.println(userPokemon.getName()+" has attacked "+enemyPokemon.getName());
+        System.out.println(enemyPokemon.getName()+" new hp ----> "+enemyPokemon.getHp());
         return attackPower;
     }
 }
