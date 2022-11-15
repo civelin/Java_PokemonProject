@@ -8,4 +8,6 @@ public interface IHumanUser {
     boolean addPokemonToAvailableList(Pokemon pokemon);
     boolean addPokemonToDeadList(Pokemon pokemon);
     boolean removePokemonFromAvailableList(Pokemon pokemon);
+
+
 }

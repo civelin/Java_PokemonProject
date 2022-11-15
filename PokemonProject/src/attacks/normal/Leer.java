@@ -18,6 +18,8 @@ public class Leer extends PokemonAttack {
         double lowerEnemyPokemonDefence = 15;
 
         enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence);
+
+        System.out.println(enemyPokemon.getName() + " now has " + enemyPokemon.getDefencePoints() + " defence points.");
         return lowerEnemyPokemonDefence;
     }
 

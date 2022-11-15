@@ -32,6 +32,7 @@ public class PCUser extends User {
     @Override
     public boolean removePokemonFromCurrentList(Pokemon pokemon) {
         if (this.currentPokemons.contains(pokemon)) {
+            pokemon.changeIsPokemonFightingStatus();
             this.currentPokemons.remove(pokemon);
             return true;
         }
@@ -44,6 +45,14 @@ public class PCUser extends User {
         PokemonAttack attack = pokemon.getAttacks()[index];
         System.out.println("✔ " + this.name + " has chosen " + attack.getName() + " attack for its move.");
         return attack;
+    }
+
+    @Override
+    public int userChoiceOptionAfterEachTurn() {
+        Random random = new Random();
+        int randomChoice = random.nextInt(6);
+
+        return randomChoice;
     }
 
     @Override
