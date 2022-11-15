@@ -3,6 +3,7 @@ package pokemons;
 import attacks.PokemonAttack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NormalPokemon extends Pokemon {
@@ -15,10 +16,13 @@ public class NormalPokemon extends Pokemon {
         this.defencePoints = this.returnInitialDefencePoints();
     }
 
-
-    @Override
-    public void revivePokemon() {
+    // the default constructor is only used for testing
+    public NormalPokemon(){
+        this.name = "Pikachu";
+        this.types = new ArrayList<>(Arrays.asList("fire", "bug", "grass", "normal", "electric"));
         this.hp = this.returnInitialHP();
+        this.attackPoints = this.returnInitialAttackPoints();
+        this.defencePoints = this.returnInitialDefencePoints();
     }
 
     @Override

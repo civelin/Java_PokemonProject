@@ -26,6 +26,9 @@ public class AttackFactory {
     private static List<PokemonAttack> normalAttacks = fillNormalAttacks();
     private static HashMap<String, List<PokemonAttack>> allAttacks = fillAllAttacks();
 
+    // private constructor
+    private AttackFactory(){}
+
     //     fill attacks
     private static HashMap<String, List<PokemonAttack>> fillAllAttacks() {
 
@@ -45,7 +48,7 @@ public class AttackFactory {
                 .stream()
                 .filter(attack -> attack.compare(newAttack))
                 .toList();
-        return duplicates.size() > 0 ? true : false;
+        return duplicates.size() > 0;
     }
 
 
@@ -83,7 +86,6 @@ public class AttackFactory {
         }
         return electricAttacks;
     }
-
 
     // -> FIRE
     // method that returns all current fire attacks

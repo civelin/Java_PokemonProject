@@ -1,5 +1,6 @@
 package users;
 
+import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
 import java.util.ArrayList;
@@ -38,27 +39,33 @@ public class PCUser extends User {
     }
 
     @Override
-    public boolean removePokemonFromAvailableList(Pokemon pokemon) {
-        if (this.availablePokemons.contains(pokemon)) {
-            this.availablePokemons.remove(pokemon);
-            return true;
-        }
-        return false;
+    public PokemonAttack chooseAttack(Pokemon pokemon) {
+        int index = (int) Math.round(Math.random());
+        PokemonAttack attack = pokemon.getAttacks()[index];
+        System.out.println("✔ " + this.name + " has chosen " + attack.getName() + " attack for its move.");
+        return attack;
     }
 
-    public void choosePokemonsFromAvailableListToCurrentList() {
+    @Override
+    public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
         Random randomPokemonGenerator = new Random();
+        List<Pokemon> pokemons = new ArrayList<>();
+        Pokemon pokemon = null;
+
         int size = this.availablePokemons.size(); //5
         boolean flag = false;
         for (int i = 0; i < 3; i++) {
-            int index = randomPokemonGenerator.nextInt(size);
-            Pokemon pokemon = this.availablePokemons.get(index);
-            while(!flag){
+            while (!flag) {
+                int index = randomPokemonGenerator.nextInt(size);
+                pokemon = this.availablePokemons.get(index);
                 // add pokemon to current list
                 flag = addPokemonToCurrentList(pokemon);
             }
+            pokemons.add(pokemon);
             flag = false;
         }
+        System.out.println("\uD83E\uDD14 " + this.name + " is choosing its current pokemons for the battle ...\n" + this.name + " has chosen: ");
+        return pokemons;
     }
 
     public Pokemon choosePokemonForBattleFromCurrentList() {
@@ -66,6 +73,10 @@ public class PCUser extends User {
         int size = this.currentPokemons.size();
         int index = randomPokemonGenerator.nextInt(size);
         Pokemon pokemonForBattle = this.currentPokemons.get(index);
+        pokemonForBattle.changeIsPokemonFightingStatus();
+
+        System.out.println("\u2714 " + this.name + " has chosen " + pokemonForBattle.getName() + " for its move!");
+        System.out.println();
         return pokemonForBattle;
     }
 

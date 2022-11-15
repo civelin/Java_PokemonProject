@@ -2,45 +2,63 @@ package pokemons;
 
 import attacks.*;
 
-import java.util.Arrays;
+import java.io.BufferedReader;
 import java.util.List;
 
-public abstract class Pokemon {
+public abstract class Pokemon implements InitialPoints, Revivable {
     // fields
     protected String name;
     protected List<String> types;
-
-
-    // defaultHp is package private which means that it cannot be seen from the other packages
-    static double defaultHp = 100;
+    final static int defaultHp = 100;
+    final static int defaultAttackPoints = 15;
+    final static int defaultDefencePoints = 50;
     protected double hp;
-
-    // defaultAttackPoints is package private
-    static double defaultAttackPoints = 15;
     protected double attackPoints;
+    protected double defencePoints;
 
-    // defaultDefencePoints is package private
-    static double defaultDefencePoints = 50;
-    protected double defencePoints = 50;
+    // each pokemon has two attacks
     protected PokemonAttack[] attacks = new PokemonAttack[2];
     protected boolean isPokemonFighting = false;
 
     // methods
-    public boolean isPokemonDead() {
-        return this.hp <= 0 ? true : false;
+
+    public boolean changeIsPokemonFightingStatus() {
+        this.isPokemonFighting = !this.isPokemonFighting;
+        return this.isPokemonFighting;
     }
 
-    public abstract void revivePokemon();
+    public boolean isPokemonDead() {
+        return this.hp <= 0;
+    }
 
+    public void revivePokemon() {
+        this.hp = this.returnInitialHP();
+        this.attackPoints = this.returnInitialAttackPoints();
+        this.defencePoints = this.returnInitialDefencePoints();
+    }
+
+    public void addAttackToPokemon(PokemonAttack attack, int index) {
+        if (attacks[index] == null) {
+            attacks[index] = attack;
+        }
+    }
+
+    public boolean isThereAttackOnConcreteIndexAtPokemonAttacks(int index) {
+        return attacks[index] != null ? true : false;
+    }
+
+    public void printAttacks() {
+        System.out.println("-> " + this.name + "'s attacks:");
+        for (int i = 0; i <= 1; i++) {
+            System.out.println((i + 1) + ". " + this.attacks[i].getDescription());
+        }
+
+    }
 
     // getters & setters
 
-    public static double getDefaultHp() {
-        return defaultHp;
-    }
-
-    public static void setDefaultHp(double defaultHp) {
-        Pokemon.defaultHp = defaultHp;
+    public String getName() {
+        return name;
     }
 
     public double getHp() {
@@ -51,14 +69,6 @@ public abstract class Pokemon {
         this.hp = hp;
     }
 
-    public static double getDefaultAttackPoints() {
-        return defaultAttackPoints;
-    }
-
-    public static void setDefaultAttackPoints(double defaultAttackPoints) {
-        Pokemon.defaultAttackPoints = defaultAttackPoints;
-    }
-
     public double getAttackPoints() {
         return attackPoints;
     }
@@ -67,20 +77,8 @@ public abstract class Pokemon {
         this.attackPoints = attackPoints;
     }
 
-    public static double getDefaultDefencePoints() {
-        return defaultDefencePoints;
-    }
-
-    public static void setDefaultDefencePoints(double defaultDefencePoints) {
-        Pokemon.defaultDefencePoints = defaultDefencePoints;
-    }
-
     public double getDefencePoints() {
         return defencePoints;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setDefencePoints(double defencePoints) {
@@ -95,26 +93,7 @@ public abstract class Pokemon {
         return attacks;
     }
 
-    abstract public double returnInitialHP();
-
-    abstract public double returnInitialAttackPoints();
-
-    abstract public double returnInitialDefencePoints();
-
-    public void addAttackToPokemon(PokemonAttack attack, int index) {
-        if (attacks[index] == null) {
-            attacks[index] = attack;
-        }
-    }
-
-    public boolean isThereAttackOnConcreteIndex(int index) {
-        return attacks[index] != null ? true : false;
-    }
-
-    public void printAttacks(){
-        System.out.println("-> " + this.name + "'s attacks:");
-        for (PokemonAttack attack: this.attacks) {
-            attack.showDescription();
-        }
+    public boolean isPokemonFighting() {
+        return isPokemonFighting;
     }
 }

@@ -3,6 +3,8 @@ package attacks.grass;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.List;
+
 public class CottonGuard extends PokemonAttack {
 
     public CottonGuard() {
@@ -12,7 +14,10 @@ public class CottonGuard extends PokemonAttack {
     }
 
     //Drastically raises(with 50%) user's defense and decreases enemy's defence with 15 percent
-    public double attack(Pokemon userPokemon, Pokemon enemyPokemon) {
+    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
+        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+
 
         enemyPokemon.setDefencePoints(0.85 * enemyPokemon.getDefencePoints());
 

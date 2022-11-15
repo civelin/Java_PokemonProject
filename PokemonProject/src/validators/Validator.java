@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Validator {
-
-    public static boolean validateUserName(String username){
+    public static boolean validateUserName(String username) {
         // compile the regex to create pattern
         // using compile() method
         Pattern pattern = Pattern.compile("^[A-Za-z]\\w{7}\\w{0,7}$");
@@ -17,5 +16,14 @@ public abstract class Validator {
         // found in actualString or not
         boolean matches = matcher.matches();
         return matches;
+    }
+
+    public static boolean enterChoice(int upperBound, String choice) {
+        try {
+            int integerChoice = Integer.parseInt(choice);
+            return integerChoice >= 1 && integerChoice <= upperBound;
+        } catch (Exception e){
+            return false;
+        }
     }
 }
