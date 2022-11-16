@@ -3,26 +3,31 @@ package attacks.LeechLife;
 import attacks.bug.LeechLife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pokemons.Pokemon;
 import pokemons.SmallPokemon;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LeechLifeAttackTestWithSmallPokemons {
-    private SmallPokemon pokemon;
-    private SmallPokemon enemyPokemon;
+    private List<Pokemon> pokemon;
+    private List<Pokemon> enemyPokemon;
     private LeechLife leechLife = new LeechLife();
 
     @BeforeEach
     private void initialize() {
-        pokemon = new SmallPokemon();
-        enemyPokemon = new SmallPokemon();
+        pokemon.add(new SmallPokemon());
+        pokemon.get(0).changeIsPokemonFightingStatus();
+        enemyPokemon.add(new SmallPokemon());
+        enemyPokemon.get(0).changeIsPokemonFightingStatus();
     }
 
     @Test
     public void testLeechLifeAttackWithSmallPokemonWithDefaultValues() {
 
-        double enemyPokemonInitialHP = enemyPokemon.getHp();
-        double pokemonInitialHP = pokemon.getHp();
+        double enemyPokemonInitialHP = enemyPokemon.get(0).getHp();
+        double pokemonInitialHP = pokemon.get(0).getHp();
 
         // pokemon attack enemyPokemon
         double finalInflictedDmg = leechLife.attack(pokemon, enemyPokemon);
@@ -31,19 +36,19 @@ public class LeechLifeAttackTestWithSmallPokemons {
         double enemyPokemonExpectedHP = enemyPokemonInitialHP - finalInflictedDmg;
 
         // test expected and actual values
-        assertEquals(enemyPokemonExpectedHP, enemyPokemon.getHp());
-        assertEquals(pokemonInitialHP, pokemon.getHp());
+        assertEquals(enemyPokemonExpectedHP, enemyPokemon.get(0).getHp());
+        assertEquals(pokemonInitialHP, pokemon.get(0).getHp());
     }
 
     @Test
     public void testLeechLifeAttackWithSmallPokemonWithSetValues() {
 
-        pokemon.setAttackPoints(40);
-        pokemon.setHp(50);
-        enemyPokemon.setDefencePoints(20);
+        pokemon.get(0).setAttackPoints(40);
+        pokemon.get(0).setHp(50);
+        enemyPokemon.get(0).setDefencePoints(20);
 
-        double enemyPokemonInitialHP = enemyPokemon.getHp();
-        double pokemonInitialHP = pokemon.getHp();
+        double enemyPokemonInitialHP = enemyPokemon.get(0).getHp();
+        double pokemonInitialHP = pokemon.get(0).getHp();
 
         // pokemon attack enemyPokemon
         double finalInflictedDmg = leechLife.attack(pokemon, enemyPokemon);
@@ -53,8 +58,8 @@ public class LeechLifeAttackTestWithSmallPokemons {
         double pokemonExpectedHP = pokemonInitialHP + finalInflictedDmg / 2;
 
         // test expected and actual values
-        assertEquals(enemyPokemonExpectedHP, enemyPokemon.getHp());
-        assertEquals(pokemonExpectedHP, pokemon.getHp());
+        assertEquals(enemyPokemonExpectedHP, enemyPokemon.get(0).getHp());
+        assertEquals(pokemonExpectedHP, pokemon.get(0).getHp());
     }
 
 }
