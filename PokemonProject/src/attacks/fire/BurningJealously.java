@@ -3,6 +3,7 @@ package attacks.fire;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BurningJealously extends PokemonAttack {
@@ -17,7 +18,7 @@ public class BurningJealously extends PokemonAttack {
     //Hits all opponents
 
     public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
-        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+        Pokemon userPokemon = userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).findFirst().get();
         System.out.println(userPokemon.getName() + " has attacked all the enemy pokemons!");
         double attackPower = userPokemon.getAttackPoints() + this.attackPower;
         for (Pokemon enemyPokemon : enemyCurrentPokemons) {

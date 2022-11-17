@@ -31,5 +31,7 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
         return type;
     }
 
-
+    public double getAttackPower() {
+        return attackPower;
+    }
 }

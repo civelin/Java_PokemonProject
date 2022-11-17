@@ -1,27 +1,23 @@
-package attacks.LeechLife;
+package attacks.LeechLifeTest;
 
+import attacks.AttackTest;
 import attacks.bug.LeechLife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pokemons.LargePokemon;
-import pokemons.Pokemon;
-
-import java.util.ArrayList;
-import java.util.List;
+import pokemons.SmallPokemon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LeechLifeAttackTestWithLargePokemons {
-    private List<Pokemon> pokemon;
-    private List<Pokemon> enemyPokemon;
+public class LeechLifeAttackTestWithSmallPokemons extends AttackTest {
+
     private LeechLife leechLife = new LeechLife();
 
     @BeforeEach
-    private void initialize() {
-
-        pokemon.add(new LargePokemon());
+    @Override
+    protected void setUp() {
+        pokemon.add(new SmallPokemon());
         pokemon.get(0).changeIsPokemonFightingStatus();
-        enemyPokemon.add( new LargePokemon());
+        enemyPokemon.add(new SmallPokemon());
         enemyPokemon.get(0).changeIsPokemonFightingStatus();
     }
 

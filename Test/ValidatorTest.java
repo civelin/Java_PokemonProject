@@ -1,10 +1,13 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import validators.Validator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
-    @Test public void testUsernameValidator(){
+    @Test
+    public void testUsernameValidator(){
         assertFalse(Validator.validateUserName("val4"), "return false when username is shorter than 8 symbols");
         assertFalse(Validator.validateUserName(""), "return false when username is shorter than 8 symbols");
         assertFalse(Validator.validateUserName("c14dj_slkclcdkpjivelin"), "return false when username is longer than 8 symbols");
@@ -16,5 +19,23 @@ public class ValidatorTest {
         assertTrue(Validator.validateUserName("Valyo_96"), "return true when username start with letter, its length is between 8 and 15 symbols and contains only letter, numbers and _");
         assertTrue(Validator.validateUserName("blum_b1989"), "return true when username start with letter, its length is between 8 and 15 symbols and contains only letter, numbers and _");
     }
+    @Test
+    public void testEnterChoiceWhenReturnTrue(){
+        boolean result = Validator.enterChoice(5, "2");
+        assertTrue(result);
+    }
+    @Test
+    public void testEnterChoiceWhenReturnFalse(){
+        boolean result = Validator.enterChoice(5, "7");
+        assertFalse(result);
+    }
+    @Test
+    public void testEnterChoiceWhenThrowException(){
+        boolean result = Validator.enterChoice(5, "incorrect input");
+
+        assertFalse(result);
+    }
+
+
 
 }

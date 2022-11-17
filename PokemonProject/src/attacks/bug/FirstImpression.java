@@ -14,7 +14,7 @@ public class FirstImpression extends PokemonAttack {
         this.attackPower = 1.9 * super.attackPower;
     }
 
-    //Although this move has great power, it only works the first turn the user is in battle.
+    //Although this move has great power.
     public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
         Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
         Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
