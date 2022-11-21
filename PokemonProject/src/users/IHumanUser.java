@@ -2,12 +2,16 @@ package users;
 
 import pokemons.Pokemon;
 
-public interface IHumanUser {
-    int addCrystals();
-    int removeCrystals();
-    boolean addPokemonToAvailableList(Pokemon pokemon);
-    boolean addPokemonToDeadList(Pokemon pokemon);
-    boolean removePokemonFromAvailableList(Pokemon pokemon);
+import java.util.Scanner;
 
+public interface IHumanUser {
+    boolean addPokemonToAvailableList(Pokemon pokemon);
+    boolean removePokemonFromAvailableList(Pokemon pokemon);
+    String printAvailablePokemons();
+    String printCurrentPokemons();
+    boolean addPokemonToDeadList(Pokemon pokemon);
+    boolean removePokemonFromDeadList(Pokemon pokemon);
+    String printDeadPokemons();
+    int chooseOptionBeforeEachTurn(Scanner scan);
 
 }

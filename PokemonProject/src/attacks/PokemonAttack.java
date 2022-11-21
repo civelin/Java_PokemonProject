@@ -1,8 +1,6 @@
 package attacks;
 
-import pokemons.Pokemon;
-
-import java.util.List;
+import users.User;
 
 public abstract class PokemonAttack implements Description, Comparable<PokemonAttack> {
 
@@ -13,20 +11,25 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     protected double attackPower = 10;
 
     // methods
+    @Override
     public String getDescription() {
         return "    -> " + this.description;
     }
 
+    @Override
     public boolean compare(PokemonAttack attack) {
         return this.getName().equals(attack.getName());
     }
 
-    public abstract double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons);
-    // getters and setters
+    public abstract double attack(User user, User enemyUser);
+
+    // getters
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getType() {
         return type;
     }

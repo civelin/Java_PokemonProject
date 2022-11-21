@@ -7,32 +7,22 @@ import validators.Validator;
 import java.util.*;
 
 public class HumanUser extends User implements IHumanUser {
-
+    // fields
     private int crystals;
     private List<Pokemon> deadPokemonList;
 
-    public HumanUser(String name) {
+    // constructor
+    public HumanUser(String name, List<Pokemon> availablePokemons) {
         this.name = name;
         this.crystals = 0;
-        this.availablePokemons = new ArrayList<>();
+        this.availablePokemons = availablePokemons;
         this.currentPokemons = new ArrayList<>();
         this.deadPokemonList = new ArrayList<>();
     }
 
-    public int addCrystals() {
-        return ++this.crystals;
-    }
+    //methods from interfaces
 
-    public int removeCrystals() {
-        if (this.crystals > 0) {
-            this.crystals--;
-            System.out.println("-> Available crystals: " + this.crystals);
-        }
-        return this.crystals;
-    }
-
-    //interfaces
-
+    @Override
     public boolean addPokemonToAvailableList(Pokemon pokemon) {
         if (!availablePokemons.contains(pokemon)) {
             this.availablePokemons.add(pokemon);
@@ -40,6 +30,24 @@ public class HumanUser extends User implements IHumanUser {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean removePokemonFromAvailableList(Pokemon pokemon) {
+        if (this.availablePokemons.contains(pokemon)) {
+            this.availablePokemons.remove(pokemon);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String printAvailablePokemons() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < availablePokemons.size(); i++) {
+            stringBuilder.append(" " + (i + 1) + ". " + availablePokemons.get(i).getName() + "\n");
+        }
+        return stringBuilder.toString();
     }
 
     @Override
@@ -52,58 +60,21 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
-    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
-        if (this.currentPokemons.contains(pokemon)) {
-            pokemon.changeIsPokemonFightingStatus();
-            this.currentPokemons.remove(pokemon);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public PokemonAttack chooseAttack(Pokemon pokemon) {
-        Scanner scan = new Scanner(System.in);
-        pokemon.printAttacks();
-        System.out.println("\uD83D\uDC49 Please select attack:");
-        System.out.println("\uD83D\uDC49");
-        String choice = scan.next();
-        while (!Validator.enterChoice(2, choice)) {
-            System.out.println("\uD83D\uDC49");
-            choice = scan.next();
-        }
-        return pokemon.getAttacks()[Integer.parseInt(choice) - 1];
-    }
-
-    public boolean removePokemonFromAvailableList(Pokemon pokemon) {
-        if (this.availablePokemons.contains(pokemon)) {
-            this.availablePokemons.remove(pokemon);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public int userChoiceOptionAfterEachTurn() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please choose what you want to do.");
-        System.out.println("1---->Attack");
-        System.out.println("2---->Change pokemon");
-        System.out.println("3---->Forfeit (in case you forfeit , you lose the battle!)");
-        String choice = sc.next();
-        while (!Validator.enterChoice(3, choice)) {
-
-            choice = sc.next();
-        }
-        return Integer.parseInt(choice);
-    }
-
     public boolean removePokemonFromDeadList(Pokemon pokemon) {
         if (this.deadPokemonList.contains(pokemon)) {
             this.deadPokemonList.remove(pokemon);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String printDeadPokemons() {
+        StringBuilder strBuilder = new StringBuilder();
+        for (int i = 0; i < this.deadPokemonList.size(); i++) {
+            strBuilder.append((i + 1) + "." + deadPokemonList.get(i).getName());
+        }
+        return strBuilder.toString();
     }
 
     @Override
@@ -118,17 +89,36 @@ public class HumanUser extends User implements IHumanUser {
         }
     }
 
-    public void printAvailablePokemons() {
-        for (int i = 0; i < availablePokemons.size(); i++) {
-            System.out.println(" " + (i + 1) + ". " + availablePokemons.get(i).getName());
+    @Override
+    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
+        if (this.currentPokemons.contains(pokemon)) {
+            this.currentPokemons.remove(pokemon);
+            return true;
         }
-        System.out.println();
+        return false;
     }
 
-    public void printCurrentPokemons() {
-        for (int i = 0; i < currentPokemons.size(); i++) {
-            System.out.println(" " + (i + 1) + ". " + currentPokemons.get(i).getName());
+    @Override
+    public PokemonAttack chooseAttack() {
+        Scanner scan = new Scanner(System.in);
+        this.currentPokemonForBattle.printAttacks();
+        System.out.println("\uD83D\uDC49 Please select attack:");
+        System.out.println("\uD83D\uDC49");
+        String choice = scan.next();
+        while (!Validator.enterChoice(2, choice)) {
+            System.out.println("\uD83D\uDC49");
+            choice = scan.next();
         }
+        return this.currentPokemonForBattle.getAttacks()[Integer.parseInt(choice) - 1];
+    }
+
+    @Override
+    public int chooseOptionBeforeEachTurn(Scanner scan) {
+        String choice = scan.next();
+        while (!Validator.enterChoice(3, choice)) {
+            choice = scan.next();
+        }
+        return Integer.parseInt(choice);
     }
 
     @Override
@@ -149,7 +139,6 @@ public class HumanUser extends User implements IHumanUser {
 
                 // entering choice until it falls within the interval
                 while (!Validator.enterChoice(availablePokemons.size(), choice)) {
-                    System.out.println("\u274C Choice must be between 1 and " + availablePokemons.size());
                     System.out.print("\uD83D\uDC49");
                     choice = scan.next();
                 }
@@ -161,22 +150,49 @@ public class HumanUser extends User implements IHumanUser {
         return pokemons;
     }
 
+    @Override
     public Pokemon choosePokemonForBattleFromCurrentList() {
-        Scanner sc = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         System.out.println("❗ Please choose your pokemon for this turn:");
-        this.printCurrentPokemons();
+        System.out.println(this.printCurrentPokemons());
         System.out.print("\n\uD83D\uDC49 ");
-        String index = sc.next();
+        String index = scan.next();
         // entering choice until it falls within the interval
         while (!Validator.enterChoice(currentPokemons.size(), index)) {
-            System.out.println("\u274C Choice must be between 1 and " + currentPokemons.size());
             System.out.print("\uD83D\uDC49");
-            index = sc.next();
+            index = scan.next();
         }
+
         Pokemon pokemonForBattle = this.currentPokemons.get(Integer.parseInt(index) - 1);
-        pokemonForBattle.changeIsPokemonFightingStatus();
-        System.out.println("✔ You chose " + pokemonForBattle.getName() + "!");
+        this.currentPokemonForBattle = pokemonForBattle;
+        this.removePokemonFromCurrentList(pokemonForBattle);
+        System.out.println("✔ You chose " + this.currentPokemonForBattle.getName() + "!");
         return pokemonForBattle;
+    }
+
+    @Override
+    public Pokemon changeCurrentPokemon() {
+        if(this.currentPokemons.size() != 0){
+            Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
+            Pokemon newCurrentPokemon = this.choosePokemonForBattleFromCurrentList();
+            if (lastCurrentPokemon != null) {
+                this.addPokemonToCurrentList(lastCurrentPokemon);
+            }
+            return newCurrentPokemon;
+        } else {
+            System.out.println("Cannot change current pokemon");
+            return null;
+        }
+    }
+
+    // getters and setters
+
+    public int getCrystals() {
+        return crystals;
+    }
+
+    public void setCrystals(int crystals) {
+        this.crystals = crystals;
     }
 
 

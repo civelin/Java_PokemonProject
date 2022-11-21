@@ -2,29 +2,31 @@ package attacks.bug;
 
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
-
-import java.util.List;
+import users.User;
 
 public class FirstImpression extends PokemonAttack {
 
     public FirstImpression() {
         this.name = "FirstImpression";
         this.type = "bug";
-        this.description = "First Impression attack only works the first turn the user is in battle. It decreases enemy's hp. ";
+        this.description = "First Impression attack decreases enemy's hp.";
         this.attackPower = 1.9 * super.attackPower;
     }
 
-    //Although this move has great power, it only works the first turn the user is in battle.
-    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
-        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
-        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+    @Override
+    public double attack(User user, User enemyUser) {
+        // get only those pokemons that are currently in the battle
+        Pokemon userPokemon = user.getCurrentPokemonForBattle();
+        Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
-        double pokemonAttackPower = userPokemon.getAttackPoints();
-        double finalInflictedDmg = (pokemonAttackPower + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        double finalInflictedDmg = (userPokemon.getAttackPoints() + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
-        System.out.println(userPokemon.getName()+" has attacked "+enemyPokemon.getName());
-        System.out.println(enemyPokemon.getName()+" new hp ----> "+enemyPokemon.getHp());
+
+        System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
+        System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
+
         return finalInflictedDmg;
     }
 

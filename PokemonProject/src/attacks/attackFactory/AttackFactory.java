@@ -27,7 +27,8 @@ public class AttackFactory {
     private static HashMap<String, List<PokemonAttack>> allAttacks = fillAllAttacks();
 
     // private constructor
-    private AttackFactory(){}
+    private AttackFactory() {
+    }
 
     //     fill attacks
     private static HashMap<String, List<PokemonAttack>> fillAllAttacks() {
@@ -68,7 +69,6 @@ public class AttackFactory {
         }
         return bugAttacks;
     }
-
 
     // -> ELECTRIC
     // method that returns all current electric attacks
@@ -121,7 +121,6 @@ public class AttackFactory {
         }
         return grassAttacks;
     }
-
 
     // -> NORMAL
     // method that returns all current normal attacks

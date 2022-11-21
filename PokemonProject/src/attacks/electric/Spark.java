@@ -2,6 +2,7 @@ package attacks.electric;
 
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
+import users.User;
 
 import java.util.List;
 import java.util.Random;
@@ -14,9 +15,11 @@ public class Spark extends PokemonAttack {
         this.description = "Spark attack has equal chances to hit opponent's hp or miss the target.";
     }
 
-    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
-        Pokemon userPokemon = (Pokemon) userCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
-        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
+    @Override
+    public double attack(User user, User enemyUser) {
+        // get only those pokemons that are currently in the battle
+        Pokemon userPokemon = user.getCurrentPokemonForBattle();
+        Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         Random randomChance = new Random();
         int critChance = randomChance.nextInt(2); //return 0 or 1
@@ -29,9 +32,8 @@ public class Spark extends PokemonAttack {
         if (critChance == 0) {
             System.out.println(userPokemon.getName() + " missed the target!");
         } else {
-            System.out.println(userPokemon.getName() + " has attacked " + enemyPokemon.getName());
-            System.out.println(enemyPokemon.getName() + " new hp ----> " + enemyPokemon.getHp());
-
+            System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
+            System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
         }
         return critChance;
     }

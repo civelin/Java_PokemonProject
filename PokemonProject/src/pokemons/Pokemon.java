@@ -18,15 +18,8 @@ public abstract class Pokemon implements InitialPoints, Revivable {
 
     // each pokemon has two attacks
     protected PokemonAttack[] attacks = new PokemonAttack[2];
-    protected boolean isPokemonFighting = false;
 
     // methods
-
-    public boolean changeIsPokemonFightingStatus() {
-        this.isPokemonFighting = !this.isPokemonFighting;
-        return this.isPokemonFighting;
-    }
-
     public boolean isPokemonDead() {
         return this.hp <= 0;
     }
@@ -93,7 +86,4 @@ public abstract class Pokemon implements InitialPoints, Revivable {
         return attacks;
     }
 
-    public boolean isPokemonFighting() {
-        return isPokemonFighting;
-    }
 }

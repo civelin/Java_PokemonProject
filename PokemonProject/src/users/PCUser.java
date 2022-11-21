@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PCUser extends User {
-
+public class PCUser extends User implements IPCUser {
+    // constructor
     public PCUser(String name, List<Pokemon> availablePokemons) {
         this.name = name;
         this.availablePokemons = availablePokemons;
         this.currentPokemons = new ArrayList<>();
     }
-
-
-    //TODO: make PC-user to think logically.
 
     @Override
     public boolean addPokemonToCurrentList(Pokemon pokemon) {
@@ -28,11 +25,9 @@ public class PCUser extends User {
         }
     }
 
-
     @Override
     public boolean removePokemonFromCurrentList(Pokemon pokemon) {
         if (this.currentPokemons.contains(pokemon)) {
-            pokemon.changeIsPokemonFightingStatus();
             this.currentPokemons.remove(pokemon);
             return true;
         }
@@ -40,17 +35,20 @@ public class PCUser extends User {
     }
 
     @Override
-    public PokemonAttack chooseAttack(Pokemon pokemon) {
-        int index = (int) Math.round(Math.random());
-        PokemonAttack attack = pokemon.getAttacks()[index];
+    public PokemonAttack chooseAttack() {
+        int index = (int) Math.round(Math.random()); // return 0 or 1
+        PokemonAttack attack = this.getCurrentPokemonForBattle().getAttacks()[index];
         System.out.println("✔ " + this.name + " has chosen " + attack.getName() + " attack for its move.");
         return attack;
     }
 
     @Override
-    public int userChoiceOptionAfterEachTurn() {
+    public int chooseOptionBeforeEachTurn(int turn) {
+        if (turn == 1) {
+            return 1;
+        }
         Random random = new Random();
-        int randomChoice = random.nextInt(6);
+        int randomChoice = random.nextInt(15);
 
         return randomChoice;
     }
@@ -61,7 +59,7 @@ public class PCUser extends User {
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
 
-        int size = this.availablePokemons.size(); //5
+        int size = this.availablePokemons.size();
         boolean flag = false;
         for (int i = 0; i < 3; i++) {
             while (!flag) {
@@ -82,13 +80,28 @@ public class PCUser extends User {
         int size = this.currentPokemons.size();
         int index = randomPokemonGenerator.nextInt(size);
         Pokemon pokemonForBattle = this.currentPokemons.get(index);
-        pokemonForBattle.changeIsPokemonFightingStatus();
+
+        this.currentPokemonForBattle = pokemonForBattle;
+        this.removePokemonFromCurrentList(pokemonForBattle);
 
         System.out.println("\u2714 " + this.name + " has chosen " + pokemonForBattle.getName() + " for its move!");
-        System.out.println();
         return pokemonForBattle;
     }
 
-//    TODO: public Attack chooseAttackForTheCurrentTurn(){};
+    @Override
+    public Pokemon changeCurrentPokemon() {
+        if(this.currentPokemons.size() != 0){
+            System.out.println(this.name + " is going to change its pokemon for battle");
+            Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
+            Pokemon newCurrentPokemon = choosePokemonForBattleFromCurrentList();
+            if (lastCurrentPokemon != null) {
+                this.addPokemonToCurrentList(lastCurrentPokemon); // return in currentList
+            }
+            return newCurrentPokemon;
+        } else {
+            System.out.println("Cannot change current pokemon");
+            return null;
+        }
 
+    }
 }

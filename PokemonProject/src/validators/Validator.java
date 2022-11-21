@@ -22,13 +22,13 @@ public abstract class Validator {
     public static boolean enterChoice(int upperBound, String choice) {
         try {
             int integerChoice = Integer.parseInt(choice);
-             if(integerChoice >= 1 && integerChoice <= upperBound){
+            if (integerChoice >= 1 && integerChoice <= upperBound) {
                 return true;
             } else {
-                 throw new InputMismatchException();
-             }
-        } catch (Exception e){
-            System.out.println("\u274C Choice must be between 1 and "+upperBound);
+                throw new InputMismatchException();
+            }
+        } catch (Exception e) {
+            System.out.println("\u274C Choice must be between 1 and " + upperBound + " inclusive");
             return false;
         }
     }

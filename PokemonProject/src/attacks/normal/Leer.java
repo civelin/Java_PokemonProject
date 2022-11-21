@@ -2,6 +2,7 @@ package attacks.normal;
 
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
+import users.User;
 
 import java.util.List;
 
@@ -12,14 +13,18 @@ public class Leer extends PokemonAttack {
         this.description = "Leer attack lowers opponent's defence.";
     }
 
-    public double attack(List<Pokemon> userCurrentPokemons, List<Pokemon> enemyCurrentPokemons) {
-        Pokemon enemyPokemon = (Pokemon) enemyCurrentPokemons.stream().filter(Pokemon::isPokemonFighting).toArray()[0];
-
+    @Override
+    public double attack(User user, User enemyUser) {
+        Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
         double lowerEnemyPokemonDefence = 15;
 
-        enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence);
+        if (enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence >= 0) {
+            enemyPokemon.setDefencePoints(enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence);
+        } else {
+            enemyPokemon.setDefencePoints(0);
+        }
 
-        System.out.println(enemyPokemon.getName() + " now has " + enemyPokemon.getDefencePoints() + " defence points.");
+        System.out.println("\u2694 " + enemyPokemon.getName() + " now has ---> " + enemyPokemon.getDefencePoints() + " defence points.");
         return lowerEnemyPokemonDefence;
     }
 

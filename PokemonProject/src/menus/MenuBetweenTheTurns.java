@@ -1,24 +1,17 @@
-//package menus;
-//
-//import pokemons.Pokemon;
-//import users.HumanUser;
-//import users.User;
-//import validators.Validator;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Scanner;
-//
-//public class MenuInbetweenTheBattles {
-//    public static void printVictoriousTextAfterSuccessfulBattle (User pcUser){
-//        System.out.println("Congratulations. You managed to defeat "+pcUser.getName()+" !");
-//    }
-//
-//    public static void printTextAfterFirstBattle(User pcUser){
-//        System.out.println("Now as a reward for your hard-fought victory , you must choose one pokemon from "+pcUser.getName()+"!");
-//        System.out.println("Choose carefully and good luck on your next battle!");
-//    }
-//
+package menus;
+
+import users.User;
+
+public class MenuBetweenTheTurns {
+    public static void printVictoriousTextAfterSuccessfulBattle (User pcUser){
+        System.out.println("Congratulations. You managed to defeat "+pcUser.getName()+" !");
+    }
+
+    public static void printTextAfterFirstBattle(User pcUser){
+        System.out.println("Now as a reward for your hard-fought victory , you must choose one pokemon from "+pcUser.getName()+"!");
+        System.out.println("Choose carefully and good luck on your next battle!");
+    }
+
 //    public static List<Pokemon> humanPokemonChoiceAsReward(List<Pokemon> pcUserPokemons , HumanUser user){
 //        List<Pokemon>humanPokemons = humanUserPokemons;
 //        Scanner sc = new Scanner(System.in);
@@ -42,4 +35,4 @@
 //        }
 //        return Integer.parseInt(choice);
 //    }
-//}
+}
