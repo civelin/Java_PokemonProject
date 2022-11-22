@@ -106,7 +106,7 @@ public class HumanUser extends User implements IHumanUser {
         System.out.println("\uD83D\uDC49 Please select attack:");
         System.out.println("\uD83D\uDC49");
         String choice = scan.next();
-        while (!Validator.enterChoice(2, choice)) {
+        while (!Validator.validateUserInputForChoice(2, choice)) {
             System.out.println("\uD83D\uDC49");
             choice = scan.next();
         }
@@ -116,7 +116,7 @@ public class HumanUser extends User implements IHumanUser {
     @Override
     public int chooseOptionBeforeEachTurn(Scanner scan) {
         String choice = scan.next();
-        while (!Validator.enterChoice(3, choice)) {
+        while (!Validator.validateUserInputForChoice(3, choice)) {
             choice = scan.next();
         }
         return Integer.parseInt(choice);
@@ -132,7 +132,7 @@ public class HumanUser extends User implements IHumanUser {
             index++;
         }
         String choice = sc.next();
-        while (!Validator.enterChoice(pokemons.size(), choice)) {
+        while (!Validator.validateUserInputForChoice(pokemons.size(), choice)) {
             System.out.print("\uD83D\uDC49");
             choice = sc.next();
         }
@@ -157,7 +157,7 @@ public class HumanUser extends User implements IHumanUser {
                 index++;
             }
             String choice = sc.next();
-            while (!Validator.enterChoice(pokemons.size(), choice)) {
+            while (!Validator.validateUserInputForChoice(pokemons.size(), choice)) {
                 System.out.print("\uD83D\uDC49");
                 choice = sc.next();
             }
@@ -200,7 +200,7 @@ public class HumanUser extends User implements IHumanUser {
                 String choice = scan.next();
 
                 // entering choice until it falls within the interval
-                while (!Validator.enterChoice(availablePokemons.size(), choice)) {
+                while (!Validator.validateUserInputForChoice(availablePokemons.size(), choice)) {
                     System.out.print("\uD83D\uDC49");
                     choice = scan.next();
                 }
@@ -220,7 +220,7 @@ public class HumanUser extends User implements IHumanUser {
         System.out.print("\n\uD83D\uDC49 ");
         String index = scan.next();
         // entering choice until it falls within the interval
-        while (!Validator.enterChoice(currentPokemons.size(), index)) {
+        while (!Validator.validateUserInputForChoice(currentPokemons.size(), index)) {
             System.out.print("\uD83D\uDC49");
             index = scan.next();
         }

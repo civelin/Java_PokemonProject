@@ -12,6 +12,7 @@ public class MagneticFlux extends PokemonAttack {
         this.name = "MagneticFlux";
         this.type = "electric";
         this.description = "Magnetic Flux attack decreases opponent's hp";
+        this.attackPower = 1.2 * super.attackPower;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class MagneticFlux extends PokemonAttack {
         double finalAttackPower = (userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.4;
 
         if (finalAttackPower < 0) {
-            finalAttackPower = 1.5 * this.attackPower;
+            finalAttackPower = 0.7 * this.attackPower;
         }
 
         enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);

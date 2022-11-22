@@ -10,7 +10,7 @@ public class FirstImpression extends PokemonAttack {
         this.name = "FirstImpression";
         this.type = "bug";
         this.description = "First Impression attack decreases enemy's hp.";
-        this.attackPower = 1.9 * super.attackPower;
+        this.attackPower = 1.4 * super.attackPower;
     }
 
     @Override

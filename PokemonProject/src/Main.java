@@ -129,7 +129,7 @@ public class Main {
             do {
                    Menu.printMenuAfterBattle();
                    String choice = scan.next();
-                   while (!Validator.enterChoice(3, choice)) {
+                   while (!Validator.validateUserInputForChoice(3, choice)) {
                        choice = scan.next();
                    }
                    int opt = Integer.parseInt(choice);

@@ -26,7 +26,7 @@ public class Spark extends PokemonAttack {
 
         double finalAttackPower = critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3);
         if (finalAttackPower < 0) {
-            finalAttackPower = this.attackPower;
+            finalAttackPower =0.7 * this.attackPower;
         }
         enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
         if (critChance == 0) {

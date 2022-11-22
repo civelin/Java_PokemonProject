@@ -5,6 +5,7 @@ public class Menu {
 
     public static String printLoginMenu() {
         StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("Welcome to our pokemon game!!! In order to play the game , please first create account");
         strBuilder.append("\u2757" + " Username must be between 8 and 15 characters.\n");
         strBuilder.append("\u2757" + " Allowed characters are lowercase, uppercase letters, numbers and _\n");
         strBuilder.append("\u2757" + " Username must start with a letter.");
