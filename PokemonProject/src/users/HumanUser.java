@@ -138,8 +138,9 @@ public class HumanUser extends User implements IHumanUser {
             choice = scan.next();
         }
         if (addPokemonToAvailableList(pokemons.get(Integer.parseInt(choice) - 1))) {
-            pokemons.remove(pokemons.get(Integer.parseInt(choice) - 1));
+
             System.out.println("Congratulation , you have added successfully " + pokemons.get(Integer.parseInt(choice) - 1).getName() + " to your pokemon inventory!");
+            pokemons.remove(pokemons.get(Integer.parseInt(choice) - 1));
             return true;
         } else {
             System.out.println("You already have that pokemon !! Please select another one !");

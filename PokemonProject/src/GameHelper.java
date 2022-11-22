@@ -57,21 +57,5 @@ public class GameHelper {
         return humanUser.getCrystals();
     }
 
-    //remove 1 crystal from humanUser's crystals if it is possible
-
-
-//    public static Pokemon returnPokemonReward(PCUser loser, HumanUser winner){
-//        for (Pokemon pokemon: loser.getAvailablePokemons()) {
-//            if(!winner.getAvailablePokemons().contains(pokemon) && !winner.get){
-//                return pokemon;
-//            }
-//        }
-//        // връща на рандом покемон от
-//        // списъкът с available на опонента
-//        // като трябва да се провери дали има възможност
-//        // да върне такъв, който го има в списъка с available на победителя
-//    }
-//
-
 
 }
