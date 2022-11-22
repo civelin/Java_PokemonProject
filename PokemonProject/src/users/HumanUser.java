@@ -22,6 +22,7 @@ public class HumanUser extends User implements IHumanUser {
 
     //methods from interfaces
 
+
     @Override
     public boolean addPokemonToAvailableList(Pokemon pokemon) {
         if (!availablePokemons.contains(pokemon)) {
@@ -122,6 +123,67 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
+    public boolean choosePokemonAsReward(List<Pokemon> pokemons) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose one of the pokemons as a reward!");
+        int index = 1;
+        for (Pokemon pokemon : pokemons) {
+            System.out.println(index + "." + pokemon.getName());
+            index++;
+        }
+        String choice = sc.next();
+        while (!Validator.enterChoice(pokemons.size(), choice)) {
+            System.out.print("\uD83D\uDC49");
+            choice = sc.next();
+        }
+        if (addPokemonToAvailableList(pokemons.get(Integer.parseInt(choice) - 1))) {
+            System.out.println("Congratulation , you have added successfully " + pokemons.get(Integer.parseInt(choice) - 1).getName() + " to your pokemon inventory!");
+            return true;
+        } else {
+            System.out.println("You already have that pokemon !! Please select another one !");
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean revivePokemon(List<Pokemon> pokemons) {
+        Scanner sc = new Scanner(System.in);
+        if(deadPokemonList.size()>0&&crystals>0){
+            System.out.println("Select which pokemon you'd like to revive!");
+            int index = 1;
+            for(Pokemon pokemon: pokemons){
+                System.out.println(index+"."+pokemon.getName());
+                index++;
+            }
+            String choice = sc.next();
+            while (!Validator.enterChoice(pokemons.size(), choice)) {
+                System.out.print("\uD83D\uDC49");
+                choice = sc.next();
+            }
+            addPokemonToAvailableList(pokemons.get(Integer.parseInt(choice)-1));
+            crystals--;
+           boolean revive= removePokemonFromDeadList(pokemons.get(Integer.parseInt(choice)-1));
+           if(revive){
+               System.out.println("You successfully revived "+pokemons.get(Integer.parseInt(choice)-1).getName());
+               System.out.println("After the revive , you have left with "+crystals+" crystals.");
+           }
+
+            return true;
+        }else {
+            System.out.println("You don't have enough crystals or dead pokemons ! ");
+            System.out.println("Available crystals ---->" + crystals);
+            System.out.println("Dead pokemons ---->");
+            for(Pokemon pokemon: pokemons){
+                System.out.print(pokemon.getName()+" ");
+            }
+            return false;
+        }
+
+    }
+
+
+    @Override
     public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
@@ -172,7 +234,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public Pokemon changeCurrentPokemon() {
-        if(this.currentPokemons.size() != 0){
+        if (this.currentPokemons.size() != 0) {
             Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
             Pokemon newCurrentPokemon = this.choosePokemonForBattleFromCurrentList();
             if (lastCurrentPokemon != null) {
@@ -187,7 +249,15 @@ public class HumanUser extends User implements IHumanUser {
 
     // getters and setters
 
+    public List<Pokemon> getDeadPokemonList() {
+        return deadPokemonList;
+    }
+
     public int getCrystals() {
+        return crystals;
+    }
+
+    public int getCrystalsAsReward() {
         return crystals;
     }
 

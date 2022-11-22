@@ -21,4 +21,12 @@ public class Menu {
 
         return strBuilder.toString();
     }
+
+    public static void printMenuAfterBattle(){
+        System.out.println("Quick break , before you face your next opponent!");
+        System.out.println("Choose an option--->");
+        System.out.println("1. Continue the battle");
+        System.out.println("2. Revive pokemon");
+        System.out.println("3. Exit the game. !!!Alert!!! If you choose this option , your progress will be lost!)");
+    }
 }

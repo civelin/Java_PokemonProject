@@ -62,13 +62,7 @@ public class Battle {
     }
 
     //remove 1 crystal from humanUser's crystals if it is possible
-    public static int removeCrystals(HumanUser humanUser) {
-        if (humanUser.getCrystals() > 0) {
-            humanUser.setCrystals(humanUser.getCrystals() - 1);
-            System.out.println("-> Available crystals: " + humanUser.getCrystals());
-        }
-        return humanUser.getCrystals();
-    }
+
 
 //    public static Pokemon returnPokemonReward(PCUser loser, HumanUser winner){
 //        for (Pokemon pokemon: loser.getAvailablePokemons()) {

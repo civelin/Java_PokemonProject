@@ -63,6 +63,23 @@ public class PokemonFactory {
         return userPokemons;
     }
 
+    public static List<Pokemon> pokemonAsRewards() {
+        List<Pokemon> rewards = new ArrayList<>();
+        rewards.add(new SmallPokemon("Sandshrew", new ArrayList<>(Arrays.asList("normal", "electric"))));
+        rewards.add(new SmallPokemon("Nidoran", new ArrayList<>(Arrays.asList("normal", "grass"))));
+        rewards.add(new SmallPokemon("Oddish", new ArrayList<>(Arrays.asList("grass", "bug"))));
+        rewards.add(new NormalPokemon("Golduck", new ArrayList<>(Arrays.asList("electric", "fire"))));
+        rewards.add(new NormalPokemon("Kadabra", new ArrayList<>(Arrays.asList("bug", "grass"))));
+        rewards.add(new NormalPokemon("Machoke", new ArrayList<>(Arrays.asList("normal"))));
+        rewards.add(new LargePokemon("Tentacruel", new ArrayList<>(Arrays.asList("fire", "bug"))));
+        rewards.add(new LargePokemon("Golem", new ArrayList<>(Arrays.asList("normal", "electric"))));
+        rewards.add(new LargePokemon("Gengar", new ArrayList<>(Arrays.asList("grass", "fire"))));
+        rewards.forEach(p -> fillPokemonAttacks(p));
+        return rewards;
+
+
+    }
+
 //    // available user's normal pokemons (on level2)
 //    public static List<Pokemon> getUserNormalPokemons() {
 //        List<Pokemon> userNormalPokemons = new ArrayList<>();
