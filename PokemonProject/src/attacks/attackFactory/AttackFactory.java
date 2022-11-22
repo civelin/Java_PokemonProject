@@ -30,7 +30,7 @@ public class AttackFactory {
     private AttackFactory() {
     }
 
-    //     fill attacks
+    // fill attacks
     private static HashMap<String, List<PokemonAttack>> fillAllAttacks() {
 
         HashMap<String, List<PokemonAttack>> attacks = new HashMap<>();
@@ -43,7 +43,7 @@ public class AttackFactory {
         return attacks;
     }
 
-    // checks if newAttack.getName() has duplicates
+    // check if newAttack has duplicates in a given list
     private static boolean contains(List<PokemonAttack> attacks, PokemonAttack newAttack) {
         List<PokemonAttack> duplicates = attacks
                 .stream()

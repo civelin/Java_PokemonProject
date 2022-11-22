@@ -1,5 +1,6 @@
 package users;
 
+import Utilities.Validator;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
@@ -23,11 +24,9 @@ public abstract class User implements IUser {
     public String getName() {
         return name;
     }
-
     public Pokemon getCurrentPokemonForBattle() {
         return currentPokemonForBattle;
     }
-
     public void setCurrentPokemonForBattle(Pokemon currentPokemonForBattle) {
         this.currentPokemonForBattle = currentPokemonForBattle;
     }
@@ -42,6 +41,23 @@ public abstract class User implements IUser {
         return stringBuilder.toString();
     }
 
+    @Override
+    public boolean addPokemonToCurrentList(Pokemon pokemon) {
+        if (!Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+            this.currentPokemons.add(pokemon);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
+        if (Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+            this.currentPokemons.remove(pokemon);
+            return true;
+        }
+        return false;
+    }
 
 
 }

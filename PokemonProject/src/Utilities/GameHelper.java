@@ -1,21 +1,21 @@
+package Utilities;
+
 import pokemons.Pokemon;
-import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
-import users.User;
 import users.userFactory.PCUserFactory;
-import validators.Validator;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class Battle {
+public class GameHelper {
+
     // fields
     public final static int numberOfLevels = 3;
-    public static int currentTurn;
+    public static int currentTurn; // used as counter
 
-    // constructor
-    private Battle() {
+    // private constructor
+    private GameHelper() {
     }
 
     // methods
@@ -23,7 +23,8 @@ public class Battle {
         System.out.println("\uD83D\uDC49 Enter username");
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
-        // using regExp
+
+        // using regExp to validate the name
         while (!Validator.validateUserName(userName)) {
             System.out.println("\u274C Invalid username. Username must meet all of the following requirements:");
             System.out.println("    \u2757 username must be between 8 and 15 characters");
@@ -31,14 +32,15 @@ public class Battle {
             System.out.println("    \u2757 username can contain letter, numbers and _");
             return enterUserName(scan);
         }
+
         System.out.println("\u2714 Successfully entered username.");
         System.out.println();
         return userName;
     }
 
-
     public static PCUser initializePCUserAccordingToCurrentLevel(int level) {
         PCUser pcUser = null;
+
         switch (level) {
             case 1:
                 pcUser = PCUserFactory.pcUser1();
@@ -54,34 +56,34 @@ public class Battle {
     }
 
     // add 1 crystal to humanUser's crystals
-    public static int addCrystals(HumanUser humanUser) {
+    public static int addCrystalAfterWin(HumanUser humanUser) {
         humanUser.setCrystals(humanUser.getCrystals() + 1);
         System.out.println("You won one crystal");
         System.out.println("-> Available crystals: " + humanUser.getCrystals());
         return humanUser.getCrystals();
     }
 
-    //remove 1 crystal from humanUser's crystals if it is possible
-    public static int removeCrystals(HumanUser humanUser) {
-        if (humanUser.getCrystals() > 0) {
-            humanUser.setCrystals(humanUser.getCrystals() - 1);
-            System.out.println("-> Available crystals: " + humanUser.getCrystals());
+    public static void doLogicAfterHumanUserPokemonIsDead(HumanUser humanUser) {
+        if (humanUser.getCurrentPokemonForBattle().isPokemonDead()) {
+            humanUser.addPokemonToDeadList(humanUser.getCurrentPokemonForBattle());
+            humanUser.removePokemonFromAvailableList(humanUser.getCurrentPokemonForBattle());
         }
-        return humanUser.getCrystals();
+
+        List<Pokemon> deadPokemons = humanUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
+        deadPokemons.forEach(deadPokemon -> {
+            humanUser.addPokemonToDeadList(deadPokemon);
+            humanUser.removePokemonFromCurrentList(deadPokemon);
+            humanUser.removePokemonFromAvailableList(deadPokemon);
+        });
     }
 
-//    public static Pokemon returnPokemonReward(PCUser loser, HumanUser winner){
-//        for (Pokemon pokemon: loser.getAvailablePokemons()) {
-//            if(!winner.getAvailablePokemons().contains(pokemon) && !winner.get){
-//                return pokemon;
-//            }
-//        }
-//        // връща на рандом покемон от
-//        // списъкът с available на опонента
-//        // като трябва да се провери дали има възможност
-//        // да върне такъв, който го има в списъка с available на победителя
-//    }
-//
-
+    public static void doLogicAfterPCUserPokemonIsDead(PCUser pcUSer) {
+        List<Pokemon> deadPokemons = pcUSer.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
+        deadPokemons.forEach(deadPokemon -> {
+            if (deadPokemon.isPokemonDead()) {
+                pcUSer.removePokemonFromCurrentList(deadPokemon);
+            }
+        });
+    }
 
 }

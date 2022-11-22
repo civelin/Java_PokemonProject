@@ -1,17 +1,17 @@
 package pokemons;
-
 import attacks.*;
+import attacks.Comparable;
 
-import java.io.BufferedReader;
 import java.util.List;
 
-public abstract class Pokemon implements InitialPoints, Revivable {
+public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Pokemon> {
     // fields
     protected String name;
     protected List<String> types;
     final static int defaultHp = 100;
     final static int defaultAttackPoints = 15;
     final static int defaultDefencePoints = 50;
+
     protected double hp;
     protected double attackPoints;
     protected double defencePoints;
@@ -46,6 +46,10 @@ public abstract class Pokemon implements InitialPoints, Revivable {
             System.out.println((i + 1) + ". " + this.attacks[i].getDescription());
         }
 
+    }
+
+    public boolean compare(Pokemon pokemon){
+        return this.getName().equals(pokemon.getName());
     }
 
     // getters & setters

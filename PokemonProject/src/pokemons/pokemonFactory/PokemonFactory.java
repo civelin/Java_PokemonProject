@@ -13,6 +13,9 @@ import java.util.*;
 
 public class PokemonFactory {
 
+    // private constructor
+    private PokemonFactory(){};
+
 
     // available pokemons of pcUser1 (level1)
     public static List<Pokemon> PCUser1Pokemons() {
@@ -63,30 +66,6 @@ public class PokemonFactory {
         return userPokemons;
     }
 
-//    // available user's normal pokemons (on level2)
-//    public static List<Pokemon> getUserNormalPokemons() {
-//        List<Pokemon> userNormalPokemons = new ArrayList<>();
-//        userNormalPokemons.add(new NormalPokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
-//        userNormalPokemons.add(new NormalPokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))));
-//        userNormalPokemons.add(new NormalPokemon("Bellsprout", new ArrayList<>(Arrays.asList("grass", "bug"))));
-//        userNormalPokemons.add(new NormalPokemon("Venonat", new ArrayList<>(Arrays.asList("fire"))));
-//        userNormalPokemons.add(new NormalPokemon("Paras", new ArrayList<>(Arrays.asList("bug"))));
-//        userNormalPokemons.forEach(p -> fillPokemonAttacks(p));
-//        return userNormalPokemons;
-//    }
-//
-//    // available user's large pokemons (on level3)
-//    public static List<Pokemon> getUserLargePokemons() {
-//        List<Pokemon> userLargePokemons = new ArrayList<>();
-//        userLargePokemons.add(new LargePokemon("Meowth", new ArrayList<>(Arrays.asList("normal"))));
-//        userLargePokemons.add(new LargePokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))));
-//        userLargePokemons.add(new LargePokemon("Bellsprout", new ArrayList<>(Arrays.asList("grass", "bug"))));
-//        userLargePokemons.add(new LargePokemon("Venonat", new ArrayList<>(Arrays.asList("fire"))));
-//        userLargePokemons.add(new LargePokemon("Paras", new ArrayList<>(Arrays.asList("bug"))));
-//        userLargePokemons.forEach(pokemon -> fillPokemonAttacks(pokemon));
-//        return userLargePokemons;
-//    }
-
     //TODO: REFACTOR the method
     private static void fillPokemonAttacks(Pokemon pokemon) {
         Random randomAttackGenerator = new Random();
@@ -97,10 +76,11 @@ public class PokemonFactory {
         if (numberOfTypes == 1) {
             // get the type
             String currentType = pokemonTypes.get(0);
+
             // get all attacks of currentType
             List<PokemonAttack> allAttacksOfCurrentTypeInTheFactory = AttackFactory.getAllAttacks().get(currentType);
-            // get the number of all attacks of currentType in the Factory
 
+            // get the number of all attacks of currentType in the Factory
             int numberOfAllAttacksOfCurrentTypeInTheFactory = allAttacksOfCurrentTypeInTheFactory.size();
             for (int i = 0; i < 2; i++) {
                 while (!pokemon.isThereAttackOnConcreteIndexAtPokemonAttacks(i)) {

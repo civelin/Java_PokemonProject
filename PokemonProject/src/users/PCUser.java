@@ -1,5 +1,6 @@
 package users;
 
+import Utilities.Validator;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
@@ -13,25 +14,6 @@ public class PCUser extends User implements IPCUser {
         this.name = name;
         this.availablePokemons = availablePokemons;
         this.currentPokemons = new ArrayList<>();
-    }
-
-    @Override
-    public boolean addPokemonToCurrentList(Pokemon pokemon) {
-        if (!currentPokemons.contains(pokemon)) {
-            this.currentPokemons.add(pokemon);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
-        if (this.currentPokemons.contains(pokemon)) {
-            this.currentPokemons.remove(pokemon);
-            return true;
-        }
-        return false;
     }
 
     @Override

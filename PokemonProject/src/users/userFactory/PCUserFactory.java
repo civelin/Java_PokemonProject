@@ -5,6 +5,9 @@ import users.PCUser;
 
 public class PCUserFactory {
 
+    // private constructor
+    private PCUserFactory(){};
+
     public static PCUser pcUser1() {
         PCUser pcUser1 = new PCUser("Misty", PokemonFactory.PCUser1Pokemons());
         return pcUser1;

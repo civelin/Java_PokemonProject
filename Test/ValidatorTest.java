@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import validators.Validator;
+import Utilities.Validator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

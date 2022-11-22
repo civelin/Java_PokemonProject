@@ -1,5 +1,8 @@
+package Utilities;
+
 public class Menu {
-    // constructor
+
+    // private constructor
     private Menu() {
     }
 

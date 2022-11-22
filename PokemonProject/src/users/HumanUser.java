@@ -2,11 +2,12 @@ package users;
 
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
-import validators.Validator;
+import Utilities.Validator;
 
 import java.util.*;
 
 public class HumanUser extends User implements IHumanUser {
+
     // fields
     private int crystals;
     private List<Pokemon> deadPokemonList;
@@ -21,20 +22,18 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     //methods from interfaces
-
     @Override
-    public boolean addPokemonToAvailableList(Pokemon pokemon) {
-        if (!availablePokemons.contains(pokemon)) {
-            this.availablePokemons.add(pokemon);
+    public boolean addPokemonToAvailableList(Pokemon newPokemon) {
+        if (!Validator.checkIfGivenListContainsPokemon(this.availablePokemons, newPokemon)) {
+            this.availablePokemons.add(newPokemon);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
     public boolean removePokemonFromAvailableList(Pokemon pokemon) {
-        if (this.availablePokemons.contains(pokemon)) {
+        if (Validator.checkIfGivenListContainsPokemon(this.availablePokemons, pokemon)) {
             this.availablePokemons.remove(pokemon);
             return true;
         }
@@ -52,7 +51,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public boolean addPokemonToDeadList(Pokemon pokemon) {
-        if (pokemon.isPokemonDead()) {
+        if (pokemon.isPokemonDead() && !Validator.checkIfGivenListContainsPokemon(this.deadPokemonList, pokemon)) {
             this.deadPokemonList.add(pokemon);
             return true;
         }
@@ -61,7 +60,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public boolean removePokemonFromDeadList(Pokemon pokemon) {
-        if (this.deadPokemonList.contains(pokemon)) {
+        if (Validator.checkIfGivenListContainsPokemon(this.deadPokemonList, pokemon)) {
             this.deadPokemonList.remove(pokemon);
             return true;
         }
@@ -78,35 +77,14 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
-    public boolean addPokemonToCurrentList(Pokemon pokemon) {
-        if (!currentPokemons.contains(pokemon)) {
-            this.currentPokemons.add(pokemon);
-            System.out.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
-            return true;
-        } else {
-            System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removePokemonFromCurrentList(Pokemon pokemon) {
-        if (this.currentPokemons.contains(pokemon)) {
-            this.currentPokemons.remove(pokemon);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public PokemonAttack chooseAttack() {
         Scanner scan = new Scanner(System.in);
         this.currentPokemonForBattle.printAttacks();
         System.out.println("\uD83D\uDC49 Please select attack:");
-        System.out.println("\uD83D\uDC49");
+        System.out.print("\uD83D\uDC49");
         String choice = scan.next();
         while (!Validator.enterChoice(2, choice)) {
-            System.out.println("\uD83D\uDC49");
+            System.out.print("\uD83D\uDC49");
             choice = scan.next();
         }
         return this.currentPokemonForBattle.getAttacks()[Integer.parseInt(choice) - 1];
@@ -114,6 +92,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public int chooseOptionBeforeEachTurn(Scanner scan) {
+
         String choice = scan.next();
         while (!Validator.enterChoice(3, choice)) {
             choice = scan.next();
@@ -144,6 +123,11 @@ public class HumanUser extends User implements IHumanUser {
                 }
                 pokemon = availablePokemons.get(Integer.parseInt(choice) - 1);
                 isAdded = this.addPokemonToCurrentList(pokemon);
+                if (isAdded) {
+                    System.out.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
+                } else {
+                    System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
+                }
             }
             pokemons.add(pokemon);
         }
@@ -172,7 +156,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public Pokemon changeCurrentPokemon() {
-        if(this.currentPokemons.size() != 0){
+        if (this.currentPokemons.size() != 0) {
             Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
             Pokemon newCurrentPokemon = this.choosePokemonForBattleFromCurrentList();
             if (lastCurrentPokemon != null) {

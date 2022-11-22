@@ -1,10 +1,15 @@
-package validators;
+package Utilities;
+
+import pokemons.Pokemon;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Validator {
+public class Validator {
+    // private constructor
+    private Validator(){}
     public static boolean validateUserName(String username) {
         // compile the regex to create pattern
         // using compile() method
@@ -13,8 +18,7 @@ public abstract class Validator {
         // get a matcher object from pattern
         Matcher matcher = pattern.matcher(username);
 
-        // check whether Regex string is
-        // found in actualString or not
+        // check whether Regex string is found a match or not
         boolean matches = matcher.matches();
         return matches;
     }
@@ -30,6 +34,15 @@ public abstract class Validator {
         } catch (Exception e) {
             System.out.println("\u274C Choice must be between 1 and " + upperBound + " inclusive");
             return false;
+        }
+    }
+
+    public static boolean checkIfGivenListContainsPokemon(List<Pokemon> listOfPokemons, Pokemon pokemon){
+        List<Pokemon> duplicates = listOfPokemons.stream().filter(currPokemon -> currPokemon.compare(pokemon)).toList();
+        if(duplicates.size() != 0){
+            return true;
+        } else {
+            return  false;
         }
     }
 }
