@@ -4,19 +4,23 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
 import java.util.List;
+import java.util.Scanner;
 
 public interface IUser {
 
     // methods
-    List<Pokemon> choosePokemonsFromAvailableListToCurrentList();
 
+
+
+    PokemonAttack chooseAttack();
+
+    List<Pokemon> choosePokemonsFromAvailableListToCurrentList();
     Pokemon choosePokemonForBattleFromCurrentList();
+
 
     boolean removePokemonFromCurrentList(Pokemon pokemon);
     boolean addPokemonToCurrentList(Pokemon pokemon);
     String printCurrentPokemons();
-
-    PokemonAttack chooseAttack();
 
     Pokemon changeCurrentPokemon();
 }

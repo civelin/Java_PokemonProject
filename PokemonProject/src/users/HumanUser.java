@@ -10,6 +10,7 @@ public class HumanUser extends User implements IHumanUser {
     // fields
     private int crystals;
     private List<Pokemon> deadPokemonList;
+    private Scanner scan = new Scanner(System.in);
 
     // constructor
     public HumanUser(String name, List<Pokemon> availablePokemons) {
@@ -101,7 +102,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public PokemonAttack chooseAttack() {
-        Scanner scan = new Scanner(System.in);
+
         this.currentPokemonForBattle.printAttacks();
         System.out.println("\uD83D\uDC49 Please select attack:");
         System.out.println("\uD83D\uDC49");
@@ -114,7 +115,7 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
-    public int chooseOptionBeforeEachTurn(Scanner scan) {
+    public int chooseOptionBeforeEachTurn() {
         String choice = scan.next();
         while (!Validator.validateUserInputForChoice(3, choice)) {
             choice = scan.next();
@@ -124,19 +125,20 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public boolean choosePokemonAsReward(List<Pokemon> pokemons) {
-        Scanner sc = new Scanner(System.in);
+
         System.out.println("Choose one of the pokemons as a reward!");
         int index = 1;
         for (Pokemon pokemon : pokemons) {
             System.out.println(index + "." + pokemon.getName());
             index++;
         }
-        String choice = sc.next();
+        String choice = scan.next();
         while (!Validator.validateUserInputForChoice(pokemons.size(), choice)) {
             System.out.print("\uD83D\uDC49");
-            choice = sc.next();
+            choice = scan.next();
         }
         if (addPokemonToAvailableList(pokemons.get(Integer.parseInt(choice) - 1))) {
+            pokemons.remove(pokemons.get(Integer.parseInt(choice) - 1));
             System.out.println("Congratulation , you have added successfully " + pokemons.get(Integer.parseInt(choice) - 1).getName() + " to your pokemon inventory!");
             return true;
         } else {
@@ -148,7 +150,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public Pokemon revivePokemon() {
-        Scanner sc = new Scanner(System.in);
+
         if (deadPokemonList.size() > 0 && crystals > 0) {
             System.out.println("Select which pokemon you'd like to revive!");
             System.out.println("One revive costs one crystal!");
@@ -157,10 +159,10 @@ public class HumanUser extends User implements IHumanUser {
                 System.out.println(index + "." + pokemon.getName());
                 index++;
             }
-            String choice = sc.next();
+            String choice = scan.next();
             while (!Validator.validateUserInputForChoice(this.deadPokemonList.size(), choice)) {
                 System.out.print("\uD83D\uDC49");
-                choice = sc.next();
+                choice = scan.next();
             }
             Pokemon chosenDeadPokemon = this.deadPokemonList.get(Integer.parseInt(choice) - 1);
             chosenDeadPokemon.resetInitialPointsOfPokemon();
@@ -191,7 +193,7 @@ public class HumanUser extends User implements IHumanUser {
     public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
-        Scanner scan = new Scanner(System.in);
+
         System.out.println("\u2757 Please select the pokemons with which you want to play. You have to choose 3 pokemons.");
         printAvailablePokemons();
 
@@ -218,7 +220,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public Pokemon choosePokemonForBattleFromCurrentList() {
-        Scanner scan = new Scanner(System.in);
+
         System.out.println("❗ Please choose your pokemon for this turn:");
         System.out.println(this.printCurrentPokemons());
         System.out.print("\n\uD83D\uDC49 ");
@@ -252,16 +254,7 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     // getters and setters
-
-    public List<Pokemon> getDeadPokemonList() {
-        return deadPokemonList;
-    }
-
     public int getCrystals() {
-        return crystals;
-    }
-
-    public int getCrystalsAsReward() {
         return crystals;
     }
 

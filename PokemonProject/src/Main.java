@@ -14,15 +14,15 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         System.out.println(Menu.printLoginMenu());
-        String username = Battle.enterUserName(scan);
+        String username = GameHelper.enterUserName(scan);
         HumanUser humanUser = new HumanUser(username, PokemonFactory.getUserPokemons());
 
-        for (int level = 1; level <= Battle.numberOfLevels; level++) {
-            Battle.currentTurn = 1;
+        for (int level = 1; level <= GameHelper.numberOfLevels; level++) {
+            GameHelper.currentTurn = 1;
 
 
             //initialize opponent according to current level
-            PCUser pcUser = Battle.initializePCUserAccordingToCurrentLevel(level);
+            PCUser pcUser = GameHelper.initializePCUserAccordingToCurrentLevel(level);
 
             // pcUser is choosing pokemons for the battle
             pcUser.choosePokemonsFromAvailableListToCurrentList();
@@ -46,7 +46,7 @@ public class Main {
             // battle starts
             while (true) {
                 System.out.println("It's " + pcUser.getName() + " turn!");
-                int pcUserChoice = pcUser.chooseOptionBeforeEachTurn(Battle.currentTurn);
+                int pcUserChoice = pcUser.chooseOptionBeforeEachTurn(GameHelper.currentTurn);
 
                 // if pcUser's choice < 4 it will attack
                 if (pcUserChoice < 13) {
@@ -81,7 +81,7 @@ public class Main {
 
                 System.out.println(Menu.printTurnMenu());
 
-                int choice = humanUser.chooseOptionBeforeEachTurn(scan);
+                int choice = humanUser.chooseOptionBeforeEachTurn();
                 if (choice == 1) {
                     PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack();
                     humanAttackForCurrentTurn.attack(humanUser, pcUser);
@@ -105,7 +105,7 @@ public class Main {
                     System.out.println(humanUser.getName() + " has forfeited!");
                     return;
                 }
-                Battle.currentTurn++;
+                GameHelper.currentTurn++;
             }
             humanUser.getCurrentPokemons().clear();
             pcUser.getCurrentPokemons().clear();
@@ -120,7 +120,7 @@ public class Main {
                     //list of pokemons , from which the user will choose one as a reward of successful battle.
                     List<Pokemon> pokemonsAsReward = PokemonFactory.pokemonAsRewards();
                     humanUser.choosePokemonAsReward(pokemonsAsReward);
-                    Battle.addCrystals(humanUser);
+                    GameHelper.addCrystals(humanUser);
                 }
             } else {
                 if (humanUser.getAvailablePokemons().size() < 2 && humanUser.getCrystals() < 2 || humanUser.getAvailablePokemons().size() <= 2 && humanUser.getCrystals() == 0) {
@@ -142,7 +142,7 @@ public class Main {
 
 
             //menu between the battles
-            while(true){
+            while (true) {
                 Menu.printMenuAfterBattle();
                 String choice = scan.next();
                 while (!Validator.validateUserInputForChoice(3, choice)) {

@@ -1,21 +1,17 @@
-import pokemons.Pokemon;
-import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
-import users.User;
 import users.userFactory.PCUserFactory;
 import validators.Validator;
 
-import java.util.List;
 import java.util.Scanner;
 
-public class Battle {
+public class GameHelper {
     // fields
     public final static int numberOfLevels = 3;
     public static int currentTurn;
 
     // constructor
-    private Battle() {
+    private GameHelper() {
     }
 
     // methods
@@ -24,7 +20,7 @@ public class Battle {
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
         // using regExp
-        while (!Validator.validateUserName(userName)) {
+        if (!Validator.validateUserName(userName)) {
             System.out.println("\u274C Invalid username. Username must meet all of the following requirements:");
             System.out.println("    \u2757 username must be between 8 and 15 characters");
             System.out.println("    \u2757 username must start with letter");
