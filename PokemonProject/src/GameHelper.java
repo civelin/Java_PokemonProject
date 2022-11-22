@@ -50,7 +50,7 @@ public class GameHelper {
     }
 
     // add 1 crystal to humanUser's crystals
-    public static int addCrystals(HumanUser humanUser) {
+    public static int addCrystalAfterWin(HumanUser humanUser) {
         humanUser.setCrystals(humanUser.getCrystals() + 1);
         System.out.println("You won one crystal");
         System.out.println("-> Available crystals: " + humanUser.getCrystals());

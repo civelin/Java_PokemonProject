@@ -120,7 +120,7 @@ public class Main {
                     //list of pokemons , from which the user will choose one as a reward of successful battle.
                     List<Pokemon> pokemonsAsReward = PokemonFactory.pokemonAsRewards();
                     humanUser.choosePokemonAsReward(pokemonsAsReward);
-                    GameHelper.addCrystals(humanUser);
+                    GameHelper.addCrystalAfterWin(humanUser);
                 }
             } else {
                 if (humanUser.getAvailablePokemons().size() < 2 && humanUser.getCrystals() < 2 || humanUser.getAvailablePokemons().size() <= 2 && humanUser.getCrystals() == 0) {
