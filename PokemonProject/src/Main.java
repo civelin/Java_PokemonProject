@@ -19,8 +19,8 @@ public class Main {
 
         for (int level = 1; level <= Battle.numberOfLevels; level++) {
             Battle.currentTurn = 1;
-            
-            
+
+
             //initialize opponent according to current level
             PCUser pcUser = Battle.initializePCUserAccordingToCurrentLevel(level);
 
@@ -41,7 +41,7 @@ public class Main {
             // humanUser choose one pokemon fot the battle
             humanUser.choosePokemonForBattleFromCurrentList();
             System.out.println();
-            
+
             boolean ifHumanIsWinner = false;
             // battle starts
             while (true) {
@@ -107,48 +107,63 @@ public class Main {
                 }
                 Battle.currentTurn++;
             }
-            humanUser.getCurrentPokemons().removeAll(humanUser.getCurrentPokemons());
-            //final text after the last opponent is defeated
-            if(ifHumanIsWinner&&level==3) {
-                System.out.println("Congratulations, you beat all the opponents !!! You won nothing, in case you lost VALUABLE time by playing the game. Bye bye");
+            humanUser.getCurrentPokemons().clear();
+            pcUser.getCurrentPokemons().clear();
+
+            //if the user is winner , we have to chose pokemons as a reward, but if the user lost , the program checks if it meets the requirements to continue the game
+            if (ifHumanIsWinner) {
+                if (level == 3) {
+                    //final text after the last opponent is defeated
+                    System.out.println("Congratulations, you beat all the opponents !!! You won nothing, in case you lost VALUABLE time by playing the game. Bye bye");
+                    return;
+                } else {
+                    //list of pokemons , from which the user will choose one as a reward of successful battle.
+                    List<Pokemon> pokemonsAsReward = PokemonFactory.pokemonAsRewards();
+                    humanUser.choosePokemonAsReward(pokemonsAsReward);
+                    Battle.addCrystals(humanUser);
+                }
+            } else {
+                if (humanUser.getAvailablePokemons().size() < 2 && humanUser.getCrystals() < 2 || humanUser.getAvailablePokemons().size() <= 2 && humanUser.getCrystals() == 0) {
+                    System.out.println("You have lost the game! Better luck next time!");
+                    return;
+                }
+                if (level == 2) {
+                    level = 1;
+                } else if (level == 3) {
+                    level = 2;
+                }
+            }
+            for (Pokemon pokemon : humanUser.getAvailablePokemons()) {
+                pokemon.resetInitialPointsOfPokemon();
+            }
+            for (Pokemon pokemon : pcUser.getAvailablePokemons()) {
+                pokemon.resetInitialPointsOfPokemon();
             }
 
-            //list of pokemons , from which the user will choose one as a reward of successful battle.
-            List<Pokemon> pokemonsAsReward = PokemonFactory.pokemonAsRewards();
-            //if the user is winner , we have to chose pokemons as a reward, but if the user lost , the program checks if it meets the requirements to continue the game
-            if(ifHumanIsWinner){
-                humanUser.choosePokemonAsReward(pokemonsAsReward);
-                Battle.addCrystals(humanUser);
-            }
-            if (humanUser.getAvailablePokemons().size()<2&&humanUser.getCrystals()<2) {
-                System.out.println("You have lost the game! Better luck next time!");
-                return;
-            }
 
             //menu between the battles
-            do {
-                   Menu.printMenuAfterBattle();
-                   String choice = scan.next();
-                   while (!Validator.validateUserInputForChoice(3, choice)) {
-                       choice = scan.next();
-                   }
-                   int opt = Integer.parseInt(choice);
+            while(true){
+                Menu.printMenuAfterBattle();
+                String choice = scan.next();
+                while (!Validator.validateUserInputForChoice(3, choice)) {
+                    choice = scan.next();
+                }
+                int opt = Integer.parseInt(choice);
 
-                   if(opt==1){
-                       if(humanUser.getAvailablePokemons().size()<3){
-                           System.out.println("You must have 3 alive pokemons before jumping into the next battle! Please revive any pokemon!");
-                       }
-                       break;
-                   } else if (opt==2) {
-                       humanUser.revivePokemon(humanUser.getDeadPokemonList()); //revive pokemon
-                   } else if (opt==3) {
-                       System.exit(0);
-                   }
-               } while (true);
+                if (opt == 1) {
+                    if (humanUser.getAvailablePokemons().size() < 3) {
+                        System.out.println("You must have 3 alive pokemons before jumping into the next battle! Please revive any pokemon!");
+                        continue;
+                    }
+                    break;
+                } else if (opt == 2) {
+                    humanUser.revivePokemon(); //revive pokemon
+                } else if (opt == 3) {
+                    return;
+                }
+            }
 
 
-            // награди
-            // съживяване
         }
 
     }

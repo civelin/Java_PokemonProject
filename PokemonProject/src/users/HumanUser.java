@@ -147,37 +147,41 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
-    public boolean revivePokemon(List<Pokemon> pokemons) {
+    public Pokemon revivePokemon() {
         Scanner sc = new Scanner(System.in);
-        if(deadPokemonList.size()>0&&crystals>0){
+        if (deadPokemonList.size() > 0 && crystals > 0) {
             System.out.println("Select which pokemon you'd like to revive!");
+            System.out.println("One revive costs one crystal!");
             int index = 1;
-            for(Pokemon pokemon: pokemons){
-                System.out.println(index+"."+pokemon.getName());
+            for (Pokemon pokemon : this.deadPokemonList) {
+                System.out.println(index + "." + pokemon.getName());
                 index++;
             }
             String choice = sc.next();
-            while (!Validator.validateUserInputForChoice(pokemons.size(), choice)) {
+            while (!Validator.validateUserInputForChoice(this.deadPokemonList.size(), choice)) {
                 System.out.print("\uD83D\uDC49");
                 choice = sc.next();
             }
-            addPokemonToAvailableList(pokemons.get(Integer.parseInt(choice)-1));
-            crystals--;
-           boolean revive= removePokemonFromDeadList(pokemons.get(Integer.parseInt(choice)-1));
-           if(revive){
-               System.out.println("You successfully revived "+pokemons.get(Integer.parseInt(choice)-1).getName());
-               System.out.println("After the revive , you have left with "+crystals+" crystals.");
-           }
+            Pokemon chosenDeadPokemon = this.deadPokemonList.get(Integer.parseInt(choice) - 1);
+            chosenDeadPokemon.resetInitialPointsOfPokemon();
+            addPokemonToAvailableList(chosenDeadPokemon);
+            removePokemonFromDeadList(chosenDeadPokemon);
 
-            return true;
-        }else {
+            System.out.println("You successfully revived " + chosenDeadPokemon.getName());
+            crystals--;
+            System.out.println("After the revive , you have left with " + crystals + " crystals.");
+
+
+            return chosenDeadPokemon;
+        } else {
             System.out.println("You don't have enough crystals or dead pokemons ! ");
             System.out.println("Available crystals ---->" + crystals);
-            System.out.println("Dead pokemons ---->");
-            for(Pokemon pokemon: pokemons){
-                System.out.print(pokemon.getName()+" ");
+            System.out.print("Dead pokemons ---->");
+            for (Pokemon pokemon : this.deadPokemonList) {
+                System.out.print(pokemon.getName() + " ");
             }
-            return false;
+            System.out.println();
+            return null;
         }
 
     }

@@ -17,6 +17,6 @@ public interface IHumanUser {
 
     boolean choosePokemonAsReward(List<Pokemon> pokemons);
 
-    boolean revivePokemon(List<Pokemon> pokemons);
+    Pokemon revivePokemon();
 
 }

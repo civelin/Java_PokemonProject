@@ -2,7 +2,6 @@ package pokemons;
 
 import attacks.*;
 
-import java.io.BufferedReader;
 import java.util.List;
 
 public abstract class Pokemon implements InitialPoints, Revivable {
@@ -24,7 +23,7 @@ public abstract class Pokemon implements InitialPoints, Revivable {
         return this.hp <= 0;
     }
 
-    public void revivePokemon() {
+    public void resetInitialPointsOfPokemon() {
         this.hp = this.returnInitialHP();
         this.attackPoints = this.returnInitialAttackPoints();
         this.defencePoints = this.returnInitialDefencePoints();
