@@ -24,7 +24,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
         return this.hp <= 0;
     }
 
-    public void revivePokemon() {
+    public void resetInitialPointsOfPokemon() {
         this.hp = this.returnInitialHP();
         this.attackPoints = this.returnInitialAttackPoints();
         this.defencePoints = this.returnInitialDefencePoints();

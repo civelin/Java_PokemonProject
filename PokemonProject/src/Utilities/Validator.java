@@ -23,7 +23,7 @@ public class Validator {
         return matches;
     }
 
-    public static boolean enterChoice(int upperBound, String choice) {
+    public static boolean validateUserInputForChoice(int upperBound, String choice) {
         try {
             int integerChoice = Integer.parseInt(choice);
             if (integerChoice >= 1 && integerChoice <= upperBound) {

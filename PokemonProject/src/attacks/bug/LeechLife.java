@@ -20,7 +20,7 @@ public class LeechLife extends PokemonAttack {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.6;
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.4;
         double finalInflictedDmg = 0.8 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
 
         if (finalInflictedDmg <= 0) {
