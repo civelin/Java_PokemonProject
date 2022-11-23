@@ -1,10 +1,12 @@
 package pokemons;
+
 import attacks.*;
-import attacks.Comparable;
+import Utilities.Comparable;
 
 import java.util.List;
 
 public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Pokemon> {
+
     // fields
     protected String name;
     protected List<String> types;
@@ -12,7 +14,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     final static int defaultAttackPoints = 15;
     final static int defaultDefencePoints = 50;
 
-    protected double hp;
+    protected int hp;
     protected double attackPoints;
     protected double defencePoints;
 
@@ -37,7 +39,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     }
 
     public boolean isThereAttackOnConcreteIndexAtPokemonAttacks(int index) {
-        return attacks[index] != null ? true : false;
+        return attacks[index] != null;
     }
 
     public void printAttacks() {
@@ -48,7 +50,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
 
     }
 
-    public boolean compare(Pokemon pokemon){
+    public boolean compare(Pokemon pokemon) {
         return this.getName().equals(pokemon.getName());
     }
 
@@ -63,7 +65,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     }
 
     public void setHp(double hp) {
-        this.hp = hp;
+        this.hp = (int) hp;
     }
 
     public double getAttackPoints() {
@@ -72,6 +74,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
 
     public void setAttackPoints(double attackPoints) {
         this.attackPoints = attackPoints;
+
     }
 
     public double getDefencePoints() {
@@ -79,7 +82,9 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     }
 
     public void setDefencePoints(double defencePoints) {
+
         this.defencePoints = defencePoints;
+
     }
 
     public List<String> getTypes() {

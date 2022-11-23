@@ -1,5 +1,6 @@
 package attacks;
 
+import Utilities.Comparable;
 import users.User;
 
 public abstract class PokemonAttack implements Description, Comparable<PokemonAttack> {
@@ -8,12 +9,12 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     protected String name;
     protected String type;
     protected String description;
-    protected double attackPower = 10;
+    protected double attackPower = 15;
 
     // methods
     @Override
     public String getDescription() {
-        return "    -> " + this.description;
+        return "    --> " + this.description;
     }
 
     @Override
@@ -33,6 +34,5 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     public String getType() {
         return type;
     }
-
 
 }

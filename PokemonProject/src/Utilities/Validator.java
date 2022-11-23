@@ -4,7 +4,6 @@ import pokemons.Pokemon;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,9 +18,8 @@ public class Validator {
         // get a matcher object from pattern
         Matcher matcher = pattern.matcher(username);
 
-        // check whether Regex string is found a match or not
-        boolean matches = matcher.matches();
-        return matches;
+        // check whether Regex string is found a match or not and return it
+        return matcher.matches();
     }
 
     public static boolean validateUserInputForChoice(int upperBound, String choice) {
@@ -40,11 +38,7 @@ public class Validator {
 
     public static boolean checkIfGivenListContainsPokemon(List<Pokemon> listOfPokemons, Pokemon pokemon){
         List<Pokemon> duplicates = listOfPokemons.stream().filter(currPokemon -> currPokemon.compare(pokemon)).toList();
-        if(duplicates.size() != 0){
-            return true;
-        } else {
-            return  false;
-        }
+        return duplicates.size() != 0;
     }
 
 }

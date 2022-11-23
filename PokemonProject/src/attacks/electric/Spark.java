@@ -4,7 +4,6 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import users.User;
 
-import java.util.List;
 import java.util.Random;
 
 public class Spark extends PokemonAttack {
@@ -22,19 +21,23 @@ public class Spark extends PokemonAttack {
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         Random randomChance = new Random();
-        int critChance = randomChance.nextInt(2); //return 0 or 1
+        int critChance = randomChance.nextInt(2); //returns 0 or 1
 
         double finalAttackPower = critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3);
+
         if (finalAttackPower < 0) {
-            finalAttackPower =0.7 * this.attackPower;
+            finalAttackPower = 0.7 * this.attackPower;
         }
+
         enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+
         if (critChance == 0) {
             System.out.println(userPokemon.getName() + " missed the target!");
         } else {
             System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
             System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
         }
+
         return critChance;
     }
 }

@@ -1,5 +1,6 @@
 package users;
 
+import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import Utilities.Validator;
@@ -11,7 +12,7 @@ public class HumanUser extends User implements IHumanUser {
     // fields
     private int crystals;
     private List<Pokemon> deadPokemonList;
-    private Scanner scan = new Scanner(System.in);
+    private static final Scanner scan = new Scanner(System.in);
 
     // constructor
     public HumanUser(String name, List<Pokemon> availablePokemons) {
@@ -42,14 +43,7 @@ public class HumanUser extends User implements IHumanUser {
         return false;
     }
 
-    @Override
-    public String printAvailablePokemons() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < availablePokemons.size(); i++) {
-            stringBuilder.append(" " + (i + 1) + ". " + availablePokemons.get(i).getName() + "\n");
-        }
-        return stringBuilder.toString();
-    }
+
 
     @Override
     public boolean addPokemonToDeadList(Pokemon pokemon) {
@@ -69,14 +63,6 @@ public class HumanUser extends User implements IHumanUser {
         return false;
     }
 
-    @Override
-    public String printDeadPokemons() {
-        StringBuilder strBuilder = new StringBuilder();
-        for (int i = 0; i < this.deadPokemonList.size(); i++) {
-            strBuilder.append((i + 1) + "." + deadPokemonList.get(i).getName());
-        }
-        return strBuilder.toString();
-    }
 
     @Override
     public PokemonAttack chooseAttack() {
@@ -91,8 +77,7 @@ public class HumanUser extends User implements IHumanUser {
     @Override
     public int chooseOptionBeforeEachTurn() {
 
-        int choice = enterHumanUserChoice(3, scan);
-        return choice;
+        return enterHumanUserChoice(3, scan);
     }
 
     @Override
@@ -125,11 +110,7 @@ public class HumanUser extends User implements IHumanUser {
         if (deadPokemonList.size() > 0 && crystals > 0) {
             System.out.println("Select which pokemon you'd like to revive!");
             System.out.println("One revive costs one crystal!");
-            int index = 1;
-            for (Pokemon pokemon : this.deadPokemonList) {
-                System.out.println(index + "." + pokemon.getName());
-                index++;
-            }
+            GameHelper.printListOfPokemons(this.deadPokemonList);
             int choice = enterHumanUserChoice(deadPokemonList.size(), scan);
             Pokemon chosenDeadPokemon = this.deadPokemonList.get(choice - 1);
             chosenDeadPokemon.resetInitialPointsOfPokemon();
@@ -162,7 +143,7 @@ public class HumanUser extends User implements IHumanUser {
         Pokemon pokemon = null;
 
         System.out.println("\u2757 Please select the pokemons with which you want to play. You have to choose 3 pokemons.");
-        printAvailablePokemons();
+        GameHelper.printListOfPokemons(this.availablePokemons);
 
         for (int i = 1; i <= 3; i++) {
             boolean isAdded = false;
@@ -188,7 +169,7 @@ public class HumanUser extends User implements IHumanUser {
     public Pokemon choosePokemonForBattleFromCurrentList() {
 
         System.out.println("❗ Please choose your pokemon for this turn:");
-        System.out.println(this.printCurrentPokemons());
+        System.out.println(GameHelper.printListOfPokemons(this.currentPokemons));
         System.out.print("\n\uD83D\uDC49 ");
         int choice = enterHumanUserChoice(currentPokemons.size(), scan);
 

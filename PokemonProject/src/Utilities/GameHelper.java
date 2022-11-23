@@ -1,4 +1,5 @@
 package Utilities;
+
 import pokemons.Pokemon;
 import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
@@ -9,14 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameHelper {
-    private static Scanner scan = new Scanner(System.in);
+    private static final Scanner scan = new Scanner(System.in);
 
     // private constructor
     private GameHelper() {
     }
 
     // methods
-    public static String enterUserName() {
+    private static String enterUserName() {
         System.out.println("\uD83D\uDC49 Enter username");
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
@@ -33,6 +34,12 @@ public class GameHelper {
         System.out.println("\u2714 Successfully entered username.");
         System.out.println();
         return userName;
+    }
+
+    public static HumanUser initializeHumanUser() {
+        System.out.println(Menu.printLoginMenu());
+        String username = GameHelper.enterUserName();
+        return new HumanUser(username, PokemonFactory.getUserPokemons());
     }
 
     public static PCUser initializePCUserAccordingToCurrentLevel(int level) {
@@ -55,41 +62,32 @@ public class GameHelper {
     // add 1 crystal to humanUser's crystals
     public static int addCrystalAfterWin(HumanUser humanUser) {
         humanUser.setCrystals(humanUser.getCrystals() + 1);
-        System.out.println("You won one crystal");
-        System.out.println("-> Available crystals: " + humanUser.getCrystals());
+        System.out.println("\uD83D\uDC8E You won one crystal");
+        System.out.println("\uD83D\uDC8E ---> Available crystals: " + humanUser.getCrystals());
         return humanUser.getCrystals();
     }
-    public static HumanUser initializeHumanUser() {
-        System.out.println(Menu.printLoginMenu());
-        String username = GameHelper.enterUserName();
-        return new HumanUser(username, PokemonFactory.getUserPokemons());
-    }
 
-    public static void doLogicAfterHumanUserPokemonIsDead(HumanUser humanUser) {
-        if (humanUser.getCurrentPokemonForBattle().isPokemonDead()){
-            humanUser.addPokemonToDeadList(humanUser.getCurrentPokemonForBattle());
-            humanUser.removePokemonFromAvailableList(humanUser.getCurrentPokemonForBattle());
-        }
-
-        List<Pokemon> deadPokemons = humanUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
-        deadPokemons.forEach(deadPokemon -> {
-            humanUser.addPokemonToDeadList(deadPokemon);
-            humanUser.removePokemonFromCurrentList(deadPokemon);
+    public static void doLogicAfterHumanUserPokemonInCurrentListIsDead(HumanUser humanUser, Pokemon deadPokemon) {
+        if (deadPokemon.isPokemonDead()) {
+            if(humanUser.removePokemonFromCurrentList(deadPokemon)){
+                humanUser.addPokemonToDeadList(deadPokemon);
+            }
             humanUser.removePokemonFromAvailableList(deadPokemon);
-        });
-    }
-
-    public static void doLogicAfterPCUserPokemonInCurrentListIsDead(PCUser pcUSer) {
-        List<Pokemon> deadPokemons = pcUSer.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
-        deadPokemons.forEach(pcUSer::removePokemonFromCurrentList);
-    }
-
-    public static boolean removePokemonFromRewards(List<Pokemon> rewards, Pokemon pokemon){
-        if(Validator.checkIfGivenListContainsPokemon(rewards, pokemon)){
-            rewards.remove(pokemon);
-            return true;
         }
-        return false;
+    }
+
+    public static void doLogicAfterPCUserPokemonInCurrentListIsDead(PCUser pcUser, Pokemon deadPokemon) {
+        if (deadPokemon.isPokemonDead()) {
+            pcUser.removePokemonFromCurrentList(deadPokemon);
+        }
+    }
+
+    public static String printListOfPokemons(List<Pokemon> pokemons){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < pokemons.size(); i++) {
+            stringBuilder.append(" ").append(i + 1).append(". ").append(pokemons.get(i).getName()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
 }

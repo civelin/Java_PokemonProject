@@ -4,8 +4,6 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import users.User;
 
-import java.util.List;
-
 public class MagneticFlux extends PokemonAttack {
 
     public MagneticFlux() {
@@ -28,8 +26,10 @@ public class MagneticFlux extends PokemonAttack {
         }
 
         enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp is ---> " + enemyPokemon.getHp());
+
         return finalAttackPower;
     }
 }

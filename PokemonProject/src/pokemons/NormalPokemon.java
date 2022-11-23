@@ -1,7 +1,5 @@
 package pokemons;
 
-import attacks.PokemonAttack;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,18 +23,19 @@ public class NormalPokemon extends Pokemon {
         this.defencePoints = this.returnInitialDefencePoints();
     }
 
+    // methods
     @Override
-    public double returnInitialHP() {
+    public int returnInitialHP() {
         return Pokemon.defaultHp;
     }
 
     @Override
-    public double returnInitialAttackPoints() {
+    public int returnInitialAttackPoints() {
         return Pokemon.defaultAttackPoints;
     }
 
     @Override
-    public double returnInitialDefencePoints() {
+    public int returnInitialDefencePoints() {
         return Pokemon.defaultDefencePoints;
     }
 
