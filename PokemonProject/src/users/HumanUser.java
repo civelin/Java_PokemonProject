@@ -84,21 +84,15 @@ public class HumanUser extends User implements IHumanUser {
         this.currentPokemonForBattle.printAttacks();
         System.out.println("\uD83D\uDC49 Please select attack:");
         System.out.print("\uD83D\uDC49");
-        String choice = scan.next();
-        while (!Validator.validateUserInputForChoice(2, choice)) {
-            System.out.println("\uD83D\uDC49");
-            choice = scan.next();
-        }
-        return this.currentPokemonForBattle.getAttacks()[Integer.parseInt(choice) - 1];
+        int choice = enterHumanUserChoice(2, scan);
+        return this.currentPokemonForBattle.getAttacks()[choice - 1];
     }
 
     @Override
     public int chooseOptionBeforeEachTurn() {
-        String choice = scan.next();
-        while (!Validator.validateUserInputForChoice(3, choice)) {
-            choice = scan.next();
-        }
-        return Integer.parseInt(choice);
+
+        int choice = enterHumanUserChoice(3, scan);
+        return choice;
     }
 
     @Override
@@ -110,16 +104,12 @@ public class HumanUser extends User implements IHumanUser {
             index++;
         }
 
-        String choice = scan.next();
-        while (!Validator.validateUserInputForChoice(pokemons.size(), choice)) {
-            System.out.print("\uD83D\uDC49");
-            choice = scan.next();
-        }
+        int choice = enterHumanUserChoice(pokemons.size(), scan);
 
-        Pokemon rewardPokemon = pokemons.get(Integer.parseInt(choice) - 1);
+        Pokemon rewardPokemon = pokemons.get(choice - 1);
 
-        if (addPokemonToAvailableList(rewardPokemon)){
-            System.out.println("Congratulation , you have added successfully " + pokemons.get(Integer.parseInt(choice) - 1).getName() + " to your pokemon inventory!");
+        if (addPokemonToAvailableList(rewardPokemon)) {
+            System.out.println("Congratulation , you have added successfully " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!");
             pokemons.remove(rewardPokemon);
             return true;
         } else {
@@ -140,12 +130,8 @@ public class HumanUser extends User implements IHumanUser {
                 System.out.println(index + "." + pokemon.getName());
                 index++;
             }
-            String choice = scan.next();
-            while (!Validator.validateUserInputForChoice(this.deadPokemonList.size(), choice)) {
-                System.out.print("\uD83D\uDC49");
-                choice = scan.next();
-            }
-            Pokemon chosenDeadPokemon = this.deadPokemonList.get(Integer.parseInt(choice) - 1);
+            int choice = enterHumanUserChoice(deadPokemonList.size(), scan);
+            Pokemon chosenDeadPokemon = this.deadPokemonList.get(choice - 1);
             chosenDeadPokemon.resetInitialPointsOfPokemon();
             addPokemonToAvailableList(chosenDeadPokemon);
             removePokemonFromDeadList(chosenDeadPokemon);
@@ -184,14 +170,8 @@ public class HumanUser extends User implements IHumanUser {
 
             while (!isAdded) {
                 System.out.print("\uD83D\uDC49");
-                String choice = scan.next();
-
-                // entering choice until it falls within the interval
-                while (!Validator.validateUserInputForChoice(availablePokemons.size(), choice)) {
-                    System.out.print("\uD83D\uDC49");
-                    choice = scan.next();
-                }
-                pokemon = availablePokemons.get(Integer.parseInt(choice) - 1);
+                int choice = enterHumanUserChoice(availablePokemons.size(), scan);
+                pokemon = availablePokemons.get(choice - 1);
                 isAdded = this.addPokemonToCurrentList(pokemon);
                 if (isAdded) {
                     System.out.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
@@ -210,14 +190,9 @@ public class HumanUser extends User implements IHumanUser {
         System.out.println("❗ Please choose your pokemon for this turn:");
         System.out.println(this.printCurrentPokemons());
         System.out.print("\n\uD83D\uDC49 ");
-        String index = scan.next();
-        // entering choice until it falls within the interval
-        while (!Validator.validateUserInputForChoice(currentPokemons.size(), index)) {
-            System.out.print("\uD83D\uDC49");
-            index = scan.next();
-        }
+        int choice = enterHumanUserChoice(currentPokemons.size(), scan);
 
-        Pokemon pokemonForBattle = this.currentPokemons.get(Integer.parseInt(index) - 1);
+        Pokemon pokemonForBattle = this.currentPokemons.get(choice - 1);
         this.currentPokemonForBattle = pokemonForBattle;
         this.removePokemonFromCurrentList(pokemonForBattle);
         System.out.println("✔ You chose " + this.currentPokemonForBattle.getName() + "!");
@@ -237,6 +212,15 @@ public class HumanUser extends User implements IHumanUser {
             System.out.println("Cannot change current pokemon");
             return null;
         }
+    }
+    @Override
+    public int enterHumanUserChoice(int upperBound, Scanner scan) {
+        String choice = scan.next();
+        while (!Validator.validateUserInputForChoice(upperBound, choice)) {
+            choice = scan.next();
+        }
+
+        return Integer.parseInt(choice);
     }
 
     // getters and setters

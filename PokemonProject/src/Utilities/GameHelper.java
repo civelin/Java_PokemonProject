@@ -1,5 +1,6 @@
 package Utilities;
 import pokemons.Pokemon;
+import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
 import users.userFactory.PCUserFactory;
@@ -8,17 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameHelper {
-
-    // fields
-    public final static int numberOfLevels = 3;
-    public static int currentTurn; // used as counter
+    private static Scanner scan = new Scanner(System.in);
 
     // private constructor
     private GameHelper() {
     }
 
     // methods
-    public static String enterUserName(Scanner scan) {
+    public static String enterUserName() {
         System.out.println("\uD83D\uDC49 Enter username");
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
@@ -29,7 +27,7 @@ public class GameHelper {
             System.out.println("    \u2757 username must be between 8 and 15 characters");
             System.out.println("    \u2757 username must start with letter");
             System.out.println("    \u2757 username can contain letter, numbers and _");
-            return enterUserName(scan);
+            return enterUserName();
         }
 
         System.out.println("\u2714 Successfully entered username.");
@@ -61,6 +59,11 @@ public class GameHelper {
         System.out.println("-> Available crystals: " + humanUser.getCrystals());
         return humanUser.getCrystals();
     }
+    public static HumanUser initializeHumanUser() {
+        System.out.println(Menu.printLoginMenu());
+        String username = GameHelper.enterUserName();
+        return new HumanUser(username, PokemonFactory.getUserPokemons());
+    }
 
     public static void doLogicAfterHumanUserPokemonIsDead(HumanUser humanUser) {
         if (humanUser.getCurrentPokemonForBattle().isPokemonDead()){
@@ -76,13 +79,9 @@ public class GameHelper {
         });
     }
 
-    public static void doLogicAfterPCUserPokemonIsDead(PCUser pcUSer) {
+    public static void doLogicAfterPCUserPokemonInCurrentListIsDead(PCUser pcUSer) {
         List<Pokemon> deadPokemons = pcUSer.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
-        deadPokemons.forEach(deadPokemon -> {
-            if (deadPokemon.isPokemonDead()) {
-                pcUSer.removePokemonFromCurrentList(deadPokemon);
-            }
-        });
+        deadPokemons.forEach(pcUSer::removePokemonFromCurrentList);
     }
 
     public static boolean removePokemonFromRewards(List<Pokemon> rewards, Pokemon pokemon){
