@@ -186,14 +186,14 @@ public class GamePlay {
             GameHelper.doLogicAfterPCUserPokemonInCurrentListIsDead(pcUser);
         }
 
-        if (pcUser.getCurrentPokemonForBattle().isPokemonDead()) {
+        if (pcUser.getCurrentPokemonForBattle().isPokemonDead() && pcUser.getCurrentPokemons().size() > 0) {
             // pc have to choose pokemon for next turn;
             System.out.println("❌" + pcUser.getCurrentPokemonForBattle().getName() + " is dead.");
             pcUser.setCurrentPokemonForBattle(null);
             pcUser.choosePokemonForBattleFromCurrentList();
         }
 
-        if (pcUser.getCurrentPokemons().size() == 0) {
+        if (pcUser.getCurrentPokemons().size() == 0 && pcUser.getCurrentPokemonForBattle().isPokemonDead()) {
             System.out.println("❌" + pcUser.getName() + " has been defeated!");
             return true;
 
@@ -227,20 +227,26 @@ public class GamePlay {
     }
 
     private static boolean checkIfHumanUserDefeat(HumanUser humanUser) {
-        if (humanUser.getCurrentPokemonForBattle().isPokemonDead() || humanUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList().size() != 0) {
+        if (humanUser.getCurrentPokemons().stream().filter(p -> p.isPokemonDead()).toList().size() != 0) {
+            humanUser.getCurrentPokemons().stream().filter(p ->
+                    p.isPokemonDead()).toList().forEach(deadPokemon ->
+                    System.out.println("❌" + deadPokemon.getName() + " is dead."));
             GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser);
-            if (humanUser.getCurrentPokemons().size() == 0) {
-                System.out.println("❌" + humanUser.getName() + " has been defeated " + " !");
-                return true;
-
-            } else {
-                // human has to choose pokemon for next turn;
-                System.out.println("❌" + humanUser.getCurrentPokemonForBattle().getName() + " is dead.");
-                humanUser.setCurrentPokemonForBattle(null);
-                System.out.println("You have to choose new pokemon with whom to continue the game");
-                humanUser.choosePokemonForBattleFromCurrentList();
-            }
         }
+
+        if (humanUser.getCurrentPokemonForBattle().isPokemonDead() && humanUser.getCurrentPokemons().size() > 0) {
+            // pc have to choose pokemon for next turn;
+            System.out.println("❌" + humanUser.getCurrentPokemonForBattle().getName() + " is dead.");
+            humanUser.setCurrentPokemonForBattle(null);
+            humanUser.choosePokemonForBattleFromCurrentList();
+        }
+
+        if (humanUser.getCurrentPokemons().size() == 0 && humanUser.getCurrentPokemonForBattle().isPokemonDead()) {
+            System.out.println("❌" + humanUser.getName() + " has been defeated!");
+            return true;
+
+        }
+
         return false;
     }
 }

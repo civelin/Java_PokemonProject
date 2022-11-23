@@ -8,7 +8,7 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     protected String name;
     protected String type;
     protected String description;
-    protected double attackPower = 10;
+    protected double attackPower = 70;
 
     // methods
     @Override
