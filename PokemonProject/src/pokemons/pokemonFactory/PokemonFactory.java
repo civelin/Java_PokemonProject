@@ -7,17 +7,14 @@ import pokemons.NormalPokemon;
 import pokemons.Pokemon;
 import pokemons.SmallPokemon;
 
-
 import java.util.*;
-
 
 public class PokemonFactory {
     // fields
     private static List<Pokemon> PokemonRewards = pokemonAsRewards();
 
     // private constructor
-    private PokemonFactory(){};
-
+    private PokemonFactory(){}
 
     // available pokemons of pcUser1 (level1)
     public static List<Pokemon> PCUser1Pokemons() {
@@ -27,7 +24,7 @@ public class PokemonFactory {
         pokemonPcUser1List.add((new LargePokemon("Pichu", new ArrayList<>(Arrays.asList("electric", "normal")))));
         pokemonPcUser1List.add((new SmallPokemon("Vulpix", new ArrayList<>(Arrays.asList("fire")))));
         pokemonPcUser1List.add((new SmallPokemon("Weedle", new ArrayList<>(Arrays.asList("grass", "bug")))));
-        pokemonPcUser1List.forEach(p -> fillPokemonAttacks(p));
+        pokemonPcUser1List.forEach(PokemonFactory::fillPokemonAttacks);
         return pokemonPcUser1List;
     }
 
@@ -39,10 +36,9 @@ public class PokemonFactory {
         pokemonPcUser2List.add(new NormalPokemon("Persian", new ArrayList<>(Arrays.asList("normal"))));
         pokemonPcUser2List.add((new NormalPokemon("Golduck", new ArrayList<>(Arrays.asList("electric", "bug")))));
         pokemonPcUser2List.add(new SmallPokemon("Poliwhirl", new ArrayList<>(Arrays.asList("fire"))));
-        pokemonPcUser2List.forEach(p -> fillPokemonAttacks(p));
+        pokemonPcUser2List.forEach(PokemonFactory::fillPokemonAttacks);
         return pokemonPcUser2List;
     }
-
 
     // available pokemons of pcUser3 on (level3)
     public static List<Pokemon> PCUser3Pokemons() {
@@ -52,7 +48,7 @@ public class PokemonFactory {
         pokemonPcUser3List.add(new LargePokemon("Dodrio", new ArrayList<>(Arrays.asList("normal"))));
         pokemonPcUser3List.add(new SmallPokemon("Electabuzz", new ArrayList<>(Arrays.asList("electric"))));
         pokemonPcUser3List.add(new LargePokemon("Gyarados", new ArrayList<>(Arrays.asList("bug", "grass"))));
-        pokemonPcUser3List.forEach(p -> fillPokemonAttacks(p));
+        pokemonPcUser3List.forEach(PokemonFactory::fillPokemonAttacks);
         return pokemonPcUser3List;
     }
 
@@ -64,7 +60,7 @@ public class PokemonFactory {
         userPokemons.add(new SmallPokemon("Bellsprout", new ArrayList<>(Arrays.asList("grass", "bug"))));
         userPokemons.add(new SmallPokemon("Venonat", new ArrayList<>(Arrays.asList("fire"))));
         userPokemons.add(new NormalPokemon("Paras", new ArrayList<>(Arrays.asList("bug"))));
-        userPokemons.forEach(p -> fillPokemonAttacks(p));
+        userPokemons.forEach(PokemonFactory::fillPokemonAttacks);
         return userPokemons;
     }
 
@@ -79,7 +75,7 @@ public class PokemonFactory {
         rewards.add(new LargePokemon("Tentacruel", new ArrayList<>(Arrays.asList("fire", "bug"))));
         rewards.add(new LargePokemon("Golem", new ArrayList<>(Arrays.asList("normal", "electric"))));
         rewards.add(new LargePokemon("Gengar", new ArrayList<>(Arrays.asList("grass", "fire"))));
-        rewards.forEach(p -> fillPokemonAttacks(p));
+        rewards.forEach(PokemonFactory::fillPokemonAttacks);
         return rewards;
 
     }

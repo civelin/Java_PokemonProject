@@ -1,6 +1,5 @@
 package users;
 
-import Utilities.Validator;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 
@@ -30,9 +29,8 @@ public class PCUser extends User implements IPCUser {
             return 1;
         }
         Random random = new Random();
-        int randomChoice = random.nextInt(15);
 
-        return randomChoice;
+        return random.nextInt(15);
     }
 
     @Override

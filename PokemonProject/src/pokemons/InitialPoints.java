@@ -1,9 +1,9 @@
 package pokemons;
 
 public interface InitialPoints {
-    public double returnInitialHP();
+    int returnInitialHP();
 
-    public double returnInitialAttackPoints();
+    int returnInitialAttackPoints();
 
-    public double returnInitialDefencePoints();
+    int returnInitialDefencePoints();
 }

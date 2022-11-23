@@ -4,8 +4,6 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import users.User;
 
-import java.util.List;
-
 public class HornLeech extends PokemonAttack {
     public HornLeech() {
         this.name = "HornLeech";

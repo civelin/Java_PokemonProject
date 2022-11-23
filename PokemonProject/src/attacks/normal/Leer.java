@@ -15,8 +15,10 @@ public class Leer extends PokemonAttack {
 
     @Override
     public double attack(User user, User enemyUser) {
+        // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
+
         double lowerEnemyPokemonDefence = 15;
 
         if (enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence >= 0) {
@@ -24,9 +26,11 @@ public class Leer extends PokemonAttack {
         } else {
             enemyPokemon.setDefencePoints(0);
         }
+
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " now has ---> " + enemyPokemon.getDefencePoints() + " defence points.");
-        return lowerEnemyPokemonDefence;
+
+        return enemyPokemon.getDefencePoints();
     }
 
 }

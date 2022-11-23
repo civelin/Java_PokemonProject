@@ -4,8 +4,6 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import users.User;
 
-import java.util.List;
-
 public class CottonGuard extends PokemonAttack {
 
     public CottonGuard() {
@@ -14,7 +12,7 @@ public class CottonGuard extends PokemonAttack {
         this.description = "Cotton guard attack drastically raises(with 50%) user's defense and increases enemy's defence with 15 percent";
     }
 
-    //Drastically raises(with 50%) user's defense and decreases enemy's defence with 15 percent
+    // Drastically raises(with 50%) user's defense and decreases enemy's defence with 15 percent
     public double attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
@@ -22,8 +20,7 @@ public class CottonGuard extends PokemonAttack {
 
         enemyPokemon.setDefencePoints(0.85 * enemyPokemon.getDefencePoints());
 
-        double currentDefencePoints = userPokemon.getDefencePoints();
-        double newDefencePoints = 1.5 * currentDefencePoints;
+        double newDefencePoints = 1.5 * userPokemon.getDefencePoints();
 
         // check if newDefencePoints > initialDefencePoints
         if (newDefencePoints > userPokemon.returnInitialDefencePoints()) {
@@ -34,6 +31,7 @@ public class CottonGuard extends PokemonAttack {
 
         System.out.println("\u2694 " + enemyPokemon.getName() + " now has ---> " + enemyPokemon.getDefencePoints() + " defence points.");
         System.out.println("\u2694 " + userPokemon.getName() + " now has ---> " + userPokemon.getDefencePoints() + " defence points.");
+
         return userPokemon.getDefencePoints();
     }
 }

@@ -5,17 +5,20 @@ import pokemons.Pokemon;
 import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
+import users.User;
 
+import java.util.List;
 import java.util.Scanner;
 
 
 public class GamePlay {
-    private static Scanner scan = new Scanner(System.in);
+    // fields
+    private static final Scanner scan = new Scanner(System.in);
     private final static int numberOfLevels = 3;
-
     private static int currentTurn;
 
-    public static void play(HumanUser humanUser) {
+    // methods
+    public static void start(HumanUser humanUser) {
 
         for (int level = 1; level <= numberOfLevels; level++) {
             currentTurn = 1;
@@ -25,11 +28,11 @@ public class GamePlay {
 
             // pcUser is choosing pokemons for the battle
             pcUser.choosePokemonsFromAvailableListToCurrentList();
-            System.out.println(pcUser.printCurrentPokemons());
+            System.out.println(GameHelper.printListOfPokemons(pcUser.getCurrentPokemons()));
             System.out.println();
 
-            // the user must choose pokemons for the current battle
-            System.out.println(humanUser.printAvailablePokemons());
+            // humanUser must is choosing pokemons for the battle
+            System.out.println(GameHelper.printListOfPokemons(humanUser.getAvailablePokemons()));
             humanUser.choosePokemonsFromAvailableListToCurrentList();
             System.out.println();
 
@@ -41,36 +44,69 @@ public class GamePlay {
             humanUser.choosePokemonForBattleFromCurrentList();
             System.out.println();
 
-            Boolean ifHumanIsWinner = getWinner(humanUser, pcUser);
+            GamePlay.play(humanUser, pcUser);
 
-            if (ifHumanIsWinner == null) return;
-
-            resetUserCurrentListOfPokemons(humanUser, pcUser);
+            clearUserCurrentListOfPokemons(humanUser, pcUser);
 
             //if the user is winner , we have to chose pokemons as a reward, but if the user lost , the program checks if it meets the requirements to continue the game
-            if (ifHumanIsWinner) {
-                if (checkIfHumanIsWinnerOnLevel3(humanUser, level)) return;
+            if (!checkIfUserIsDefeated(humanUser)) {
+                doLogicAfterHumanUserIsWinner(humanUser, level);
             } else {
-                if (ifHumanUserMeetRequirementsToContinueTheGame(humanUser)) return;
-                level = restartLevelIfHumanUserLostBattle(level);
+                if (level == 1) {
+                    System.exit(0);
+                } else {
+                    if (!isHumanUserMetRequirementsToContinueTheGame(humanUser)){
+                        return;
+                    }
+                    level = restartLevelIfHumanUserLostBattle(level);
+                }
             }
-            resetInitialPointsOfPokemonAfterEachBattle(humanUser, pcUser);
 
+            resetInitialPointsOfPokemonAfterEachBattle(humanUser, pcUser);
 
             //menu between the battles
             if (userChoiceBetweenEachBattle(humanUser)) return;
 
         }
     }
+    private static void play(HumanUser humanUser, PCUser pcUser) {
 
+        // battle starts
+        while (true) {
+            System.out.println("❗ It's " + pcUser.getName() + " turn!");
+            pcUserTurn(humanUser, pcUser);
+            // checking if humanUser's pokemon for current battle is dead
+            doLogicAfterHumanUserIsAttacked(humanUser);
+            if (checkIfUserIsDefeated(humanUser)) {
+                return;
+            } else if (humanUser.getCurrentPokemonForBattle() == null) {
+                // human has to choose pokemon for next turn
+                System.out.println("You have to choose new pokemon with whom to continue the game");
+                humanUser.choosePokemonForBattleFromCurrentList();
+            }
+
+            // Human user on turn
+            System.out.println("❗It's " + humanUser.getName() + " turn!");
+            humanUserTurn(humanUser, pcUser);
+            // do logic after pcUser had been attacked and check if pcUser's pokemon for current battle is dead
+            doLogicAfterPcUserIsAttacked(pcUser);
+            if (checkIfUserIsDefeated(pcUser)) {
+                return;
+            } else if (pcUser.getCurrentPokemonForBattle() == null) {
+                pcUser.choosePokemonForBattleFromCurrentList();
+            }
+            currentTurn++;
+        }
+    }
     private static boolean userChoiceBetweenEachBattle(HumanUser humanUser) {
         while (true) {
             Menu.printMenuAfterBattle();
             int choice = humanUser.enterHumanUserChoice(3, scan);
 
-
             if (choice == 1) {
-                if (checkHumanUserAvaiablePokemonsListSize(humanUser)) continue;
+                if (checkHumanUserAvaiablePokemonsListSize(humanUser)){
+                    continue;
+                }
                 break;
             } else if (choice == 2) {
                 humanUser.revivePokemon(); //revive pokemon
@@ -80,7 +116,77 @@ public class GamePlay {
         }
         return false;
     }
+    private static void pcUserTurn(HumanUser humanUser, PCUser pcUser) {
 
+        int pcUserChoice = pcUser.chooseOptionBeforeEachTurn(currentTurn);
+
+        // if pcUser's choice < 13 it will attack
+        if (pcUserChoice < 13) {
+            // pcUser is choosing attack for the current turn
+            PokemonAttack pcAttackForCurrentTurn = pcUser.chooseAttack();
+            // pcUser attacks
+            System.out.println();
+            pcAttackForCurrentTurn.attack(pcUser, humanUser);
+            System.out.println();
+        } else {
+            pcUser.changeCurrentPokemon();
+        }
+    }
+
+    private static void doLogicAfterHumanUserIsAttacked(HumanUser humanUser) {
+        List<Pokemon> humanUserDeadPokemonsAtCurrentList = humanUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
+        Pokemon humanUserCurrentPokemon = humanUser.getCurrentPokemonForBattle();
+
+        if (humanUserDeadPokemonsAtCurrentList.size() != 0) {
+            humanUserDeadPokemonsAtCurrentList.forEach(deadPokemon -> {
+                System.out.println("\uD83D\uDC80" + deadPokemon.getName() + " is dead.");
+                GameHelper.doLogicAfterHumanUserPokemonInCurrentListIsDead(humanUser, deadPokemon);
+            });
+        }
+
+        if (humanUserCurrentPokemon.isPokemonDead()) {
+            System.out.println("\uD83D\uDC80" + humanUserCurrentPokemon.getName() + " is dead.");
+            humanUser.addPokemonToDeadList(humanUserCurrentPokemon);
+            humanUser.removePokemonFromAvailableList(humanUserCurrentPokemon);
+            humanUser.setCurrentPokemonForBattle(null);
+        }
+
+    }
+    private static void humanUserTurn(HumanUser humanUser, PCUser pcUser) {
+        System.out.println(Menu.printTurnMenu());
+
+        int choice = humanUser.chooseOptionBeforeEachTurn();
+        if (choice == 1) {
+            PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack();
+            System.out.println();
+            humanAttackForCurrentTurn.attack(humanUser, pcUser);
+            System.out.println();
+
+        } else if (choice == 2) {
+            humanUser.changeCurrentPokemon();
+        } else if (choice == 3) {
+            System.out.println("❌" + humanUser.getName() + " has forfeited!");
+            System.exit(0);
+        }
+    }
+
+    private static void doLogicAfterPcUserIsAttacked(PCUser pcUser) {
+        List<Pokemon> pcUserDeadPokemonsAtCurrentList = pcUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList();
+        Pokemon pcUserCurrentPokemon = pcUser.getCurrentPokemonForBattle();
+
+        // check if pcUser has dead pokemons at its current list
+        if (pcUserDeadPokemonsAtCurrentList.size() != 0) {
+            pcUserDeadPokemonsAtCurrentList.forEach(deadPokemon -> {
+                System.out.println("\uD83D\uDC80" + deadPokemon.getName() + " is dead.");
+                GameHelper.doLogicAfterPCUserPokemonInCurrentListIsDead(pcUser, deadPokemon);
+            });
+        }
+
+        if (pcUserCurrentPokemon.isPokemonDead()) {
+            System.out.println("\uD83D\uDC80" + pcUserCurrentPokemon.getName() + " is dead.");
+            pcUser.setCurrentPokemonForBattle(null);
+        }
+    }
     private static boolean checkHumanUserAvaiablePokemonsListSize(HumanUser humanUser) {
         if (humanUser.getAvailablePokemons().size() < 3) {
             System.out.println("You must have 3 alive pokemons before jumping into the next battle! Please revive any pokemon!");
@@ -88,7 +194,6 @@ public class GamePlay {
         }
         return false;
     }
-
 
     private static void resetInitialPointsOfPokemonAfterEachBattle(HumanUser humanUser, PCUser pcUser) {
         for (Pokemon pokemon : humanUser.getAvailablePokemons()) {
@@ -108,139 +213,37 @@ public class GamePlay {
         return level;
     }
 
-    private static boolean ifHumanUserMeetRequirementsToContinueTheGame(HumanUser humanUser) {
+    private static boolean isHumanUserMetRequirementsToContinueTheGame(HumanUser humanUser) {
         if (humanUser.getAvailablePokemons().size() < 2 && humanUser.getCrystals() < 2 || humanUser.getAvailablePokemons().size() <= 2 && humanUser.getCrystals() == 0) {
             System.out.println("You have lost the game! Better luck next time!");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
-    private static boolean checkIfHumanIsWinnerOnLevel3(HumanUser humanUser, int level) {
+    private static void doLogicAfterHumanUserIsWinner(HumanUser humanUser, int level) {
         if (level == 3) {
             //final text after the last opponent is defeated
-            System.out.println("Congratulations, you beat all the opponents !!! You won nothing, in case you lost VALUABLE time by playing the game. Bye bye");
-            return true;
+            System.out.println("\uD83C\uDF87" +  " Congratulations, you beat all the opponents!!!\nYou won nothing, in fact you lost VALUABLE time by playing the game. Bye bye");
+            System.exit(0);
         } else {
             //list of pokemons , from which the user will choose one as a reward of successful battle.
             humanUser.choosePokemonAsReward(PokemonFactory.getPokemonRewards());
             GameHelper.addCrystalAfterWin(humanUser);
         }
-        return false;
     }
 
-    private static void resetUserCurrentListOfPokemons(HumanUser humanUser, PCUser pcUser) {
+    private static void clearUserCurrentListOfPokemons(HumanUser humanUser, PCUser pcUser) {
         humanUser.getCurrentPokemons().clear();
         pcUser.getCurrentPokemons().clear();
     }
 
-    private static Boolean getWinner(HumanUser humanUser, PCUser pcUser) {
-        boolean ifHumanIsWinner = false;
-        // battle starts
-        while (true) {
-            System.out.println("❗ It's " + pcUser.getName() + " turn!");
-
-            if (!pcUserTurn(humanUser, pcUser)) {
-                break;
-            }
-
-            // Human user on turn
-            if (humanUserTurn(humanUser, pcUser)) {
-                ifHumanIsWinner = true;
-                break;
-            }
-            currentTurn++;
-        }
-        return ifHumanIsWinner;
+    private static boolean checkIfUserIsDefeated(User user) {
+        return user.getCurrentPokemonForBattle() == null && user.getCurrentPokemons().size() == 0;
     }
 
-    private static boolean humanUserTurn(HumanUser humanUser, PCUser pcUser) {
-        System.out.println("❗It's " + humanUser.getName() + " turn!");
-
-        System.out.println(Menu.printTurnMenu());
-
-        int choice = humanUser.chooseOptionBeforeEachTurn();
-        if (choice == 1) {
-            PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack();
-            System.out.println();
-            humanAttackForCurrentTurn.attack(humanUser, pcUser);
-
-            // checking if pcUser's pokemon for current battle is dead
-            if (checkIfPcUserIsDefeated(pcUser)) return true;
-        } else if (choice == 2) {
-            humanUser.changeCurrentPokemon();
-        } else if (choice == 3) {
-            System.out.println("❌" + humanUser.getName() + " has forfeited!");
-            System.exit(0);
-        }
-        return false;
-    }
-
-    private static boolean checkIfPcUserIsDefeated(PCUser pcUser) {
 
 
-        if (pcUser.getCurrentPokemons().stream().filter(p -> p.isPokemonDead()).toList().size() != 0) {
-            pcUser.getCurrentPokemons().stream().filter(p ->
-                    p.isPokemonDead()).toList().forEach(deadPokemon ->
-                    System.out.println("❌" + deadPokemon.getName() + " is dead."));
-            GameHelper.doLogicAfterPCUserPokemonInCurrentListIsDead(pcUser);
-        }
 
-        if (pcUser.getCurrentPokemonForBattle().isPokemonDead()) {
-            // pc have to choose pokemon for next turn;
-            System.out.println("❌" + pcUser.getCurrentPokemonForBattle().getName() + " is dead.");
-            pcUser.setCurrentPokemonForBattle(null);
-            pcUser.choosePokemonForBattleFromCurrentList();
-        }
 
-        if (pcUser.getCurrentPokemons().size() == 0) {
-            System.out.println("❌" + pcUser.getName() + " has been defeated!");
-            return true;
-
-        }
-
-        return false;
-    }
-
-    private static boolean pcUserTurn(HumanUser humanUser, PCUser pcUser) {
-
-        int pcUserChoice = pcUser.chooseOptionBeforeEachTurn(currentTurn);
-
-        // if pcUser's choice < 13 it will attack
-        if (pcUserChoice < 13) {
-            // pcUser is choosing attack for the current turn
-            PokemonAttack pcAttackForCurrentTurn = pcUser.chooseAttack();
-            // pcUser attacks
-            System.out.println();
-            pcAttackForCurrentTurn.attack(pcUser, humanUser);
-            System.out.println();
-
-            // checking if humanUser's pokemon for current battle is dead
-            if (checkIfHumanUserDefeat(humanUser)) {
-                return false;
-            }
-        } else {
-            pcUser.changeCurrentPokemon();
-            System.out.println();
-        }
-        return true;
-    }
-
-    private static boolean checkIfHumanUserDefeat(HumanUser humanUser) {
-        if (humanUser.getCurrentPokemonForBattle().isPokemonDead() || humanUser.getCurrentPokemons().stream().filter(Pokemon::isPokemonDead).toList().size() != 0) {
-            GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser);
-            if (humanUser.getCurrentPokemons().size() == 0) {
-                System.out.println("❌" + humanUser.getName() + " has been defeated " + " !");
-                return true;
-
-            } else {
-                // human has to choose pokemon for next turn;
-                System.out.println("❌" + humanUser.getCurrentPokemonForBattle().getName() + " is dead.");
-                humanUser.setCurrentPokemonForBattle(null);
-                System.out.println("You have to choose new pokemon with whom to continue the game");
-                humanUser.choosePokemonForBattleFromCurrentList();
-            }
-        }
-        return false;
-    }
 }

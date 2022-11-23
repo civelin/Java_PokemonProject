@@ -19,6 +19,7 @@ import java.util.List;
 
 
 public class AttackFactory {
+    // fields
     private static List<PokemonAttack> bugAttacks = fillBugAttacks();
     private static List<PokemonAttack> electricAttacks = fillElectricAttacks();
     private static List<PokemonAttack> fireAttacks = fillFireAttacks();

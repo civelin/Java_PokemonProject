@@ -4,8 +4,6 @@ import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import users.User;
 
-import java.util.List;
-
 public class LeechLife extends PokemonAttack {
 
     public LeechLife() {
@@ -21,7 +19,7 @@ public class LeechLife extends PokemonAttack {
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.4;
-        double finalInflictedDmg = 0.8 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        double finalInflictedDmg = 1.6 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
 
         if (finalInflictedDmg <= 0) {
             finalInflictedDmg = this.attackPower;
