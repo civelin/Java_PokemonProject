@@ -13,7 +13,7 @@ public class HornLeech extends PokemonAttack {
 
     // Increase hp up to 20 points if it's under 20 points
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         if (userPokemon.getHp() < 20) {
             userPokemon.setHp(20);

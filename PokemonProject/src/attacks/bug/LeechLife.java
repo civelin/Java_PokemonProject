@@ -13,19 +13,17 @@ public class LeechLife extends PokemonAttack {
     }
 
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.4;
-        double finalInflictedDmg = 1.6 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
 
         if (finalInflictedDmg <= 0) {
             finalInflictedDmg = this.attackPower;
         }
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
-
 
         if (userPokemon.getHp() + finalInflictedDmg / 2 < userPokemon.returnInitialHP()) {
             userPokemon.setHp(userPokemon.getHp() + finalInflictedDmg / 2);
@@ -38,5 +36,11 @@ public class LeechLife extends PokemonAttack {
         System.out.println("\u2694 " + userPokemon.getName() + " has recovered " + finalInflictedDmg / 2 + " hp! New hp ---> " + userPokemon.getHp());
 
         return finalInflictedDmg;
+    }
+
+    private int getFinalInflictedDmg(Pokemon userPokemon, Pokemon enemyPokemon) {
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.4;
+        double finalInflictedDmg = 1.6 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        return (int) finalInflictedDmg;
     }
 }

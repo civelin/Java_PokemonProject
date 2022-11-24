@@ -10,17 +10,16 @@ public class FirstImpression extends PokemonAttack {
         this.name = "FirstImpression";
         this.type = "bug";
         this.description = "First Impression attack decreases enemy's hp.";
-        this.attackPower = 1.4 * super.attackPower;
+        this.attackPower = (int) (1.4 * super.attackPower);
     }
 
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the fight
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
-        double finalInflictedDmg = (userPokemon.getAttackPoints() + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
 
         enemyPokemon.setHp((enemyPokemon.getHp() - finalInflictedDmg));
 
@@ -28,6 +27,12 @@ public class FirstImpression extends PokemonAttack {
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
 
         return finalInflictedDmg;
+    }
+
+    private int getFinalInflictedDmg(Pokemon userPokemon, Pokemon enemyPokemon) {
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
+        double finalInflictedDmg = (userPokemon.getAttackPoints() + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        return (int) finalInflictedDmg;
     }
 
 }

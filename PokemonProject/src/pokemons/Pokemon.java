@@ -1,11 +1,11 @@
 package pokemons;
 
 import attacks.*;
-import Utilities.Comparable;
 
 import java.util.List;
+import java.util.Objects;
 
-public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Pokemon> {
+public abstract class Pokemon implements InitialPoints, Revivable {
 
     // fields
     protected String name;
@@ -15,8 +15,8 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     final static int defaultDefencePoints = 50;
 
     protected int hp;
-    protected double attackPoints;
-    protected double defencePoints;
+    protected int attackPoints;
+    protected int defencePoints;
 
     // each pokemon has two attacks
     protected PokemonAttack[] attacks = new PokemonAttack[2];
@@ -50,8 +50,17 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
 
     }
 
-    public boolean compare(Pokemon pokemon) {
-        return this.getName().equals(pokemon.getName());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pokemon pokemon = (Pokemon) o;
+        return Objects.equals(name, pokemon.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     // getters & setters
@@ -60,28 +69,27 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
         return name;
     }
 
-    public double getHp() {
+    public int getHp() {
         return hp;
     }
 
-    public void setHp(double hp) {
-        this.hp = (int) hp;
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
-    public double getAttackPoints() {
+    public int getAttackPoints() {
         return attackPoints;
     }
 
-    public void setAttackPoints(double attackPoints) {
+    public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
-
     }
 
-    public double getDefencePoints() {
+    public int getDefencePoints() {
         return defencePoints;
     }
 
-    public void setDefencePoints(double defencePoints) {
+    public void setDefencePoints(int defencePoints) {
 
         this.defencePoints = defencePoints;
 

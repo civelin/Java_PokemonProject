@@ -103,7 +103,7 @@ public class PokemonFactory {
                     PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(randomIndex);
                     if (i == 0) {
                         pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
-                    } else if (!pokemon.getAttacks()[0].compare(randomAttackOfCurrentType)) {
+                    } else if (!pokemon.getAttacks()[0].equals(randomAttackOfCurrentType)) {
                         pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
                     }
                 }

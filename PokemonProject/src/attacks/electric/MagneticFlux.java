@@ -10,19 +10,19 @@ public class MagneticFlux extends PokemonAttack {
         this.name = "MagneticFlux";
         this.type = "electric";
         this.description = "Magnetic Flux attack decreases opponent's hp";
-        this.attackPower = 1.2 * super.attackPower;
+        this.attackPower = (int) (1.2 * super.attackPower);
     }
 
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        double finalAttackPower = (userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.4;
+        int finalAttackPower = getFinalAttackPower(userPokemon, enemyPokemon);
 
         if (finalAttackPower < 0) {
-            finalAttackPower = 0.7 * this.attackPower;
+            finalAttackPower = (int) (0.7 * this.attackPower);
         }
 
         enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
@@ -31,5 +31,9 @@ public class MagneticFlux extends PokemonAttack {
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp is ---> " + enemyPokemon.getHp());
 
         return finalAttackPower;
+    }
+
+    private int getFinalAttackPower(Pokemon userPokemon, Pokemon enemyPokemon) {
+        return (int) ((userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.4);
     }
 }

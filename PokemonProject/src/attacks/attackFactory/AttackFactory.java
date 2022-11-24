@@ -44,17 +44,7 @@ public class AttackFactory {
         return attacks;
     }
 
-    // check if newAttack has duplicates in a given list
-    private static boolean contains(List<PokemonAttack> attacks, PokemonAttack newAttack) {
-        List<PokemonAttack> duplicates = attacks
-                .stream()
-                .filter(attack -> attack.compare(newAttack))
-                .toList();
-        return duplicates.size() > 0;
-    }
-
-
-    //    -> BUG
+       //    -> BUG
     // method that returns all current bug attacks
     private static List<PokemonAttack> fillBugAttacks() {
         List<PokemonAttack> bugAttacks = new ArrayList<>();
@@ -65,7 +55,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to bug attacks
     public static List<PokemonAttack> addToBugAttacks(PokemonAttack attack) {
-        if (attack.getType().equals("bug") && !contains(bugAttacks, attack)) {
+        if (attack.getType().equals("bug") && !bugAttacks.contains(attack)) {
             bugAttacks.add(attack);
         }
         return bugAttacks;
@@ -82,7 +72,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to electric attacks
     public static List<PokemonAttack> addToElectricAttacks(PokemonAttack attack) {
-        if (attack.getType().equals("electric") && !contains(electricAttacks, attack)) {
+        if (attack.getType().equals("electric") && !electricAttacks.contains(attack)) {
             electricAttacks.add(attack);
         }
         return electricAttacks;
@@ -99,7 +89,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to fire attacks
     public static List<PokemonAttack> addToFireAttacks(PokemonAttack attack) {
-        if (attack.getType().equals("fire") && !contains(fireAttacks, attack)) {
+        if (attack.getType().equals("fire") && !fireAttacks.contains(attack)) {
             fireAttacks.add(attack);
         }
         return fireAttacks;
@@ -117,7 +107,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to grass attacks
     public static List<PokemonAttack> addToGrassAttacks(PokemonAttack attack) {
-        if (attack.getType().equals("grass") && !contains(grassAttacks, attack)) {
+        if (attack.getType().equals("grass") && !grassAttacks.contains(attack)) {
             grassAttacks.add(attack);
         }
         return grassAttacks;
@@ -134,7 +124,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to grass attacks
     public static List<PokemonAttack> addToNormalAttacks(PokemonAttack attack) {
-        if (attack.getType().equals("normal") && !contains(normalAttacks, attack)) {
+        if (attack.getType().equals("normal") && !normalAttacks.contains(attack)) {
             normalAttacks.add(attack);
         }
         return normalAttacks;

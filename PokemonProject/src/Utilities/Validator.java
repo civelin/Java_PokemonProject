@@ -37,7 +37,7 @@ public class Validator {
     }
 
     public static boolean checkIfGivenListContainsPokemon(List<Pokemon> listOfPokemons, Pokemon pokemon){
-        List<Pokemon> duplicates = listOfPokemons.stream().filter(currPokemon -> currPokemon.compare(pokemon)).toList();
+        List<Pokemon> duplicates = listOfPokemons.stream().filter(currPokemon -> currPokemon.equals(pokemon)).toList();
         return duplicates.size() != 0;
     }
 

@@ -110,7 +110,7 @@ public class HumanUser extends User implements IHumanUser {
         if (deadPokemonList.size() > 0 && crystals > 0) {
             System.out.println("Select which pokemon you'd like to revive!");
             System.out.println("One revive costs one crystal!");
-            GameHelper.printListOfPokemons(this.deadPokemonList);
+            System.out.println(GameHelper.printListOfPokemons(this.deadPokemonList));
             int choice = enterHumanUserChoice(deadPokemonList.size(), scan);
             Pokemon chosenDeadPokemon = this.deadPokemonList.get(choice - 1);
             chosenDeadPokemon.resetInitialPointsOfPokemon();
@@ -143,7 +143,6 @@ public class HumanUser extends User implements IHumanUser {
         Pokemon pokemon = null;
 
         System.out.println("\u2757 Please select the pokemons with which you want to play. You have to choose 3 pokemons.");
-        GameHelper.printListOfPokemons(this.availablePokemons);
 
         for (int i = 1; i <= 3; i++) {
             boolean isAdded = false;
