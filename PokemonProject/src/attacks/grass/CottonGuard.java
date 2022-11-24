@@ -9,10 +9,10 @@ public class CottonGuard extends PokemonAttack {
     public CottonGuard() {
         this.name = "CottonGuard";
         this.type = "grass";
-        this.description = "Cotton guard attack drastically raises(with 50%) user's defense and increases enemy's defence with 15 percent";
+        this.description = "Cotton guard attack drastically raises(with 50%) user's defense and increases enemy's defence with 15%";
     }
 
-    // Drastically raises(with 50%) user's defense and decreases enemy's defence with 15 percent
+    // Drastically raises(with 50%) user's defense and decreases enemy's defence with 15%
     public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();

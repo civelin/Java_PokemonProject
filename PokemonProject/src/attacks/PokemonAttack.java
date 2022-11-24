@@ -4,7 +4,7 @@ import users.User;
 
 import java.util.Objects;
 
-public abstract class PokemonAttack implements Description {
+public abstract class PokemonAttack implements Description, IAttack {
 
     // fields
     protected String name;
@@ -31,7 +31,6 @@ public abstract class PokemonAttack implements Description {
         return Objects.hash(name);
     }
 
-    public abstract int attack(User user, User enemyUser);
 
     // getters
     @Override

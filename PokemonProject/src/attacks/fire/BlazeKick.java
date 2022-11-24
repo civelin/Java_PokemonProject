@@ -11,7 +11,7 @@ public class BlazeKick extends PokemonAttack {
         this.name = "BlazeKick";
         this.type = "fire";
         this.attackPower = (int) (1.3 * super.attackPower);
-        this.description = "Blaze kick attack has a chance to burn the opponent for additional extra damage.";
+        this.description = "Blaze kick attack has a chance to burn the opponent for extra damage.";
     }
 
     @Override

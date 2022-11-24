@@ -11,7 +11,7 @@ import users.User;
 
 import static org.testng.Assert.assertEquals;
 
-public class ElectricAttacksTest {
+public class ElectricAttacksTests {
     private User user1;
     private User user2;
 
