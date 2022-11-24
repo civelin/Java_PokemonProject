@@ -70,7 +70,6 @@ public class GamePlay {
         }
     }
     private static void play(HumanUser humanUser, PCUser pcUser) {
-
         // battle starts
         while (true) {
             System.out.println("❗ It's " + pcUser.getName() + " turn!");

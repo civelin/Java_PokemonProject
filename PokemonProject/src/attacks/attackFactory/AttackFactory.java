@@ -44,7 +44,7 @@ public class AttackFactory {
         return attacks;
     }
 
-       //    -> BUG
+    //    -> BUG
     // method that returns all current bug attacks
     private static List<PokemonAttack> fillBugAttacks() {
         List<PokemonAttack> bugAttacks = new ArrayList<>();
@@ -54,11 +54,12 @@ public class AttackFactory {
     }
 
     // method that provides adding a new attack to bug attacks
-    public static List<PokemonAttack> addToBugAttacks(PokemonAttack attack) {
+    public static boolean addToBugAttacks(PokemonAttack attack) {
         if (attack.getType().equals("bug") && !bugAttacks.contains(attack)) {
             bugAttacks.add(attack);
+            return true;
         }
-        return bugAttacks;
+        return false;
     }
 
     // -> ELECTRIC
@@ -71,11 +72,12 @@ public class AttackFactory {
     }
 
     // method that provides adding a new attack to electric attacks
-    public static List<PokemonAttack> addToElectricAttacks(PokemonAttack attack) {
+    public static boolean addToElectricAttacks(PokemonAttack attack) {
         if (attack.getType().equals("electric") && !electricAttacks.contains(attack)) {
             electricAttacks.add(attack);
+            return true;
         }
-        return electricAttacks;
+        return false;
     }
 
     // -> FIRE
@@ -88,11 +90,12 @@ public class AttackFactory {
     }
 
     // method that provides adding a new attack to fire attacks
-    public static List<PokemonAttack> addToFireAttacks(PokemonAttack attack) {
+    public static boolean addToFireAttacks(PokemonAttack attack) {
         if (attack.getType().equals("fire") && !fireAttacks.contains(attack)) {
             fireAttacks.add(attack);
+            return true;
         }
-        return fireAttacks;
+        return false;
     }
 
 
@@ -106,11 +109,12 @@ public class AttackFactory {
     }
 
     // method that provides adding a new attack to grass attacks
-    public static List<PokemonAttack> addToGrassAttacks(PokemonAttack attack) {
+    public static boolean addToGrassAttacks(PokemonAttack attack) {
         if (attack.getType().equals("grass") && !grassAttacks.contains(attack)) {
             grassAttacks.add(attack);
+            return true;
         }
-        return grassAttacks;
+        return false;
     }
 
     // -> NORMAL
@@ -123,11 +127,11 @@ public class AttackFactory {
     }
 
     // method that provides adding a new attack to grass attacks
-    public static List<PokemonAttack> addToNormalAttacks(PokemonAttack attack) {
+    public static boolean addToNormalAttacks(PokemonAttack attack) {
         if (attack.getType().equals("normal") && !normalAttacks.contains(attack)) {
-            normalAttacks.add(attack);
+            return true;
         }
-        return normalAttacks;
+        return false;
     }
 
     // getters

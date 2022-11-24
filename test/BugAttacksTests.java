@@ -12,7 +12,7 @@ import users.User;
 
 import static org.testng.Assert.assertEquals;
 
-public class BugAttacksTest {
+public class BugAttacksTests {
     private User user1;
     private User user2;
     @Before
@@ -58,7 +58,6 @@ public class BugAttacksTest {
     public void testLeechLifeAttackWhenFinalInflictedDmgIsEqualToZero(){
         LeechLife leechLife = new LeechLife();
 
-        User user2 = new HumanUser("civelin77", null);
         user2.setCurrentPokemonForBattle(new LargePokemon());
         user1.getCurrentPokemonForBattle().setAttackPoints(0);
 

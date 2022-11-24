@@ -11,7 +11,7 @@ public class Spark extends PokemonAttack {
     public Spark() {
         this.name = "Spark";
         this.type = "electric";
-        this.description = "Spark attack has equal chances to hit opponent's hp or miss the target.";
+        this.description = "Spark attack has equal chance to hit the opponent's hp or miss the target.";
     }
 
     @Override

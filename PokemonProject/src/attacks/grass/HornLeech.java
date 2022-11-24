@@ -8,7 +8,7 @@ public class HornLeech extends PokemonAttack {
     public HornLeech() {
         this.name = "HornLeech";
         this.type = "grass";
-        this.description = "Horn Leech attack increases pokemon's hp up to 20 points if it's under 20 points.";
+        this.description = "Horn Leech attack increases pokemon's hp with 20 points if current hp is under 20 points.";
     }
 
     // Increase hp up to 20 points if it's under 20 points

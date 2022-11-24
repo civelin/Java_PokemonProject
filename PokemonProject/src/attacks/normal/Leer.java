@@ -10,7 +10,7 @@ public class Leer extends PokemonAttack {
     public Leer() {
         this.name = "Leer";
         this.type = "normal";
-        this.description = "Leer attack lowers opponent's defence.";
+        this.description = "Leer attack lowers the defence of your opponent's pokemon.";
     }
 
     @Override

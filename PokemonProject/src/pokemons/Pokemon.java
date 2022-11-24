@@ -1,5 +1,6 @@
 package pokemons;
 
+import Utilities.Validator;
 import attacks.*;
 
 import java.util.List;
@@ -33,8 +34,10 @@ public abstract class Pokemon implements InitialPoints, Revivable {
     }
 
     public void addAttackToPokemon(PokemonAttack attack, int index) {
-        if (attacks[index] == null) {
-            attacks[index] = attack;
+        if(index >= 0 && index < attacks.length){
+            if (attacks[index] == null) {
+                attacks[index] = attack;
+            }
         }
     }
 
@@ -74,7 +77,6 @@ public abstract class Pokemon implements InitialPoints, Revivable {
     }
 
     public void setHp(int hp) {
-
         this.hp =  hp;
     }
 
