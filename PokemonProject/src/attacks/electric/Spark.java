@@ -29,7 +29,7 @@ public class Spark extends PokemonAttack {
             finalAttackPower = (int) (0.7 * this.attackPower);
         }
 
-        enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalAttackPower));
 
         if (critChance == 0) {
             System.out.println(userPokemon.getName() + " missed the target!");

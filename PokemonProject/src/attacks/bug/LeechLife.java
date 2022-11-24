@@ -11,7 +11,7 @@ public class LeechLife extends PokemonAttack {
         this.type = "bug";
         this.description = "Leech Life attack recovers half the hp inflicted on opponent";
     }
-
+    
     @Override
     public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
@@ -20,8 +20,9 @@ public class LeechLife extends PokemonAttack {
 
         int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
 
+
         if (finalInflictedDmg <= 0) {
-            finalInflictedDmg = this.attackPower;
+            finalInflictedDmg =  this.attackPower;
         }
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
 

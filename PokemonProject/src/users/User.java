@@ -29,6 +29,10 @@ public abstract class User implements IUser {
         this.currentPokemonForBattle = currentPokemonForBattle;
     }
 
+    public void setCurrentPokemons(List<Pokemon> currentPokemons) {
+        this.currentPokemons = currentPokemons;
+    }
+
     // methods
     @Override
     public boolean addPokemonToCurrentList(Pokemon pokemon) {

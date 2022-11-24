@@ -31,7 +31,7 @@ public class MegaPunch extends PokemonAttack {
         int pokemonAttackPower = userPokemon.getAttackPoints();
 
         finalInflictedDmg = (pokemonAttackPower + ((this.attackPower * critChance)) - dmgReductionAccordingToEnemyPokemonDefencePoints);
-        enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalInflictedDmg));
 
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());

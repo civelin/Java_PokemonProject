@@ -74,7 +74,8 @@ public abstract class Pokemon implements InitialPoints, Revivable {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+
+        this.hp =  hp;
     }
 
     public int getAttackPoints() {

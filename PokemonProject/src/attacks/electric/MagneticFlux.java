@@ -19,13 +19,15 @@ public class MagneticFlux extends PokemonAttack {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
+
         int finalAttackPower = getFinalAttackPower(userPokemon, enemyPokemon);
+
 
         if (finalAttackPower < 0) {
             finalAttackPower = (int) (0.7 * this.attackPower);
         }
 
-        enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalAttackPower));
 
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp is ---> " + enemyPokemon.getHp());

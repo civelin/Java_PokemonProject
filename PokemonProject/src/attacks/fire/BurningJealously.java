@@ -17,20 +17,24 @@ public class BurningJealously extends PokemonAttack {
     public int attack(User user, User enemyUser) {
         // get user pokemon that is currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
+        Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         int attackPower = userPokemon.getAttackPoints() + this.attackPower;
 
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked all the enemy pokemons!");
 
         for (Pokemon enemyPokemon : enemyUser.getCurrentPokemons()) {
-            enemyPokemon.setHp(enemyPokemon.getHp() - (int) (attackPower + 0.3 * enemyPokemon.getDefencePoints()));
+
+            enemyPokemon.setHp((int) (enemyPokemon.getHp() - attackPower + 0.3 * enemyPokemon.getDefencePoints()));
             System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
         }
 
-        enemyUser.getCurrentPokemonForBattle().setHp(enemyUser.getCurrentPokemonForBattle().getHp() - attackPower + (int) (0.3 * enemyUser.getCurrentPokemonForBattle().getDefencePoints()));
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - attackPower + 0.3 * enemyPokemon.getDefencePoints()));
 
-        System.out.println("\u2694 " + enemyUser.getCurrentPokemonForBattle().getName() + " new hp ---> " + enemyUser.getCurrentPokemonForBattle().getHp());
+         
 
-        return attackPower;
+        System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
+
+        return  attackPower;
     }
 }

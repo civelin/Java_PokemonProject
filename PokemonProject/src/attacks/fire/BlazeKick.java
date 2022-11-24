@@ -25,12 +25,12 @@ public class BlazeKick extends PokemonAttack {
 
         int attackPower = getAttackPower(userPokemon, enemyPokemon, chance);
 
-        enemyPokemon.setHp(enemyPokemon.getHp() - attackPower);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - attackPower));
 
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
 
-        return attackPower;
+        return chance;
     }
 
     private int getAttackPower(Pokemon userPokemon, Pokemon enemyPokemon, int chance) {

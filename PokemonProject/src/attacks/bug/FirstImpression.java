@@ -13,6 +13,7 @@ public class FirstImpression extends PokemonAttack {
         this.attackPower = (int) (1.4 * super.attackPower);
     }
 
+
     @Override
     public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the fight
@@ -20,6 +21,7 @@ public class FirstImpression extends PokemonAttack {
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
+
 
         enemyPokemon.setHp((enemyPokemon.getHp() - finalInflictedDmg));
 
