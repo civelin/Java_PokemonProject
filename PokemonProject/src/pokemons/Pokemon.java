@@ -4,7 +4,6 @@ import attacks.*;
 import Utilities.Comparable;
 
 import java.util.List;
-
 public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Pokemon> {
 
     // fields
@@ -53,7 +52,6 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     public boolean compare(Pokemon pokemon) {
         return this.getName().equals(pokemon.getName());
     }
-
     // getters & setters
 
     public String getName() {
