@@ -76,6 +76,7 @@ public class PokemonFactory {
         rewards.add(new LargePokemon("Golem", new ArrayList<>(Arrays.asList("normal", "electric"))));
         rewards.add(new LargePokemon("Gengar", new ArrayList<>(Arrays.asList("grass", "fire"))));
         rewards.forEach(PokemonFactory::fillPokemonAttacks);
+        Collections.shuffle(rewards);
         return rewards;
 
     }
