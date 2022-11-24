@@ -9,7 +9,7 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     protected String name;
     protected String type;
     protected String description;
-    protected double attackPower = 15;
+    protected int attackPower = 15;
 
     // methods
     @Override
@@ -22,7 +22,7 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
         return this.getName().equals(attack.getName());
     }
 
-    public abstract double attack(User user, User enemyUser);
+    public abstract int attack(User user, User enemyUser);
 
     // getters
     @Override

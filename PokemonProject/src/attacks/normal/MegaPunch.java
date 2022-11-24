@@ -12,12 +12,12 @@ public class MegaPunch extends PokemonAttack {
     public MegaPunch() {
         this.name = "MegaPunch";
         this.type = "normal";
-        this.attackPower = 0.5 * super.attackPower;
+        this.attackPower = (int) (0.5 * super.attackPower);
         this.description = "Mega punch attack deals damage to the opponent's pokemon.";
     }
 
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
@@ -31,10 +31,10 @@ public class MegaPunch extends PokemonAttack {
         double pokemonAttackPower = userPokemon.getAttackPoints();
 
         finalInflictedDmg = (pokemonAttackPower + ((this.attackPower * critChance)) - dmgReductionAccordingToEnemyPokemonDefencePoints);
-        enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalInflictedDmg));
 
         System.out.println("\u2694 " + userPokemon.getName() + " has attacked " + enemyPokemon.getName());
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
-        return finalInflictedDmg;
+        return critChance;
     }
 }

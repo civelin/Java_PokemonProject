@@ -15,8 +15,8 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     final static int defaultDefencePoints = 50;
 
     protected int hp;
-    protected double attackPoints;
-    protected double defencePoints;
+    protected int attackPoints;
+    protected int defencePoints;
 
     // each pokemon has two attacks
     protected PokemonAttack[] attacks = new PokemonAttack[2];
@@ -60,28 +60,28 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
         return name;
     }
 
-    public double getHp() {
+    public int getHp() {
         return hp;
     }
 
-    public void setHp(double hp) {
-        this.hp = (int) hp;
+    public void setHp(int hp) {
+        this.hp =  hp;
     }
 
-    public double getAttackPoints() {
+    public int getAttackPoints() {
         return attackPoints;
     }
 
-    public void setAttackPoints(double attackPoints) {
+    public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
 
     }
 
-    public double getDefencePoints() {
+    public int getDefencePoints() {
         return defencePoints;
     }
 
-    public void setDefencePoints(double defencePoints) {
+    public void setDefencePoints(int defencePoints) {
 
         this.defencePoints = defencePoints;
 
