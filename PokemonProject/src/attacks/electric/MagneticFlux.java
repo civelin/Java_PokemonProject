@@ -19,13 +19,7 @@ public class MagneticFlux extends PokemonAttack {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-
         int finalAttackPower = getFinalAttackPower(userPokemon, enemyPokemon);
-
-
-        if (finalAttackPower < 0) {
-            finalAttackPower = (int) (0.7 * this.attackPower);
-        }
 
         enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalAttackPower));
 
@@ -36,6 +30,10 @@ public class MagneticFlux extends PokemonAttack {
     }
 
     private int getFinalAttackPower(Pokemon userPokemon, Pokemon enemyPokemon) {
-        return (int) ((userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.4);
+        int finalAttackPower =  (int) ((userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.4);
+        if (finalAttackPower < 0) {
+            finalAttackPower = (int) (0.7 * this.attackPower);
+        }
+        return finalAttackPower;
     }
 }

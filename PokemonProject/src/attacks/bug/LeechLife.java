@@ -20,10 +20,6 @@ public class LeechLife extends PokemonAttack {
 
         int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
 
-
-        if (finalInflictedDmg <= 0) {
-            finalInflictedDmg =  this.attackPower;
-        }
         enemyPokemon.setHp(enemyPokemon.getHp() - finalInflictedDmg);
 
         if (userPokemon.getHp() + finalInflictedDmg / 2 < userPokemon.returnInitialHP()) {
@@ -42,6 +38,9 @@ public class LeechLife extends PokemonAttack {
     private int getFinalInflictedDmg(Pokemon userPokemon, Pokemon enemyPokemon) {
         double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.4;
         double finalInflictedDmg = 1.6 * (userPokemon.getAttackPoints() + this.attackPower) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        if (finalInflictedDmg <= 0) {
+            finalInflictedDmg =  this.attackPower;
+        }
         return (int) finalInflictedDmg;
     }
 }

@@ -23,11 +23,7 @@ public class Spark extends PokemonAttack {
         Random randomChance = new Random();
         int critChance = randomChance.nextInt(2); //returns 0 or 1
 
-        int finalAttackPower = (int) (critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3));
-
-        if (finalAttackPower < 0) {
-            finalAttackPower = (int) (0.7 * this.attackPower);
-        }
+        int finalAttackPower = getFinalAttackPower(userPokemon, enemyPokemon, critChance);
 
         enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalAttackPower));
 
@@ -39,5 +35,15 @@ public class Spark extends PokemonAttack {
         }
 
         return critChance;
+    }
+
+    private int getFinalAttackPower(Pokemon userPokemon, Pokemon enemyPokemon, int critChance) {
+        int finalAttackPower = (int) (critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3));
+
+        if (finalAttackPower < 0) {
+            finalAttackPower = (int) (0.7 * this.attackPower);
+        }
+
+        return finalAttackPower;
     }
 }
