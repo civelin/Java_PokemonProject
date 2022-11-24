@@ -17,7 +17,7 @@ public class BurningJealously extends PokemonAttack {
     public int attack(User user, User enemyUser) {
         // get user pokemon that is currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
-        Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
+        Pokemon enemyCurrentPokemon = enemyUser.getCurrentPokemonForBattle();
 
         int attackPower = userPokemon.getAttackPoints() + this.attackPower;
 
@@ -29,11 +29,11 @@ public class BurningJealously extends PokemonAttack {
             System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
         }
 
-        enemyPokemon.setHp((int) (enemyPokemon.getHp() - attackPower + 0.3 * enemyPokemon.getDefencePoints()));
+        enemyCurrentPokemon.setHp((int) (enemyCurrentPokemon.getHp() - attackPower + 0.3 * enemyCurrentPokemon.getDefencePoints()));
 
          
 
-        System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
+        System.out.println("\u2694 " + enemyCurrentPokemon.getName() + " new hp ---> " + enemyCurrentPokemon.getHp());
 
         return  attackPower;
     }

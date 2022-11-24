@@ -11,15 +11,14 @@ import users.userFactory.PCUserFactory;
 
 import static org.testng.Assert.assertEquals;
 
-
 public class AttacksTest {
     private PCUser pcUser;
     private HumanUser humanUser;
     @Before
     public void setUp(){
-         pcUser = PCUserFactory.pcUser1();
+        pcUser = new PCUser("PcUserTester", null);
         pcUser.setCurrentPokemonForBattle(new NormalPokemon());
-        humanUser = new HumanUser("Tester", PokemonFactory.getUserPokemons());
+        humanUser = new HumanUser("Tester", null);
         humanUser.setCurrentPokemonForBattle(new NormalPokemon());
     }
     @Test
