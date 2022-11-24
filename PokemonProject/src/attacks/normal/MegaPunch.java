@@ -26,9 +26,9 @@ public class MegaPunch extends PokemonAttack {
         Random rnd = new Random();
         int critChance = rnd.nextInt(2) + 1;
 
-        double finalInflictedDmg;
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
-        double pokemonAttackPower = userPokemon.getAttackPoints();
+        int finalInflictedDmg;
+        int dmgReductionAccordingToEnemyPokemonDefencePoints = (int) (enemyPokemon.getDefencePoints() * 0.3);
+        int pokemonAttackPower = userPokemon.getAttackPoints();
 
         finalInflictedDmg = (pokemonAttackPower + ((this.attackPower * critChance)) - dmgReductionAccordingToEnemyPokemonDefencePoints);
         enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalInflictedDmg));

@@ -19,7 +19,7 @@ public class Leer extends PokemonAttack {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        double lowerEnemyPokemonDefence = 15;
+        int lowerEnemyPokemonDefence = 15;
 
         if (enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence >= 0) {
             enemyPokemon.setDefencePoints((int) (enemyPokemon.getDefencePoints() - lowerEnemyPokemonDefence));

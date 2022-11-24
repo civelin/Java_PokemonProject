@@ -21,15 +21,9 @@ public class BlazeKick extends PokemonAttack {
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
         Random chanceToBurnOpponentForExtraDmg = new Random();
-        int chance = chanceToBurnOpponentForExtraDmg.nextInt(2);
+        int chance = chanceToBurnOpponentForExtraDmg.nextInt(2); // 0 or 1
 
-        double attackPower;
-
-        if (chance == 0) {
-            attackPower = (userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.3;
-        } else {
-            attackPower = (userPokemon.getAttackPoints() + this.attackPower + 8) - enemyPokemon.getDefencePoints() * 0.3;
-        }
+        int attackPower = getAttackPower(userPokemon, enemyPokemon, chance);
 
         enemyPokemon.setHp((int) (enemyPokemon.getHp() - attackPower));
 
@@ -37,5 +31,16 @@ public class BlazeKick extends PokemonAttack {
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
 
         return chance;
+    }
+
+    private int getAttackPower(Pokemon userPokemon, Pokemon enemyPokemon, int chance) {
+        int attackPower;
+
+        if (chance == 0) {
+            attackPower = (int) ((userPokemon.getAttackPoints() + this.attackPower) - enemyPokemon.getDefencePoints() * 0.3);
+        } else {
+            attackPower = (int) ((userPokemon.getAttackPoints() + this.attackPower + 8) - enemyPokemon.getDefencePoints() * 0.3);
+        }
+        return attackPower;
     }
 }

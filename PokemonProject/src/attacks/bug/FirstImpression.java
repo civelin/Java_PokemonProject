@@ -13,11 +13,6 @@ public class FirstImpression extends PokemonAttack {
         this.attackPower = (int) (1.4 * super.attackPower);
     }
 
-    private int sumFinalInflictedDmg(Pokemon pokemon1, Pokemon pokemon2) {
-        double dmgReductionAccordingToEnemyPokemonDefencePoints = pokemon2.getDefencePoints() * 0.3;
-        int finalInflictedDmg = (pokemon1.getAttackPoints() + (this.attackPower)) - (int)dmgReductionAccordingToEnemyPokemonDefencePoints;
-        return  finalInflictedDmg;
-    }
 
     @Override
     public int attack(User user, User enemyUser) {
@@ -25,7 +20,8 @@ public class FirstImpression extends PokemonAttack {
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
 
-        int finalInflictedDmg = sumFinalInflictedDmg(userPokemon, enemyPokemon);
+        int finalInflictedDmg = getFinalInflictedDmg(userPokemon, enemyPokemon);
+
 
         enemyPokemon.setHp((enemyPokemon.getHp() - finalInflictedDmg));
 
@@ -33,6 +29,12 @@ public class FirstImpression extends PokemonAttack {
         System.out.println("\u2694 " + enemyPokemon.getName() + " new hp ---> " + enemyPokemon.getHp());
 
         return finalInflictedDmg;
+    }
+
+    private int getFinalInflictedDmg(Pokemon userPokemon, Pokemon enemyPokemon) {
+        double dmgReductionAccordingToEnemyPokemonDefencePoints = enemyPokemon.getDefencePoints() * 0.3;
+        double finalInflictedDmg = (userPokemon.getAttackPoints() + (this.attackPower)) - dmgReductionAccordingToEnemyPokemonDefencePoints;
+        return (int) finalInflictedDmg;
     }
 
 }

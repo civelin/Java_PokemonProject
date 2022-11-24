@@ -1,11 +1,11 @@
 package pokemons;
 
 import attacks.*;
-import Utilities.Comparable;
 
 import java.util.List;
+import java.util.Objects;
 
-public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Pokemon> {
+public abstract class Pokemon implements InitialPoints, Revivable {
 
     // fields
     protected String name;
@@ -50,8 +50,17 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
 
     }
 
-    public boolean compare(Pokemon pokemon) {
-        return this.getName().equals(pokemon.getName());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pokemon pokemon = (Pokemon) o;
+        return Objects.equals(name, pokemon.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     // getters & setters
@@ -65,6 +74,7 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
     }
 
     public void setHp(int hp) {
+
         this.hp =  hp;
     }
 
@@ -74,7 +84,6 @@ public abstract class Pokemon implements InitialPoints, Revivable, Comparable<Po
 
     public void setAttackPoints(int attackPoints) {
         this.attackPoints = attackPoints;
-
     }
 
     public int getDefencePoints() {

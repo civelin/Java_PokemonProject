@@ -1,9 +1,10 @@
 package attacks;
 
-import Utilities.Comparable;
 import users.User;
 
-public abstract class PokemonAttack implements Description, Comparable<PokemonAttack> {
+import java.util.Objects;
+
+public abstract class PokemonAttack implements Description {
 
     // fields
     protected String name;
@@ -18,8 +19,16 @@ public abstract class PokemonAttack implements Description, Comparable<PokemonAt
     }
 
     @Override
-    public boolean compare(PokemonAttack attack) {
-        return this.getName().equals(attack.getName());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PokemonAttack that = (PokemonAttack) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     public abstract int attack(User user, User enemyUser);
