@@ -143,7 +143,6 @@ public class HumanUser extends User implements IHumanUser {
         Pokemon pokemon = null;
 
         System.out.println("\u2757 Please select the pokemons with which you want to play. You have to choose 3 pokemons.");
-        System.out.println(GameHelper.printListOfPokemons(this.availablePokemons));
 
         for (int i = 1; i <= 3; i++) {
             boolean isAdded = false;

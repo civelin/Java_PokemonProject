@@ -15,7 +15,7 @@ public class Spark extends PokemonAttack {
     }
 
     @Override
-    public double attack(User user, User enemyUser) {
+    public int attack(User user, User enemyUser) {
         // get only those pokemons that are currently in the battle
         Pokemon userPokemon = user.getCurrentPokemonForBattle();
         Pokemon enemyPokemon = enemyUser.getCurrentPokemonForBattle();
@@ -23,13 +23,13 @@ public class Spark extends PokemonAttack {
         Random randomChance = new Random();
         int critChance = randomChance.nextInt(2); //returns 0 or 1
 
-        double finalAttackPower = critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3);
+        int finalAttackPower = (int) (critChance * ((userPokemon.getAttackPoints() + this.attackPower) * 1.1 - enemyPokemon.getDefencePoints() * 0.3));
 
         if (finalAttackPower < 0) {
-            finalAttackPower = 0.7 * this.attackPower;
+            finalAttackPower = (int) (0.7 * this.attackPower);
         }
 
-        enemyPokemon.setHp(enemyPokemon.getHp() - finalAttackPower);
+        enemyPokemon.setHp((int) (enemyPokemon.getHp() - finalAttackPower));
 
         if (critChance == 0) {
             System.out.println(userPokemon.getName() + " missed the target!");
