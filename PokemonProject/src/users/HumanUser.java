@@ -196,7 +196,7 @@ public class HumanUser extends User implements IHumanUser {
     @Override
     public int enterHumanUserChoice(int upperBound, Scanner scan) {
         String choice = scan.next();
-        while (!Validator.validateUserInputForChoice(upperBound, choice)) {
+        while (!Validator.validateUserInputChoice(upperBound, choice)) {
             choice = scan.next();
         }
 
