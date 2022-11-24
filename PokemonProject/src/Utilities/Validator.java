@@ -22,7 +22,7 @@ public class Validator {
         return matcher.matches();
     }
 
-    public static boolean validateUserInputForChoice(int upperBound, String choice) {
+    public static boolean validateUserInputChoice(int upperBound, String choice) {
         try {
             int integerChoice = Integer.parseInt(choice);
             if (integerChoice >= 1 && integerChoice <= upperBound) {
