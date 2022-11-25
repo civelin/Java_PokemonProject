@@ -100,7 +100,7 @@ public class GamePlay {
     private static boolean userChoiceBetweenEachBattle(HumanUser humanUser) {
         while (true) {
             Menu.printMenuAfterBattle();
-            int choice = humanUser.enterHumanUserChoice(3, scan);
+            int choice = humanUser.enterHumanUserChoice(3);
 
             if (choice == 1) {
                 if (checkHumanUserAvaiablePokemonsListSize(humanUser)){
@@ -154,7 +154,7 @@ public class GamePlay {
     private static void humanUserTurn(HumanUser humanUser, PCUser pcUser) {
         System.out.println(Menu.printTurnMenu());
 
-        int choice = humanUser.chooseOptionBeforeEachTurn();
+        int choice = humanUser.enterHumanUserChoice(3);
         if (choice == 1) {
             PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack();
             System.out.println();

@@ -11,7 +11,7 @@ public interface IUser {
     // methods
     PokemonAttack chooseAttack();
 
-    List<Pokemon> choosePokemonsFromAvailableListToCurrentList();
+    void choosePokemonsFromAvailableListToCurrentList();
     Pokemon choosePokemonForBattleFromCurrentList();
 
     boolean removePokemonFromCurrentList(Pokemon pokemon);

@@ -50,7 +50,7 @@ public abstract class User implements IUser {
     // methods
     @Override
     public boolean addPokemonToCurrentList(Pokemon pokemon) {
-        if (!Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+        if (!this.currentPokemons.contains(pokemon)) {
             this.currentPokemons.add(pokemon);
             return true;
         }
@@ -59,7 +59,7 @@ public abstract class User implements IUser {
 
     @Override
     public boolean removePokemonFromCurrentList(Pokemon pokemon) {
-        if (Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+        if (this.currentPokemons.contains(pokemon)) {
             this.currentPokemons.remove(pokemon);
             return true;
         }
