@@ -34,7 +34,7 @@ public class PCUser extends User implements IPCUser {
     }
 
     @Override
-    public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
+    public void choosePokemonsFromAvailableListToCurrentList() {
         Random randomPokemonGenerator = new Random();
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
@@ -52,7 +52,7 @@ public class PCUser extends User implements IPCUser {
             flag = false;
         }
         System.out.println("\uD83E\uDD14 " + this.name + " is choosing its current pokemons for the battle ...\n" + this.name + " has chosen: ");
-        return pokemons;
+
     }
 
     public Pokemon choosePokemonForBattleFromCurrentList() {

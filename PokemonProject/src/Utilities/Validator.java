@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 
 public class Validator {
     // private constructor
-    private Validator(){}
+    private Validator() {
+    }
+
     public static boolean validateUserName(String username) {
         // compile the regex to create pattern
         // using compile() method
@@ -34,11 +36,6 @@ public class Validator {
             System.out.println("\u274C Choice must be between 1 and " + upperBound + " inclusive");
             return false;
         }
-    }
-
-    public static boolean checkIfGivenListContainsPokemon(List<Pokemon> listOfPokemons, Pokemon pokemon){
-        List<Pokemon> duplicates = listOfPokemons.stream().filter(currPokemon -> currPokemon.equals(pokemon)).toList();
-        return duplicates.size() != 0;
     }
 
 }
