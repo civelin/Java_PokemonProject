@@ -13,35 +13,42 @@ import java.util.Scanner;
 
 public class GamePlay {
     // fields
-    private static final Scanner scan = new Scanner(System.in);
+    private static Scanner scanner;
     private final static int numberOfLevels = 3;
     private static int currentTurn;
+
+    public static void setScan(Scanner scan) {
+        scanner = scan;
+    }
 
     // methods
     public static void start(HumanUser humanUser) {
 
         for (int level = 1; level <= numberOfLevels; level++) {
             currentTurn = 1;
-
             //initialize opponent according to current level
             PCUser pcUser = GameHelper.initializePCUserAccordingToCurrentLevel(level);
 
+            System.out.println("        \u25B6 LEVEL №" + level + " \u25C0");
+            System.out.println("    You are going to face " + pcUser.getName() + "\r\n");
+
+
             // pcUser is choosing pokemons for the battle
-            pcUser.choosePokemonsFromAvailableListToCurrentList();
+            pcUser.choosePokemonsFromAvailableListToCurrentList(null);
             System.out.println(GameHelper.printListOfPokemons(pcUser.getCurrentPokemons()));
             System.out.println();
 
             // humanUser must is choosing pokemons for the battle
             System.out.println(GameHelper.printListOfPokemons(humanUser.getAvailablePokemons()));
-            humanUser.choosePokemonsFromAvailableListToCurrentList();
+            humanUser.choosePokemonsFromAvailableListToCurrentList(scanner);
             System.out.println();
 
             // pcUser is choosing one pokemon for the battle
-            pcUser.choosePokemonForBattleFromCurrentList();
+            pcUser.choosePokemonForBattleFromCurrentList(null);
             System.out.println();
 
             // humanUser choose one pokemon fot the battle
-            humanUser.choosePokemonForBattleFromCurrentList();
+            humanUser.choosePokemonForBattleFromCurrentList(scanner);
             System.out.println();
 
             GamePlay.play(humanUser, pcUser);
@@ -81,7 +88,7 @@ public class GamePlay {
             } else if (humanUser.getCurrentPokemonForBattle() == null) {
                 // human has to choose pokemon for next turn
                 System.out.println("You have to choose new pokemon with whom to continue the game");
-                humanUser.choosePokemonForBattleFromCurrentList();
+                humanUser.choosePokemonForBattleFromCurrentList(scanner);
             }
 
             // Human user on turn
@@ -92,7 +99,7 @@ public class GamePlay {
             if (checkIfUserIsDefeated(pcUser)) {
                 return;
             } else if (pcUser.getCurrentPokemonForBattle() == null) {
-                pcUser.choosePokemonForBattleFromCurrentList();
+                pcUser.choosePokemonForBattleFromCurrentList(null);
             }
             currentTurn++;
         }
@@ -100,7 +107,8 @@ public class GamePlay {
     private static boolean userChoiceBetweenEachBattle(HumanUser humanUser) {
         while (true) {
             Menu.printMenuAfterBattle();
-            int choice = humanUser.enterHumanUserChoice(3, scan);
+            System.out.print("👉");
+            int choice = humanUser.enterHumanUserChoice(3, scanner);
 
             if (choice == 1) {
                 if (checkHumanUserAvaiablePokemonsListSize(humanUser)){
@@ -108,7 +116,7 @@ public class GamePlay {
                 }
                 break;
             } else if (choice == 2) {
-                humanUser.revivePokemon(); //revive pokemon
+                humanUser.revivePokemon(scanner); //revive pokemon
             } else if (choice == 3) {
                 return true;
             }
@@ -122,13 +130,14 @@ public class GamePlay {
         // if pcUser's choice < 13 it will attack
         if (pcUserChoice < 13) {
             // pcUser is choosing attack for the current turn
-            PokemonAttack pcAttackForCurrentTurn = pcUser.chooseAttack();
+            PokemonAttack pcAttackForCurrentTurn = pcUser.chooseAttack(null);
             // pcUser attacks
             System.out.println();
             pcAttackForCurrentTurn.attack(pcUser, humanUser);
             System.out.println();
         } else {
-            pcUser.changeCurrentPokemon();
+            System.out.println();
+            pcUser.changeCurrentPokemon(null);
         }
     }
 
@@ -154,18 +163,21 @@ public class GamePlay {
     private static void humanUserTurn(HumanUser humanUser, PCUser pcUser) {
         System.out.println(Menu.printTurnMenu());
 
-        int choice = humanUser.chooseOptionBeforeEachTurn();
+        int choice = humanUser.enterHumanUserChoice(3, scanner);
         if (choice == 1) {
-            PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack();
+            PokemonAttack humanAttackForCurrentTurn = humanUser.chooseAttack(scanner);
             System.out.println();
             humanAttackForCurrentTurn.attack(humanUser, pcUser);
             System.out.println();
 
         } else if (choice == 2) {
-            humanUser.changeCurrentPokemon();
+            System.out.println();
+            humanUser.changeCurrentPokemon(scanner);
+            System.out.println();
         } else if (choice == 3) {
             System.out.println("❌" + humanUser.getName() + " has forfeited!");
             System.exit(0);
+            System.out.println();
         }
     }
 
@@ -227,7 +239,8 @@ public class GamePlay {
             System.exit(0);
         } else {
             //list of pokemons , from which the user will choose one as a reward of successful battle.
-            humanUser.choosePokemonAsReward(PokemonFactory.getPokemonRewards());
+            humanUser.choosePokemonAsReward(PokemonFactory.getPokemonRewards(), scanner);
+            System.out.println();
             GameHelper.addCrystalAfterWin(humanUser);
         }
     }

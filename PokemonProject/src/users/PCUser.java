@@ -6,6 +6,7 @@ import pokemons.Pokemon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class PCUser extends User implements IPCUser {
     // constructor
@@ -16,7 +17,7 @@ public class PCUser extends User implements IPCUser {
     }
 
     @Override
-    public PokemonAttack chooseAttack() {
+    public PokemonAttack chooseAttack(Scanner scanner) {
         int index = (int) Math.round(Math.random()); // return 0 or 1
         PokemonAttack attack = this.getCurrentPokemonForBattle().getAttacks()[index];
         System.out.println("✔ " + this.name + " has chosen " + attack.getName() + " attack for its move.");
@@ -34,7 +35,7 @@ public class PCUser extends User implements IPCUser {
     }
 
     @Override
-    public List<Pokemon> choosePokemonsFromAvailableListToCurrentList() {
+    public void choosePokemonsFromAvailableListToCurrentList(Scanner scanner) {
         Random randomPokemonGenerator = new Random();
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
@@ -52,10 +53,11 @@ public class PCUser extends User implements IPCUser {
             flag = false;
         }
         System.out.println("\uD83E\uDD14 " + this.name + " is choosing its current pokemons for the battle ...\n" + this.name + " has chosen: ");
-        return pokemons;
+
     }
 
-    public Pokemon choosePokemonForBattleFromCurrentList() {
+    @Override
+    public void choosePokemonForBattleFromCurrentList(Scanner scanner) {
         Random randomPokemonGenerator = new Random();
         int size = this.currentPokemons.size();
         int index = randomPokemonGenerator.nextInt(size);
@@ -65,22 +67,20 @@ public class PCUser extends User implements IPCUser {
         this.removePokemonFromCurrentList(pokemonForBattle);
 
         System.out.println("\u2714 " + this.name + " has chosen " + pokemonForBattle.getName() + " for its move!");
-        return pokemonForBattle;
+
     }
 
     @Override
-    public Pokemon changeCurrentPokemon() {
+    public void changeCurrentPokemon(Scanner scanner) {
         if(this.currentPokemons.size() != 0){
             System.out.println(this.name + " is going to change its pokemon for battle");
             Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
-            Pokemon newCurrentPokemon = choosePokemonForBattleFromCurrentList();
+            choosePokemonForBattleFromCurrentList(scanner);
             if (lastCurrentPokemon != null) {
                 this.addPokemonToCurrentList(lastCurrentPokemon); // return in currentList
             }
-            return newCurrentPokemon;
         } else {
             System.out.println("Cannot change current pokemon");
-            return null;
         }
 
     }

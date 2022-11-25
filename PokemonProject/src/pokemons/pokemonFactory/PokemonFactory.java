@@ -11,10 +11,11 @@ import java.util.*;
 
 public class PokemonFactory {
     // fields
-    private static List<Pokemon> PokemonRewards = pokemonAsRewards();
+    private static List<Pokemon> pokemonRewards = pokemonAsRewards();
 
     // private constructor
-    private PokemonFactory(){}
+    private PokemonFactory() {
+    }
 
     // available pokemons of pcUser1 (level1)
     public static List<Pokemon> PCUser1Pokemons() {
@@ -66,17 +67,16 @@ public class PokemonFactory {
 
     private static List<Pokemon> pokemonAsRewards() {
         List<Pokemon> rewards = new ArrayList<>();
-        rewards.add(new SmallPokemon("Sandshrew", new ArrayList<>(Arrays.asList("normal", "electric"))));
-        rewards.add(new SmallPokemon("Nidoran", new ArrayList<>(Arrays.asList("normal", "grass"))));
         rewards.add(new SmallPokemon("Oddish", new ArrayList<>(Arrays.asList("grass", "bug"))));
-        rewards.add(new NormalPokemon("Golduck", new ArrayList<>(Arrays.asList("electric", "fire"))));
-        rewards.add(new NormalPokemon("Kadabra", new ArrayList<>(Arrays.asList("bug", "grass"))));
+        rewards.add(new LargePokemon("Gengar", new ArrayList<>(Arrays.asList("grass", "fire"))));
+        rewards.add(new SmallPokemon("Sandshrew", new ArrayList<>(Arrays.asList("normal", "electric"))));
         rewards.add(new NormalPokemon("Machoke", new ArrayList<>(Arrays.asList("normal"))));
         rewards.add(new LargePokemon("Tentacruel", new ArrayList<>(Arrays.asList("fire", "bug"))));
+        rewards.add(new SmallPokemon("Nidoran", new ArrayList<>(Arrays.asList("normal", "grass"))));
+        rewards.add(new NormalPokemon("Golduck", new ArrayList<>(Arrays.asList("electric", "fire"))));
         rewards.add(new LargePokemon("Golem", new ArrayList<>(Arrays.asList("normal", "electric"))));
-        rewards.add(new LargePokemon("Gengar", new ArrayList<>(Arrays.asList("grass", "fire"))));
+        rewards.add(new NormalPokemon("Kadabra", new ArrayList<>(Arrays.asList("bug", "grass"))));
         rewards.forEach(PokemonFactory::fillPokemonAttacks);
-        Collections.shuffle(rewards);
         return rewards;
 
     }
@@ -94,35 +94,44 @@ public class PokemonFactory {
             // get all attacks of currentType
             List<PokemonAttack> allAttacksOfCurrentTypeInTheFactory = AttackFactory.getAllAttacks().get(currentType);
 
-            // get the number of all attacks of currentType in the Factory
-            int numberOfAllAttacksOfCurrentTypeInTheFactory = allAttacksOfCurrentTypeInTheFactory.size();
-            for (int i = 0; i < 2; i++) {
-                while (!pokemon.isThereAttackOnConcreteIndexAtPokemonAttacks(i)) {
-                    int randomIndex = randomAttackGenerator.nextInt(numberOfAllAttacksOfCurrentTypeInTheFactory);
-                    // get attack on randomIndex
-                    PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(randomIndex);
-                    if (i == 0) {
-                        pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
-                    } else if (!pokemon.getAttacks()[0].equals(randomAttackOfCurrentType)) {
-                        pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
-                    }
-                }
-            }
+            fillPokemonAttacksWhenPokemonHasExactlyOneType(pokemon, randomAttackGenerator, currentType, allAttacksOfCurrentTypeInTheFactory);
 
         } else {
             // shuffles randomly pokemon's types
             Collections.shuffle(pokemonTypes);
-            for (int i = 0; i < 2; i++) {
-                String currentType = pokemonTypes.get(i);
-                int numberOfCurrentTypeAttacksInTheFactory = AttackFactory.getAllAttacks().get(currentType).size();
-                int index = randomAttackGenerator.nextInt(numberOfCurrentTypeAttacksInTheFactory); // from 0 to numberOfCurrentTypeAttacksInTheFactory - 1
-                PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(index);
-                pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+            fillPokemonAttackWhenPokemonHasMoreThanOneType(pokemon, randomAttackGenerator, pokemonTypes);
+        }
+    }
+
+    private static void fillPokemonAttacksWhenPokemonHasExactlyOneType(Pokemon pokemon, Random randomAttackGenerator, String currentType, List<PokemonAttack> allAttacksOfCurrentTypeInTheFactory) {
+        // get the number of all attacks of currentType in the Factory
+        int numberOfAllAttacksOfCurrentTypeInTheFactory = allAttacksOfCurrentTypeInTheFactory.size();
+        for (int i = 0; i < 2; i++) {
+            while (pokemon.getAttacks()[i] == null){
+                int randomIndex = randomAttackGenerator.nextInt(numberOfAllAttacksOfCurrentTypeInTheFactory);
+                // get attack on randomIndex
+                PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(randomIndex);
+                if (i == 0) {
+                    pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+                } else if (!pokemon.getAttacks()[0].equals(randomAttackOfCurrentType)) {
+                    pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+                }
             }
         }
     }
 
+    private static void fillPokemonAttackWhenPokemonHasMoreThanOneType(Pokemon pokemon, Random randomAttackGenerator, List<String> pokemonTypes) {
+        for (int i = 0; i < 2; i++) {
+            String currentType = pokemonTypes.get(i);
+            int numberOfCurrentTypeAttacksInTheFactory = AttackFactory.getAllAttacks().get(currentType).size();
+            int index = randomAttackGenerator.nextInt(numberOfCurrentTypeAttacksInTheFactory); // from 0 to numberOfCurrentTypeAttacksInTheFactory - 1
+            PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(index);
+            pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+        }
+    }
+
+    // getters
     public static List<Pokemon> getPokemonRewards() {
-        return PokemonRewards;
+        return pokemonRewards;
     }
 }

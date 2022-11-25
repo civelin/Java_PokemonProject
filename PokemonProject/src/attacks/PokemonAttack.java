@@ -14,7 +14,7 @@ public abstract class PokemonAttack implements Description, IAttack {
 
     // methods
     @Override
-    public String getDescription() {
+    public String returnDescription() {
         return "    --> " + this.description;
     }
 
@@ -23,14 +23,13 @@ public abstract class PokemonAttack implements Description, IAttack {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PokemonAttack that = (PokemonAttack) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, type);
     }
-
 
     // getters
     @Override

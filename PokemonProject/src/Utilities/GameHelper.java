@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameHelper {
-    private static final Scanner scan = new Scanner(System.in);
 
     // private constructor
     private GameHelper() {
     }
 
     // methods
-    private static String enterUserName() {
+    public static String enterUserName(Scanner scan) {
         System.out.println("\uD83D\uDC49 Enter username");
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
@@ -28,7 +27,7 @@ public class GameHelper {
             System.out.println("    \u2757 username must be between 8 and 15 characters");
             System.out.println("    \u2757 username must start with letter");
             System.out.println("    \u2757 username can contain letter, numbers and _");
-            return enterUserName();
+            return enterUserName(scan);
         }
 
         System.out.println("\u2714 Successfully entered username.");
@@ -36,10 +35,8 @@ public class GameHelper {
         return userName;
     }
 
-    public static HumanUser initializeHumanUser() {
-        System.out.println(Menu.printLoginMenu());
-        String username = GameHelper.enterUserName();
-        return new HumanUser(username, PokemonFactory.getUserPokemons());
+    public static HumanUser initializeHumanUser(String userName) {
+        return new HumanUser(userName, PokemonFactory.getUserPokemons());
     }
 
     public static PCUser initializePCUserAccordingToCurrentLevel(int level) {
@@ -63,13 +60,13 @@ public class GameHelper {
     public static int addCrystalAfterWin(HumanUser humanUser) {
         humanUser.setCrystals(humanUser.getCrystals() + 1);
         System.out.println("\uD83D\uDC8E You won one crystal");
-        System.out.println("\uD83D\uDC8E ---> Available crystals: " + humanUser.getCrystals());
+        System.out.println("\uD83D\uDC8E ---> Available crystals: " + humanUser.getCrystals() + "\r");
         return humanUser.getCrystals();
     }
 
     public static void doLogicAfterHumanUserPokemonInCurrentListIsDead(HumanUser humanUser, Pokemon deadPokemon) {
         if (deadPokemon.isPokemonDead()) {
-            if(humanUser.removePokemonFromCurrentList(deadPokemon)){
+            if (humanUser.removePokemonFromCurrentList(deadPokemon)) {
                 humanUser.addPokemonToDeadList(deadPokemon);
             }
             humanUser.removePokemonFromAvailableList(deadPokemon);
@@ -82,7 +79,7 @@ public class GameHelper {
         }
     }
 
-    public static String printListOfPokemons(List<Pokemon> pokemons){
+    public static String printListOfPokemons(List<Pokemon> pokemons) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < pokemons.size(); i++) {
             stringBuilder.append(" ").append(i + 1).append(". ").append(pokemons.get(i).getName()).append("\n");

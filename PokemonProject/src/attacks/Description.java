@@ -1,7 +1,7 @@
 package attacks;
 
 public interface Description {
-    String getDescription();
+    String returnDescription();
 
     String getName();
 

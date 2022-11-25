@@ -4,6 +4,7 @@ import Utilities.Validator;
 import pokemons.Pokemon;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class User implements IUser {
     // fields
@@ -29,6 +30,19 @@ public abstract class User implements IUser {
         this.currentPokemonForBattle = currentPokemonForBattle;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
     public void setCurrentPokemons(List<Pokemon> currentPokemons) {
         this.currentPokemons = currentPokemons;
     }
@@ -36,7 +50,7 @@ public abstract class User implements IUser {
     // methods
     @Override
     public boolean addPokemonToCurrentList(Pokemon pokemon) {
-        if (!Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+        if (!this.currentPokemons.contains(pokemon)) {
             this.currentPokemons.add(pokemon);
             return true;
         }
@@ -45,7 +59,7 @@ public abstract class User implements IUser {
 
     @Override
     public boolean removePokemonFromCurrentList(Pokemon pokemon) {
-        if (Validator.checkIfGivenListContainsPokemon(this.currentPokemons, pokemon)) {
+        if (this.currentPokemons.contains(pokemon)) {
             this.currentPokemons.remove(pokemon);
             return true;
         }

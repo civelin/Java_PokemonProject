@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface IHumanUser {
-    int enterHumanUserChoice(int upperBound, Scanner scan);
+    int enterHumanUserChoice(int upperBound, Scanner scanner);
 
     boolean addPokemonToAvailableList(Pokemon pokemon);
 
@@ -16,11 +16,9 @@ public interface IHumanUser {
 
     boolean removePokemonFromDeadList(Pokemon pokemon);
 
-    int chooseOptionBeforeEachTurn();
+    void choosePokemonAsReward(List<Pokemon> pokemons, Scanner scanner);
 
-    boolean choosePokemonAsReward(List<Pokemon> pokemons);
-
-    Pokemon revivePokemon();
+    void revivePokemon(Scanner scanner);
 
 
 }
