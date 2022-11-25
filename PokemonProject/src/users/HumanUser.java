@@ -217,4 +217,5 @@ public class HumanUser extends User implements IHumanUser {
     public void setDeadPokemonList(List<Pokemon> deadPokemonList) {
         this.deadPokemonList = deadPokemonList;
     }
+
 }

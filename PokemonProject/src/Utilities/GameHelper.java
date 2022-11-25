@@ -17,7 +17,7 @@ public class GameHelper {
     }
 
     // methods
-    private static String enterUserName() {
+    public static String enterUserName() {
         System.out.println("\uD83D\uDC49 Enter username");
         System.out.print("\uD83D\uDC49" + " ");
         String userName = scan.next();
@@ -36,10 +36,10 @@ public class GameHelper {
         return userName;
     }
 
-    public static HumanUser initializeHumanUser() {
+    public static HumanUser initializeHumanUser(String userName) {
         System.out.println(Menu.printLoginMenu());
-        String username = GameHelper.enterUserName();
-        return new HumanUser(username, PokemonFactory.getUserPokemons());
+
+        return new HumanUser(userName, PokemonFactory.getUserPokemons());
     }
 
     public static PCUser initializePCUserAccordingToCurrentLevel(int level) {
@@ -69,7 +69,7 @@ public class GameHelper {
 
     public static void doLogicAfterHumanUserPokemonInCurrentListIsDead(HumanUser humanUser, Pokemon deadPokemon) {
         if (deadPokemon.isPokemonDead()) {
-            if(humanUser.removePokemonFromCurrentList(deadPokemon)){
+            if (humanUser.removePokemonFromCurrentList(deadPokemon)) {
                 humanUser.addPokemonToDeadList(deadPokemon);
             }
             humanUser.removePokemonFromAvailableList(deadPokemon);
@@ -82,7 +82,7 @@ public class GameHelper {
         }
     }
 
-    public static String printListOfPokemons(List<Pokemon> pokemons){
+    public static String printListOfPokemons(List<Pokemon> pokemons) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < pokemons.size(); i++) {
             stringBuilder.append(" ").append(i + 1).append(". ").append(pokemons.get(i).getName()).append("\n");
