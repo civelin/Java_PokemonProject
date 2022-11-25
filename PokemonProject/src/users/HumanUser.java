@@ -212,5 +212,7 @@ public class HumanUser extends User implements IHumanUser {
         this.crystals = crystals;
     }
 
-
+    public List<Pokemon> getDeadPokemonList() {
+        return deadPokemonList;
+    }
 }
