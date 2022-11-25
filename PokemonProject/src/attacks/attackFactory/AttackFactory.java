@@ -20,19 +20,19 @@ import java.util.List;
 
 public class AttackFactory {
     // fields
-    private static List<PokemonAttack> bugAttacks = fillBugAttacks();
-    private static List<PokemonAttack> electricAttacks = fillElectricAttacks();
-    private static List<PokemonAttack> fireAttacks = fillFireAttacks();
-    private static List<PokemonAttack> grassAttacks = fillGrassAttacks();
-    private static List<PokemonAttack> normalAttacks = fillNormalAttacks();
-    private static HashMap<String, List<PokemonAttack>> allAttacks = fillAllAttacks();
+    private static List<PokemonAttack> bugAttacks = returnBugAttacks();
+    private static List<PokemonAttack> electricAttacks = returnElectricAttacks();
+    private static List<PokemonAttack> fireAttacks = returnFireAttacks();
+    private static List<PokemonAttack> grassAttacks = returnGrassAttacks();
+    private static List<PokemonAttack> normalAttacks = returnNormalAttacks();
+    private static HashMap<String, List<PokemonAttack>> allAttacks = returnAllAttacks();
 
     // private constructor
     private AttackFactory() {
     }
 
     // fill attacks
-    private static HashMap<String, List<PokemonAttack>> fillAllAttacks() {
+    private static HashMap<String, List<PokemonAttack>> returnAllAttacks() {
 
         HashMap<String, List<PokemonAttack>> attacks = new HashMap<>();
         attacks.put("bug", bugAttacks);
@@ -46,7 +46,7 @@ public class AttackFactory {
 
     //    -> BUG
     // method that returns all current bug attacks
-    private static List<PokemonAttack> fillBugAttacks() {
+    private static List<PokemonAttack> returnBugAttacks() {
         List<PokemonAttack> bugAttacks = new ArrayList<>();
         bugAttacks.add(new FirstImpression());
         bugAttacks.add(new LeechLife());
@@ -64,7 +64,7 @@ public class AttackFactory {
 
     // -> ELECTRIC
     // method that returns all current electric attacks
-    private static List<PokemonAttack> fillElectricAttacks() {
+    private static List<PokemonAttack> returnElectricAttacks() {
         List<PokemonAttack> electricAttacks = new ArrayList<>();
         electricAttacks.add(new MagneticFlux());
         electricAttacks.add(new Spark());
@@ -82,7 +82,7 @@ public class AttackFactory {
 
     // -> FIRE
     // method that returns all current fire attacks
-    private static List<PokemonAttack> fillFireAttacks() {
+    private static List<PokemonAttack> returnFireAttacks() {
         List<PokemonAttack> fireAttacks = new ArrayList<>();
         fireAttacks.add(new BlazeKick());
         fireAttacks.add(new BurningJealously());
@@ -101,7 +101,7 @@ public class AttackFactory {
 
     // -> GRASS
     // method that returns all current grass attacks
-    private static List<PokemonAttack> fillGrassAttacks() {
+    private static List<PokemonAttack> returnGrassAttacks() {
         List<PokemonAttack> grassAttacks = new ArrayList<>();
         grassAttacks.add(new CottonGuard());
         grassAttacks.add(new HornLeech());
@@ -119,7 +119,7 @@ public class AttackFactory {
 
     // -> NORMAL
     // method that returns all current normal attacks
-    private static List<PokemonAttack> fillNormalAttacks() {
+    private static List<PokemonAttack> returnNormalAttacks() {
         List<PokemonAttack> normalAttacks = new ArrayList<>();
         normalAttacks.add(new Leer());
         normalAttacks.add(new MegaPunch());

@@ -1,6 +1,5 @@
 package pokemons;
 
-import Utilities.Validator;
 import attacks.*;
 
 import java.util.List;
@@ -41,14 +40,10 @@ public abstract class Pokemon implements InitialPoints, Revivable {
         }
     }
 
-    public boolean isThereAttackOnConcreteIndexAtPokemonAttacks(int index) {
-        return attacks[index] != null;
-    }
-
     public void printAttacks() {
         System.out.println("-> " + this.name + "'s attacks:");
         for (int i = 0; i <= 1; i++) {
-            System.out.println((i + 1) + ". " + this.attacks[i].getDescription());
+            System.out.println((i + 1) + ". " + this.attacks[i].returnDescription());
         }
 
     }

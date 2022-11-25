@@ -4,24 +4,16 @@ import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import Utilities.Validator;
+import pokemons.pokemonFactory.PokemonFactory;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.*;
 
 public class HumanUser extends User implements IHumanUser {
-
     // fields
     private int crystals;
     private List<Pokemon> deadPokemonList;
-    private Scanner scan;
-    private PrintStream printStream;
-
-    public void setOutputAndInputStream(InputStream inputStream, PrintStream printStream) {
-        this.scan = new Scanner(inputStream);
-        this.printStream = printStream;
-    }
-
 
     // constructor
     public HumanUser(String name, List<Pokemon> availablePokemons) {
@@ -33,7 +25,6 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     //methods from interfaces
-
 
     @Override
     public boolean addPokemonToAvailableList(Pokemon newPokemon) {
@@ -53,7 +44,6 @@ public class HumanUser extends User implements IHumanUser {
         return false;
     }
 
-
     @Override
     public boolean addPokemonToDeadList(Pokemon pokemon) {
         if (pokemon.isPokemonDead() && !this.deadPokemonList.contains(pokemon)) {
@@ -72,90 +62,86 @@ public class HumanUser extends User implements IHumanUser {
         return false;
     }
 
-
     @Override
-    public PokemonAttack chooseAttack() {
+    public PokemonAttack chooseAttack(Scanner scan) {
         this.currentPokemonForBattle.printAttacks();
-        printStream.println("\uD83D\uDC49 Please select attack:");
-        printStream.print("\uD83D\uDC49");
-        int choice = enterHumanUserChoice(2);
+        System.out.println("\uD83D\uDC49 Please select attack:");
+        System.out.print("\uD83D\uDC49");
+        int choice = enterHumanUserChoice(2, scan);
         return this.currentPokemonForBattle.getAttacks()[choice - 1];
-
     }
 
-
     @Override
-    public void choosePokemonAsReward(List<Pokemon> pokemons) {
-        printStream.println("Choose one of the pokemons as a reward!");
-        int index = 1;
-        for (Pokemon pokemon : pokemons) {
-            printStream.println(index + "." + pokemon.getName());
-            index++;
-        }
+    public void choosePokemonAsReward(List<Pokemon> pokemons, Scanner scanner) {
+        System.out.println("Choose one of the pokemons as a reward!");
+        System.out.println(GameHelper.printListOfPokemons(PokemonFactory.getPokemonRewards()));
 
-        int choice = enterHumanUserChoice(pokemons.size());
+        int choice = enterHumanUserChoice(pokemons.size(), scanner);
 
         Pokemon rewardPokemon = pokemons.get(choice - 1);
 
+
         if (addPokemonToAvailableList(rewardPokemon)) {
-            printStream.println("Congratulation , you have added successfully " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!");
+            System.out.println("Congratulation , you have added successfully " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!\r");
             pokemons.remove(rewardPokemon);
         } else {
-            printStream.println("You already have that pokemon !! Please select another one !");
+            System.out.println("You already have that pokemon !! Please select another one !\r");
         }
 
     }
 
     @Override
-    public void revivePokemon() {
+    public void revivePokemon(Scanner scanner) {
 
         if (deadPokemonList.size() > 0 && crystals > 0) {
-            printStream.println("Select which pokemon you'd like to revive!");
-            printStream.println("One revive costs one crystal!");
-            printStream.println(GameHelper.printListOfPokemons(this.deadPokemonList));
-            int choice = enterHumanUserChoice(deadPokemonList.size());
+            System.out.println("Select which pokemon you'd like to revive!");
+            System.out.println("One revive costs one crystal!");
+
+            System.out.println(GameHelper.printListOfPokemons(this.deadPokemonList));
+
+            int choice = enterHumanUserChoice(deadPokemonList.size(), scanner);
             Pokemon chosenDeadPokemon = this.deadPokemonList.get(choice - 1);
             chosenDeadPokemon.resetInitialPointsOfPokemon();
             addPokemonToAvailableList(chosenDeadPokemon);
             removePokemonFromDeadList(chosenDeadPokemon);
 
-            printStream.println("You successfully revived " + chosenDeadPokemon.getName());
+            System.out.println("You successfully revived " + chosenDeadPokemon.getName());
             crystals--;
-            printStream.println("After the revive , you have left with " + crystals + " crystals.");
+            System.out.println("After the revive , you have left with " + crystals + " crystals.");
 
         } else {
-            printStream.println("You don't have enough crystals or dead pokemons ! ");
-            printStream.println("Available crystals ---->" + crystals);
-            printStream.print("Dead pokemons ---->");
+            System.out.println("You don't have enough crystals or dead pokemons ! ");
+            System.out.println("Available crystals ---->" + crystals);
+            System.out.print("Dead pokemons ----> ");
             for (Pokemon pokemon : this.deadPokemonList) {
-                printStream.print(pokemon.getName() + " ");
+                System.out.print(pokemon.getName() + " ");
             }
 
-            printStream.println();
+            System.out.println();
         }
 
     }
 
 
     @Override
-    public void choosePokemonsFromAvailableListToCurrentList() {
+    public void choosePokemonsFromAvailableListToCurrentList(Scanner scanner) {
         List<Pokemon> pokemons = new ArrayList<>();
         Pokemon pokemon = null;
-        printStream.println("\u2757 Select 3 pokemons with which you want to play.");
+        System.out.println("\u2757 Select 3 pokemons with which you want to play.");
 
         for (int i = 1; i <= 3; i++) {
             boolean isAdded = false;
-            printStream.println("\uD83D\uDC49 Please enter your choice");
+            System.out.println("\uD83D\uDC49 Please enter your choice");
 
             while (!isAdded) {
-                printStream.print("\uD83D\uDC49");
-                int choice = enterHumanUserChoice(availablePokemons.size());
+                System.out.print("\uD83D\uDC49");
+                int choice = enterHumanUserChoice(availablePokemons.size(), scanner);
                 pokemon = availablePokemons.get(choice - 1);
                 isAdded = this.addPokemonToCurrentList(pokemon);
                 if (isAdded) {
-                    printStream.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
+                    System.out.println("\u2714 " + pokemon.getName() + " has been successfully chosen.");
                 } else {
-                    printStream.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
+                    System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
                 }
             }
             pokemons.add(pokemon);
@@ -163,40 +149,39 @@ public class HumanUser extends User implements IHumanUser {
     }
 
     @Override
-    public Pokemon choosePokemonForBattleFromCurrentList() {
+    public void choosePokemonForBattleFromCurrentList(Scanner scanner) {
 
-        printStream.println("❗ Please choose your pokemon for this turn:");
-        printStream.println(GameHelper.printListOfPokemons(this.currentPokemons));
-        printStream.print("\n\uD83D\uDC49 ");
-        int choice = enterHumanUserChoice(currentPokemons.size());
+        System.out.println("❗ Please choose your pokemon for this turn:");
+        System.out.println(GameHelper.printListOfPokemons(this.currentPokemons));
+        System.out.print("\n\uD83D\uDC49 ");
+        int choice = enterHumanUserChoice(currentPokemons.size(), scanner);
 
         Pokemon pokemonForBattle = this.currentPokemons.get(choice - 1);
         this.currentPokemonForBattle = pokemonForBattle;
         this.removePokemonFromCurrentList(pokemonForBattle);
-        printStream.println("✔ You chose " + this.currentPokemonForBattle.getName() + "!");
-        return pokemonForBattle;
+        System.out.println("✔ You chose " + this.currentPokemonForBattle.getName() + "!");
+
     }
 
     @Override
-    public Pokemon changeCurrentPokemon() {
+    public void changeCurrentPokemon(Scanner scanner) {
         if (this.currentPokemons.size() != 0) {
             Pokemon lastCurrentPokemon = this.currentPokemonForBattle;
-            Pokemon newCurrentPokemon = this.choosePokemonForBattleFromCurrentList();
+            this.choosePokemonForBattleFromCurrentList(scanner);
+            // in case that current pokemon is not dead
             if (lastCurrentPokemon != null) {
                 this.addPokemonToCurrentList(lastCurrentPokemon);
             }
-            return newCurrentPokemon;
         } else {
-            printStream.println("Cannot change current pokemon");
-            return null;
+            System.out.println("Cannot change current pokemon");
         }
     }
 
     @Override
-    public int enterHumanUserChoice(int upperBound) {
-        String choice = scan.next();
+    public int enterHumanUserChoice(int upperBound, Scanner scanner) {
+        String choice = scanner.next();
         while (!Validator.validateUserInputChoice(upperBound, choice)) {
-            choice = scan.next();
+            choice = scanner.next();
         }
         return Integer.parseInt(choice);
     }

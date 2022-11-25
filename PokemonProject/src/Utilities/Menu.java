@@ -18,7 +18,7 @@ public class Menu {
         return """
                 Please choose what you want to do.
                 1. Attack
-                2. Change pokemon
+                2. Change pokemon (in that case you will miss the turn!)
                 3. Forfeit (in that case you will lose the battle!)
                 """;
     }

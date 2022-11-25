@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -20,10 +21,8 @@ public class GameHelperTests {
     @Test
     public void testEnterUserName(){
         String input = "Valyoo12345";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        assertEquals("Valyoo12345", GameHelper.enterUserName());
+        String actualUserName = GameHelper.enterUserName(new Scanner(new ByteArrayInputStream(input.getBytes())));
+        assertEquals("Valyoo12345", actualUserName);
     }
     @Test
     public void testInitializeHumanUser(){

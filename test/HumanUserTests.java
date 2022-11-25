@@ -15,6 +15,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -90,30 +91,13 @@ public class HumanUserTests {
 
         // simulated human user input equals to "1"
         System.setIn(new ByteArrayInputStream("1\r\n".getBytes()));
-        humanUser.setOutputAndInputStream(System.in, System.out);
 
         // invoke human user's method chooseAttack
-        PokemonAttack actualAttack = humanUser.chooseAttack();
+        PokemonAttack actualAttack = humanUser.chooseAttack(new Scanner(new ByteArrayInputStream("1\r\n".getBytes())));
 
         // check if actual attack is equal to attack1 at index 1
         assertEquals(attack1, actualAttack);
 
-    }
-
-    @Test
-    public void testChoosePokemonsFromAvailableListToCurrentList() {
-        // simulate human user input "1\n1\n2\n3"
-        System.setIn(new ByteArrayInputStream("1\n1\n2\n3".getBytes()));
-
-        humanUser.setOutputAndInputStream(System.in, System.out);
-        humanUser.choosePokemonsFromAvailableListToCurrentList();
-
-        List<Pokemon> expectedUserCurrentPokemonList = Arrays.asList(new NormalPokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))),
-                new SmallPokemon("Bellsprout", new ArrayList<>(Arrays.asList("grass", "bug"))),
-                new SmallPokemon("Venonat", new ArrayList<>(Arrays.asList("fire"))));
-
-
-        assertEquals(humanUser.getCurrentPokemons(), expectedUserCurrentPokemonList);
     }
 
     @Test
@@ -129,11 +113,8 @@ public class HumanUserTests {
         rewards.add(reward3);
 
         // simulate human user input "2" -> reward2
-        System.setIn(new ByteArrayInputStream("2\r\n".getBytes()));
-        humanUser.setOutputAndInputStream(System.in, System.out);
-
         // invoke human user's method choosePokemonAsReward with created rewards
-        humanUser.choosePokemonAsReward(rewards);
+        humanUser.choosePokemonAsReward(rewards,new Scanner(new ByteArrayInputStream("2\r\n".getBytes())));
 
         // check if human user has such a reward at its available pokemons
         assertTrue(humanUser.getAvailablePokemons().contains(reward2));
@@ -144,6 +125,21 @@ public class HumanUserTests {
     }
 
     @Test
+    public void testChoosePokemonsFromAvailableListToCurrentList() {
+        // simulate human user input "1\n1\n2\n3"
+
+        humanUser.choosePokemonsFromAvailableListToCurrentList(new Scanner(new ByteArrayInputStream("1\n1\n2\n3".getBytes())));
+
+        List<Pokemon> expectedUserCurrentPokemonList = Arrays.asList(new NormalPokemon("Growlithe", new ArrayList<>(Arrays.asList("fire", "electric"))),
+                new SmallPokemon("Bellsprout", new ArrayList<>(Arrays.asList("grass", "bug"))),
+                new SmallPokemon("Venonat", new ArrayList<>(Arrays.asList("fire"))));
+
+
+        assertEquals(humanUser.getCurrentPokemons(), expectedUserCurrentPokemonList);
+    }
+
+
+    @Test
     public void testRevivePokemonWhenUserHasPositiveNumberOfCrystalsAndAtLeastOneDeadPokemon() {
         // add one crystal to user
         humanUser.setCrystals(2);
@@ -152,11 +148,8 @@ public class HumanUserTests {
         assertFalse(humanUser.getAvailablePokemons().contains(deadPokemon));
 
         // simulate human user input "1"
-        System.setIn(new ByteArrayInputStream("1\r\n".getBytes()));
-        humanUser.setOutputAndInputStream(System.in, System.out);
-
         // invoke method revivePokemon
-        humanUser.revivePokemon();
+        humanUser.revivePokemon(new Scanner(new ByteArrayInputStream("1\r\n".getBytes())));
 
         // check that dead pokemon is at available list
         assertTrue(humanUser.getAvailablePokemons().contains(deadPokemon));
@@ -166,5 +159,33 @@ public class HumanUserTests {
         assertEquals(1, humanUser.getCrystals());
     }
 
+
+    @Test
+    public void testChangeCurrentPokemonWhenUserIsAllowedToChange(){
+        Pokemon currentPokemon = new SmallPokemon("Niko", null);
+        humanUser.setCurrentPokemonForBattle(currentPokemon);
+
+        List<Pokemon> currentPokemons = new ArrayList<>();
+        currentPokemons.add(new SmallPokemon("Pichu", null));
+
+        humanUser.setCurrentPokemons(currentPokemons);
+
+        humanUser.changeCurrentPokemon(new Scanner(new ByteArrayInputStream("1\n".getBytes())));
+
+        // check for equality only names, because two pokemons are equal when their names are the same
+        assertEquals(humanUser.getCurrentPokemonForBattle().getName(), "Pichu");
+
+    }
+
+    @Test
+    public void testChangeCurrentPokemonWhenUserIsNotAllowedToChange(){
+        Pokemon currentPokemon = new SmallPokemon("Niko", null);
+        humanUser.setCurrentPokemonForBattle(currentPokemon);
+
+        humanUser.changeCurrentPokemon(null);
+
+        assertEquals("Niko", humanUser.getCurrentPokemonForBattle().getName());
+
+    }
 }
 
