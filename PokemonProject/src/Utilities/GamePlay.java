@@ -39,6 +39,7 @@ public class GamePlay {
             System.out.println();
 
             // humanUser must is choosing pokemons for the battle
+            System.out.println("Your pokemons---->");
             System.out.println(GameHelper.printListOfPokemons(humanUser.getAvailablePokemons()));
             humanUser.choosePokemonsFromAvailableListToCurrentList(scanner);
             System.out.println();
@@ -84,6 +85,7 @@ public class GamePlay {
             // checking if humanUser's pokemon for current battle is dead
             doLogicAfterHumanUserIsAttacked(humanUser);
             if (checkIfUserIsDefeated(humanUser)) {
+                System.out.println("You have been defeated by "+pcUser.getName()+"\r\n");
                 return;
             } else if (humanUser.getCurrentPokemonForBattle() == null) {
                 // human has to choose pokemon for next turn
@@ -97,6 +99,7 @@ public class GamePlay {
             // do logic after pcUser had been attacked and check if pcUser's pokemon for current battle is dead
             doLogicAfterPcUserIsAttacked(pcUser);
             if (checkIfUserIsDefeated(pcUser)) {
+                System.out.println(pcUser.getName()+" has been defeated! Good job.\r\n");
                 return;
             } else if (pcUser.getCurrentPokemonForBattle() == null) {
                 pcUser.choosePokemonForBattleFromCurrentList(null);
