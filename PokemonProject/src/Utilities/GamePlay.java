@@ -13,13 +13,13 @@ import java.util.Scanner;
 
 public class GamePlay {
     // fields
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
     private final static int numberOfLevels = 3;
     private static int currentTurn;
 
-    public static void setScan(Scanner scan) {
-        scanner = scan;
-    }
+//    public static void setScan(Scanner scan) {
+//        scanner = scan;
+//    }
 
     // methods
     public static void start(HumanUser humanUser) {
@@ -171,9 +171,13 @@ public class GamePlay {
             System.out.println();
 
         } else if (choice == 2) {
-            System.out.println();
-            humanUser.changeCurrentPokemon(scanner);
-            System.out.println();
+            Menu.printOptionWhenUserChoseToChangePokemonsDuringBattle();
+            int choice2 =  humanUser.enterHumanUserChoice(2, scanner);
+            switch (choice2){
+                case 1 ->   humanUser.changeCurrentPokemon(scanner);
+                case 2 ->   humanUserTurn(humanUser , pcUser);
+            }
+
         } else if (choice == 3) {
             System.out.println("❌" + humanUser.getName() + " has forfeited!");
             System.exit(0);
