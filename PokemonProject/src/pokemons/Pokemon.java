@@ -32,22 +32,6 @@ public abstract class Pokemon implements InitialPoints, Revivable {
         this.defencePoints = this.returnInitialDefencePoints();
     }
 
-    public void addAttackToPokemon(PokemonAttack attack, int index) {
-        if(index >= 0 && index < attacks.length){
-            if (attacks[index] == null) {
-                attacks[index] = attack;
-            }
-        }
-    }
-
-    public void printAttacks() {
-        System.out.println("-> " + this.name + "'s attacks:");
-        for (int i = 0; i <= 1; i++) {
-            System.out.println((i + 1) + ". " + this.attacks[i].returnDescription());
-        }
-
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

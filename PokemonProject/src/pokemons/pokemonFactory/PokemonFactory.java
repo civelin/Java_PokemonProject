@@ -1,5 +1,6 @@
 package pokemons.pokemonFactory;
 
+import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import attacks.attackFactory.AttackFactory;
 import pokemons.LargePokemon;
@@ -112,9 +113,9 @@ public class PokemonFactory {
                 // get attack on randomIndex
                 PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(randomIndex);
                 if (i == 0) {
-                    pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+                    GameHelper.addAttackToPokemon(pokemon , randomAttackOfCurrentType , i);
                 } else if (!pokemon.getAttacks()[0].equals(randomAttackOfCurrentType)) {
-                    pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+                    GameHelper.addAttackToPokemon(pokemon , randomAttackOfCurrentType , i);
                 }
             }
         }
@@ -126,7 +127,7 @@ public class PokemonFactory {
             int numberOfCurrentTypeAttacksInTheFactory = AttackFactory.getAllAttacks().get(currentType).size();
             int index = randomAttackGenerator.nextInt(numberOfCurrentTypeAttacksInTheFactory); // from 0 to numberOfCurrentTypeAttacksInTheFactory - 1
             PokemonAttack randomAttackOfCurrentType = AttackFactory.getAllAttacks().get(currentType).get(index);
-            pokemon.addAttackToPokemon(randomAttackOfCurrentType, i);
+            GameHelper.addAttackToPokemon(pokemon , randomAttackOfCurrentType , i);
         }
     }
 

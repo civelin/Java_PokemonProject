@@ -17,7 +17,7 @@ public class Menu {
     public static String printTurnMenu() {
 
         return """
-                Please choose what you want to do.
+                ❗ Please choose what you want to do.
                 1. Attack
                 2. Change pokemon (in that case you will miss the turn!)
                 3. Forfeit (in that case you will lose the battle!)
@@ -47,15 +47,15 @@ public class Menu {
                 1 pokemon from the already chosen with which you will fight the opponent's pokemon. In every turn you can attack,
                 change your fighting pokemon or forfeit the battle (!!!ALERT!!! you will loose the game!).
                 Each pokemon has 2 attacks , health points , attack points and defence points. The battle is played
-                in turns where your opponent is always first. One player becomes winner of a battle when all of the opponent's pokemons
-                 are defeated. For every achieved win, you will be granted to choose one pokemon as a reward and receive
-                 a crystal. The crystal can be used to revive a dead pokemon.
-                If you are defeated on the first level, the game is over!Nonetheless,  defeats on level 2 and 3,
+                in turns where your opponent is always first. One player is victorious when all of the opponent's pokemons
+                are defeated. For every achieved win, you will be granted to choose one pokemon as a reward and receive
+                a crystal. The crystal can be used to revive a dead pokemon.
+                If you are defeated on the first level, the game is over! Nonetheless, defeats on level 2 and 3,
                 you have a chance to replay the battle if you meet one of the requirements which are the following ----->.
                     ---> At least 3 alive pokemons
                     ---> At least 1 crystal and 2 alive pokemons
                     ---> At least 2 crystals and 1 alive pokemon.
                 Major success is achieved when all of the levels are passed.
-                \uD83E\uDD1E Good luck and have fun!\r\n""");
+                \uD83E\uDD1E Good luck and have fun!\r""");
     }
 }

@@ -17,9 +17,6 @@ public class GamePlay {
     private final static int numberOfLevels = 3;
     private static int currentTurn;
 
-//    public static void setScan(Scanner scan) {
-//        scanner = scan;
-//    }
 
     // methods
     public static void start(HumanUser humanUser) {
@@ -32,11 +29,8 @@ public class GamePlay {
             System.out.println("        \u25B6 LEVEL №" + level + " \u25C0");
             System.out.println("    You are going to face " + pcUser.getName() + "\r\n");
 
-
             // pcUser is choosing pokemons for the battle
             pcUser.choosePokemonsFromAvailableListToCurrentList(null);
-            System.out.println(GameHelper.printListOfPokemons(pcUser.getCurrentPokemons()));
-            System.out.println();
 
             // humanUser must is choosing pokemons for the battle
             System.out.println("Your pokemons---->");
@@ -64,16 +58,17 @@ public class GamePlay {
                     System.exit(0);
                 } else {
                     if (!isHumanUserMetRequirementsToContinueTheGame(humanUser)){
-                        return;
+                        System.out.println("You have lost the game! Better luck next time!");
+                        System.exit(0);
                     }
-                    level = restartLevelIfHumanUserLostBattle(level);
+                    level--;
                 }
             }
 
-            resetInitialPointsOfPokemonAfterEachBattle(humanUser, pcUser);
+            GamePlay.resetInitialPointsOfPokemonsAfterEachBattle(humanUser, pcUser);
 
-            //menu between the battles
-            if (userChoiceBetweenEachBattle(humanUser)) return;
+            //user has to choose what to do between battles
+            GamePlay.userChoiceBetweenEachBattle(humanUser);
 
         }
     }
@@ -81,11 +76,14 @@ public class GamePlay {
         // battle starts
         while (true) {
             System.out.println("❗ It's " + pcUser.getName() + " turn!");
+
             pcUserTurn(humanUser, pcUser);
-            // checking if humanUser's pokemon for current battle is dead
+
+            // do logic after humanUser has been attacked
             doLogicAfterHumanUserIsAttacked(humanUser);
             if (checkIfUserIsDefeated(humanUser)) {
-                System.out.println("You have been defeated by "+pcUser.getName()+"\r\n");
+                System.out.println("You have been defeated by "+pcUser.getName()+".\r\n" +
+                        "The battle took "+currentTurn+" turns.");
                 return;
             } else if (humanUser.getCurrentPokemonForBattle() == null) {
                 // human has to choose pokemon for next turn
@@ -96,10 +94,12 @@ public class GamePlay {
             // Human user on turn
             System.out.println("❗It's " + humanUser.getName() + " turn!");
             humanUserTurn(humanUser, pcUser);
-            // do logic after pcUser had been attacked and check if pcUser's pokemon for current battle is dead
+            // do logic after pcUser has been attacked
             doLogicAfterPcUserIsAttacked(pcUser);
+
             if (checkIfUserIsDefeated(pcUser)) {
-                System.out.println(pcUser.getName()+" has been defeated! Good job.\r\n");
+                System.out.println(pcUser.getName()+" has been defeated! Good job.\r\n" +
+                        "The battle took "+currentTurn+" turns.");
                 return;
             } else if (pcUser.getCurrentPokemonForBattle() == null) {
                 pcUser.choosePokemonForBattleFromCurrentList(null);
@@ -107,24 +107,23 @@ public class GamePlay {
             currentTurn++;
         }
     }
-    private static boolean userChoiceBetweenEachBattle(HumanUser humanUser) {
+    private static void userChoiceBetweenEachBattle(HumanUser humanUser) {
         while (true) {
             Menu.printMenuAfterBattle();
             System.out.print("👉");
             int choice = humanUser.enterHumanUserChoice(3, scanner);
 
             if (choice == 1) {
-                if (checkHumanUserAvaiablePokemonsListSize(humanUser)){
+                if (checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(humanUser)){
                     continue;
                 }
                 break;
             } else if (choice == 2) {
                 humanUser.revivePokemon(scanner); //revive pokemon
             } else if (choice == 3) {
-                return true;
+                System.exit(0);
             }
         }
-        return false;
     }
     private static void pcUserTurn(HumanUser humanUser, PCUser pcUser) {
 
@@ -151,15 +150,13 @@ public class GamePlay {
         if (humanUserDeadPokemonsAtCurrentList.size() != 0) {
             humanUserDeadPokemonsAtCurrentList.forEach(deadPokemon -> {
                 System.out.println("\uD83D\uDC80" + deadPokemon.getName() + " is dead.");
-                GameHelper.doLogicAfterHumanUserPokemonInCurrentListIsDead(humanUser, deadPokemon);
+                GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser, deadPokemon);
             });
         }
 
         if (humanUserCurrentPokemon.isPokemonDead()) {
             System.out.println("\uD83D\uDC80" + humanUserCurrentPokemon.getName() + " is dead.");
-            humanUser.addPokemonToDeadList(humanUserCurrentPokemon);
-            humanUser.removePokemonFromAvailableList(humanUserCurrentPokemon);
-            humanUser.setCurrentPokemonForBattle(null);
+           GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser , humanUserCurrentPokemon);
         }
 
     }
@@ -184,7 +181,6 @@ public class GamePlay {
         } else if (choice == 3) {
             System.out.println("❌" + humanUser.getName() + " has forfeited!");
             System.exit(0);
-            System.out.println();
         }
     }
 
@@ -205,7 +201,7 @@ public class GamePlay {
             pcUser.setCurrentPokemonForBattle(null);
         }
     }
-    private static boolean checkHumanUserAvaiablePokemonsListSize(HumanUser humanUser) {
+    private static boolean checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(HumanUser humanUser) {
         if (humanUser.getAvailablePokemons().size() < 3) {
             System.out.println("You must have 3 alive pokemons before jumping into the next battle! Please revive any pokemon!");
             return true;
@@ -213,7 +209,7 @@ public class GamePlay {
         return false;
     }
 
-    private static void resetInitialPointsOfPokemonAfterEachBattle(HumanUser humanUser, PCUser pcUser) {
+    private static void resetInitialPointsOfPokemonsAfterEachBattle(HumanUser humanUser, PCUser pcUser) {
         for (Pokemon pokemon : humanUser.getAvailablePokemons()) {
             pokemon.resetInitialPointsOfPokemon();
         }
@@ -222,32 +218,21 @@ public class GamePlay {
         }
     }
 
-    private static int restartLevelIfHumanUserLostBattle(int level) {
-        if (level == 2) {
-            level = 1;
-        } else if (level == 3) {
-            level = 2;
-        }
-        return level;
-    }
-
     private static boolean isHumanUserMetRequirementsToContinueTheGame(HumanUser humanUser) {
-        if (humanUser.getAvailablePokemons().size() < 2 && humanUser.getCrystals() < 2 || humanUser.getAvailablePokemons().size() <= 2 && humanUser.getCrystals() == 0) {
-            System.out.println("You have lost the game! Better luck next time!");
-            return false;
-        }
-        return true;
+        return (humanUser.getAvailablePokemons().size() >= 2 || humanUser.getCrystals() >= 2) && (humanUser.getAvailablePokemons().size() > 2 || humanUser.getCrystals() != 0);
     }
 
     private static void doLogicAfterHumanUserIsWinner(HumanUser humanUser, int level) {
         if (level == 3) {
             //final text after the last opponent is defeated
-            System.out.println("\uD83C\uDF87" +  " Congratulations, you beat all the opponents!!!\nYou won nothing, in fact you lost VALUABLE time by playing the game. Bye bye");
+            System.out.println("""
+                    \uD83C\uDF87 Congratulations, you beat all the opponents!!!
+                    You won nothing, in fact you lost VALUABLE time by playing the game. Bye bye\r
+                    Best regards from Valyo and Tsveti :)""");
             System.exit(0);
         } else {
             //list of pokemons , from which the user will choose one as a reward of successful battle.
             humanUser.choosePokemonAsReward(PokemonFactory.getPokemonRewards(), scanner);
-            System.out.println();
             GameHelper.addCrystalAfterWin(humanUser);
         }
     }

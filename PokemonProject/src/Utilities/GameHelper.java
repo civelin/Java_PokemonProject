@@ -1,5 +1,6 @@
 package Utilities;
 
+import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
@@ -27,11 +28,10 @@ public class GameHelper {
             System.out.println("    \u2757 username must be between 8 and 15 characters");
             System.out.println("    \u2757 username must start with letter");
             System.out.println("    \u2757 username can contain letter, numbers and _");
-            return enterUserName(scan);
+            return GameHelper.enterUserName(scan);
         }
 
-        System.out.println("\u2714 Successfully entered username.");
-        System.out.println();
+        System.out.println("\u2714 Successfully entered username.\r\n");
         return userName;
     }
 
@@ -56,27 +56,35 @@ public class GameHelper {
         return pcUser;
     }
 
+    public static void addAttackToPokemon(Pokemon pokemon, PokemonAttack attack, int index) {
+        if (index >= 0 && index < pokemon.getAttacks().length) {
+            if (pokemon.getAttacks()[index] == null) {
+                pokemon.getAttacks()[index] = attack;
+            }
+        }
+    }
+
+
     // add 1 crystal to humanUser's crystals
-    public static int addCrystalAfterWin(HumanUser humanUser) {
+    public static void addCrystalAfterWin(HumanUser humanUser) {
         humanUser.setCrystals(humanUser.getCrystals() + 1);
         System.out.println("\uD83D\uDC8E You won one crystal");
         System.out.println("\uD83D\uDC8E ---> Available crystals: " + humanUser.getCrystals() + "\r");
-        return humanUser.getCrystals();
     }
 
-    public static void doLogicAfterHumanUserPokemonInCurrentListIsDead(HumanUser humanUser, Pokemon deadPokemon) {
-        if (deadPokemon.isPokemonDead()) {
-            if (humanUser.removePokemonFromCurrentList(deadPokemon)) {
-                humanUser.addPokemonToDeadList(deadPokemon);
-            }
-            humanUser.removePokemonFromAvailableList(deadPokemon);
+    public static void doLogicAfterHumanUserPokemonIsDead(HumanUser humanUser, Pokemon deadPokemon) {
+        humanUser.addPokemonToDeadList(deadPokemon);
+        humanUser.removePokemonFromAvailableList(deadPokemon);
+        if (humanUser.getCurrentPokemons().contains(deadPokemon)) {
+            humanUser.removePokemonFromCurrentList(deadPokemon);
+        } else {
+            humanUser.setCurrentPokemonForBattle(null);
         }
     }
 
     public static void doLogicAfterPCUserPokemonInCurrentListIsDead(PCUser pcUser, Pokemon deadPokemon) {
-        if (deadPokemon.isPokemonDead()) {
-            pcUser.removePokemonFromCurrentList(deadPokemon);
-        }
+        pcUser.removePokemonFromCurrentList(deadPokemon);
+
     }
 
     public static String printListOfPokemons(List<Pokemon> pokemons) {
@@ -84,7 +92,16 @@ public class GameHelper {
         for (int i = 0; i < pokemons.size(); i++) {
             stringBuilder.append(" ").append(i + 1).append(". ").append(pokemons.get(i).getName()).append("\n");
         }
+        stringBuilder.append("\r\n");
         return stringBuilder.toString();
+    }
+
+    public static void printAttacks(Pokemon pokemon) {
+        System.out.println("-> " + pokemon.getName() + "'s attacks:");
+        for (int i = 0; i <= 1; i++) {
+            System.out.println((i + 1) + ". " + pokemon.getAttacks()[i].returnDescription());
+        }
+
     }
 
 }

@@ -1,7 +1,5 @@
 package attacks;
 
-import users.User;
-
 import java.util.Objects;
 
 public abstract class PokemonAttack implements Description, IAttack {

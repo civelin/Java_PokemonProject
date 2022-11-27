@@ -1,3 +1,4 @@
+import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import attacks.fire.BurningJealously;
 import org.junit.Before;
@@ -54,13 +55,6 @@ public class PokemonTests {
         assertEquals(50, pokemon2.getDefencePoints());
     }
 
-    @Test
-    public void testAddAttackToPokemon() {
-        PokemonAttack attack1 = new BurningJealously();
-        pokemon1.addAttackToPokemon(attack1, 1);
-
-        assertEquals(pokemon1.getAttacks()[1], attack1);
-    }
 
     @Test
     public void testSmallPokemonReturnInitialHp() {

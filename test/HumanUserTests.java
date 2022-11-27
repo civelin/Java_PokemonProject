@@ -83,8 +83,8 @@ public class HumanUserTests {
         Pokemon currentPokemonForBattle = new NormalPokemon("Misty", Arrays.asList("bug", "normal"));
         PokemonAttack attack1 = new FirstImpression();
         PokemonAttack attack2 = new MegaPunch();
-        currentPokemonForBattle.addAttackToPokemon(attack1, 0);
-        currentPokemonForBattle.addAttackToPokemon(attack2, 1);
+        GameHelper.addAttackToPokemon(currentPokemonForBattle,attack1, 0);
+        GameHelper.addAttackToPokemon(currentPokemonForBattle,attack2, 1);
 
         // set created pokemon as current pokemon to human user
         humanUser.setCurrentPokemonForBattle(currentPokemonForBattle);

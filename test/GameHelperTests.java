@@ -1,5 +1,7 @@
 import Utilities.GameHelper;
 
+import attacks.PokemonAttack;
+import attacks.fire.BurningJealously;
 import org.junit.Test;
 import pokemons.NormalPokemon;
 import pokemons.Pokemon;
@@ -9,7 +11,6 @@ import users.PCUser;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -37,8 +38,8 @@ public class GameHelperTests {
         List<Pokemon> tester = new ArrayList<>();
         HumanUser humanUser = new HumanUser("Gosheto1234", tester);
         humanUser.setCrystals(5);
-        int crystals = GameHelper.addCrystalAfterWin(humanUser);
-        assertEquals(6, crystals);
+        GameHelper.addCrystalAfterWin(humanUser);
+        assertEquals(6, humanUser.getCrystals());
 
     }
 
@@ -78,7 +79,7 @@ public class GameHelperTests {
         humanUser.setCurrentPokemons(currentPokemonList);
         deadPokemon.setHp(0);
 
-        GameHelper.doLogicAfterHumanUserPokemonInCurrentListIsDead(humanUser, deadPokemon);
+        GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser, deadPokemon);
 
         assertEquals(0, humanUser.getCurrentPokemons().size());
         assertEquals(0, humanUser.getAvailablePokemons().size());
@@ -108,7 +109,7 @@ public class GameHelperTests {
     public void testPrintListOfPokemonsWhenListIsEmpty(){
         List<Pokemon> pokemons = new ArrayList<>();
 
-        assertEquals("" , GameHelper.printListOfPokemons(pokemons));
+        assertEquals("\r\n" , GameHelper.printListOfPokemons(pokemons));
     }
 
     @Test
@@ -116,9 +117,19 @@ public class GameHelperTests {
         List<Pokemon> pokemons = new ArrayList<>();
         pokemons.add(new NormalPokemon());
 
-        assertEquals(" 1. Pikachu\n",  GameHelper.printListOfPokemons(pokemons));
+        assertEquals(" 1. Pikachu\n\r\n",  GameHelper.printListOfPokemons(pokemons));
 
     }
+
+    @Test
+    public void testAddAttackToPokemon() {
+        Pokemon pokemon = new NormalPokemon();
+        PokemonAttack attack1 = new BurningJealously();
+        GameHelper.addAttackToPokemon(pokemon,attack1, 1);
+
+        assertEquals(pokemon.getAttacks()[1], attack1);
+    }
+
 
 
 }

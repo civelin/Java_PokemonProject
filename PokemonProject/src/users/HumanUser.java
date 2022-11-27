@@ -64,9 +64,8 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public PokemonAttack chooseAttack(Scanner scan) {
-        this.currentPokemonForBattle.printAttacks();
-        System.out.println("\uD83D\uDC49 Please select attack:");
-        System.out.print("\uD83D\uDC49");
+        GameHelper.printAttacks(this.currentPokemonForBattle);
+        System.out.println("\uD83D\uDC49 Please select attack:\n\uD83D\uDC49");
         int choice = enterHumanUserChoice(2, scan);
         return this.currentPokemonForBattle.getAttacks()[choice - 1];
     }
@@ -82,7 +81,7 @@ public class HumanUser extends User implements IHumanUser {
 
 
         if (addPokemonToAvailableList(rewardPokemon)) {
-            System.out.println("Congratulation , you have added successfully " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!\r");
+            System.out.println("Congratulation , you have successfully added " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!\r");
             pokemons.remove(rewardPokemon);
         } else {
             System.out.println("You already have that pokemon !! Please select another one !\r");
@@ -112,12 +111,8 @@ public class HumanUser extends User implements IHumanUser {
         } else {
             System.out.println("You don't have enough crystals or dead pokemons ! ");
             System.out.println("Available crystals ---->" + crystals);
-            System.out.print("Dead pokemons ----> ");
-            for (Pokemon pokemon : this.deadPokemonList) {
-                System.out.print(pokemon.getName() + " ");
-            }
-
-            System.out.println();
+            System.out.println("Dead pokemons:");
+            System.out.println(GameHelper.printListOfPokemons(this.deadPokemonList));
         }
 
     }
@@ -125,8 +120,7 @@ public class HumanUser extends User implements IHumanUser {
 
     @Override
     public void choosePokemonsFromAvailableListToCurrentList(Scanner scanner) {
-        List<Pokemon> pokemons = new ArrayList<>();
-        Pokemon pokemon = null;
+        Pokemon pokemon;
         System.out.println("\u2757 Select 3 pokemons with which you want to play.");
 
         for (int i = 1; i <= 3; i++) {
@@ -144,19 +138,19 @@ public class HumanUser extends User implements IHumanUser {
                     System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
                 }
             }
-            pokemons.add(pokemon);
+
         }
     }
 
     @Override
     public void choosePokemonForBattleFromCurrentList(Scanner scanner) {
-
         System.out.println("❗ Please choose your pokemon for this turn:");
         System.out.println(GameHelper.printListOfPokemons(this.currentPokemons));
         System.out.print("\n\uD83D\uDC49 ");
-        int choice = enterHumanUserChoice(currentPokemons.size(), scanner);
 
+        int choice = enterHumanUserChoice(currentPokemons.size(), scanner);
         Pokemon pokemonForBattle = this.currentPokemons.get(choice - 1);
+
         this.currentPokemonForBattle = pokemonForBattle;
         this.removePokemonFromCurrentList(pokemonForBattle);
         System.out.println("✔ You chose " + this.currentPokemonForBattle.getName() + "!");
