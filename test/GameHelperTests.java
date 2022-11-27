@@ -132,8 +132,26 @@ public class GameHelperTests {
         assertEquals(50, humanUser.getAvailablePokemons().get(0).getDefencePoints());
         assertEquals(15, humanUser.getAvailablePokemons().get(0).getAttackPoints());
     }
+    
+    @Test
+    public void testDoesHumanUserMeetRequirementsToContinueTheGameWhenNoAvailablePokemons(){
+        List<Pokemon> emptyList = new ArrayList<>();
+        HumanUser humanUser = new HumanUser("Tester",emptyList);
 
-    // TODO: test doesHumanUserMeetRequirementsToContinueTheGame
+        assertFalse(GameHelper.doesHumanUserMeetRequirementsToContinueTheGame(humanUser));
+    }
+
+    @Test
+    public void testDoesHumanUserMeetRequirementsToContinueTheGameWhenAvailablePokemonsAnd2Crystals(){
+        List<Pokemon> pokemons = new ArrayList<>();
+        pokemons.add(new NormalPokemon());
+
+        HumanUser humanUser = new HumanUser("Tester",pokemons);
+
+        humanUser.setCrystals(2);
+
+        assertTrue(GameHelper.doesHumanUserMeetRequirementsToContinueTheGame(humanUser));
+    }
 
     @Test
     public void testCheckIfUserIsDefeatedWhenDefeated(){

@@ -187,5 +187,6 @@ public class HumanUserTests {
         assertEquals("Niko", humanUser.getCurrentPokemonForBattle().getName());
 
     }
+
 }
 
