@@ -55,7 +55,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to bug attacks
     public static boolean addToBugAttacks(PokemonAttack attack) {
-        if (!bugAttacks.contains(attack)) {
+        if (attack.getName().equals("bug") && !bugAttacks.contains(attack)) {
             bugAttacks.add(attack);
             return true;
         }
@@ -73,7 +73,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to electric attacks
     public static boolean addToElectricAttacks(PokemonAttack attack) {
-        if (!electricAttacks.contains(attack)) {
+        if (attack.getName().equals("electric") && !electricAttacks.contains(attack)) {
             electricAttacks.add(attack);
             return true;
         }
@@ -91,7 +91,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to fire attacks
     public static boolean addToFireAttacks(PokemonAttack attack) {
-        if (!fireAttacks.contains(attack)) {
+        if (attack.getName().equals("fire") && !fireAttacks.contains(attack)) {
             fireAttacks.add(attack);
             return true;
         }
@@ -110,7 +110,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to grass attacks
     public static boolean addToGrassAttacks(PokemonAttack attack) {
-        if (!grassAttacks.contains(attack)) {
+        if (attack.getName().equals("grass") && !grassAttacks.contains(attack)) {
             grassAttacks.add(attack);
             return true;
         }
@@ -128,7 +128,7 @@ public class AttackFactory {
 
     // method that provides adding a new attack to grass attacks
     public static boolean addToNormalAttacks(PokemonAttack attack) {
-        if (!normalAttacks.contains(attack)) {
+        if (attack.getName().equals("normal") && !normalAttacks.contains(attack)) {
             return true;
         }
         return false;

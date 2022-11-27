@@ -26,9 +26,9 @@ public class BugAttacksTests {
     public void testFirstImpressionAttack() {
         FirstImpression firstImpression = new FirstImpression();
 
-        int expectedDmg = firstImpression.attack(user1, user2);
+        int actualDmg = firstImpression.attack(user1, user2);
 
-        assertEquals( expectedDmg, 21);
+        assertEquals( actualDmg, 21);
         assertEquals(79 , user2.getCurrentPokemonForBattle().getHp());
     }
 
