@@ -1,6 +1,7 @@
 package users;
 
 import Utilities.GameHelper;
+import Utilities.Menu;
 import attacks.PokemonAttack;
 import pokemons.Pokemon;
 import Utilities.Validator;
@@ -79,7 +80,6 @@ public class HumanUser extends User implements IHumanUser {
 
         Pokemon rewardPokemon = pokemons.get(choice - 1);
 
-
         if (addPokemonToAvailableList(rewardPokemon)) {
             System.out.println("Congratulation , you have successfully added " + pokemons.get(choice - 1).getName() + " to your pokemon inventory!\r");
             pokemons.remove(rewardPokemon);
@@ -138,7 +138,6 @@ public class HumanUser extends User implements IHumanUser {
                     System.out.println("\u274C " + pokemon.getName() + " has been already chosen. Please choose another pokemon!");
                 }
             }
-
         }
     }
 
@@ -178,6 +177,26 @@ public class HumanUser extends User implements IHumanUser {
             choice = scanner.next();
         }
         return Integer.parseInt(choice);
+    }
+
+    @Override
+    public void userChoiceBetweenEachBattle(Scanner scanner) {
+        while (true) {
+            Menu.printMenuAfterBattle();
+            System.out.print("👉");
+            int choice = this.enterHumanUserChoice(3, scanner);
+
+            if (choice == 1) {
+                if (GameHelper.checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(this)) {
+                    continue;
+                }
+                break;
+            } else if (choice == 2) {
+                this.revivePokemon(scanner); //revive pokemon
+            } else if (choice == 3) {
+                System.exit(0);
+            }
+        }
     }
 
     // getters and setters

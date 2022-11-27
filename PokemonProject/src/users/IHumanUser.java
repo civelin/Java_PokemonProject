@@ -19,6 +19,5 @@ public interface IHumanUser {
     void choosePokemonAsReward(List<Pokemon> pokemons, Scanner scanner);
 
     void revivePokemon(Scanner scanner);
-
-
+    void userChoiceBetweenEachBattle(Scanner scanner);
 }

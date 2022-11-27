@@ -3,11 +3,14 @@ import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import attacks.fire.BurningJealously;
 import org.junit.Test;
+import pokemons.LargePokemon;
 import pokemons.NormalPokemon;
 import pokemons.Pokemon;
 
+import pokemons.SmallPokemon;
 import users.HumanUser;
 import users.PCUser;
+import users.User;
 
 
 import java.io.ByteArrayInputStream;
@@ -31,15 +34,6 @@ public class GameHelperTests {
         HumanUser humanUserActual = GameHelper.initializeHumanUser("Emo_number1");
 
         assertEquals(humanUserExpected , humanUserActual);
-
-    }
-    @Test
-    public void testAddCrystalsAfterWin() {
-        List<Pokemon> tester = new ArrayList<>();
-        HumanUser humanUser = new HumanUser("Gosheto1234", tester);
-        humanUser.setCrystals(5);
-        GameHelper.addCrystalAfterWin(humanUser);
-        assertEquals(6, humanUser.getCrystals());
 
     }
 
@@ -68,41 +62,22 @@ public class GameHelperTests {
     }
 
     @Test
-    public void testDoLogicAfterHumanUserPokemonInCurrentListIsDead() {
-        Pokemon deadPokemon = new NormalPokemon();
-        List<Pokemon> tester = new ArrayList<>();
-        tester.add(deadPokemon);
-        HumanUser humanUser = new HumanUser("Gosheto1234", tester);
+    public void testAddAttackToPokemon() {
+        Pokemon pokemon = new NormalPokemon();
+        PokemonAttack attack1 = new BurningJealously();
+        GameHelper.addAttackToPokemon(pokemon,attack1, 1);
 
-        List<Pokemon> currentPokemonList = new ArrayList<>();
-        currentPokemonList.add(deadPokemon);
-        humanUser.setCurrentPokemons(currentPokemonList);
-        deadPokemon.setHp(0);
-
-        GameHelper.doLogicAfterHumanUserPokemonIsDead(humanUser, deadPokemon);
-
-        assertEquals(0, humanUser.getCurrentPokemons().size());
-        assertEquals(0, humanUser.getAvailablePokemons().size());
-        assertEquals(1, humanUser.getDeadPokemonList().size());
-        assertFalse(humanUser.getCurrentPokemons().contains(deadPokemon));
-        assertFalse(humanUser.getAvailablePokemons().contains(deadPokemon));
-        assertTrue(humanUser.getDeadPokemonList().contains(deadPokemon));
-
+        assertEquals(pokemon.getAttacks()[1], attack1);
     }
+
     @Test
-    public void testDoLogicAfterPCUserPokemonInCurrentListIsDead(){
-        Pokemon testerPokemon = new NormalPokemon();
+    public void testAddCrystalsAfterWin() {
         List<Pokemon> tester = new ArrayList<>();
-        tester.add(testerPokemon);
-        PCUser pcUser = new PCUser("Tester",tester);
+        HumanUser humanUser = new HumanUser("Gosheto1234", tester);
+        humanUser.setCrystals(5);
+        GameHelper.addCrystalAfterWin(humanUser , 1);
+        assertEquals(6, humanUser.getCrystals());
 
-        List<Pokemon>currentPokemons = new ArrayList<>();
-        currentPokemons.add(testerPokemon);
-        testerPokemon.setHp(0);
-
-        GameHelper.doLogicAfterPCUserPokemonInCurrentListIsDead(pcUser , testerPokemon);
-        assertEquals(0, pcUser.getCurrentPokemons().size());
-        assertFalse(pcUser.getCurrentPokemons().contains(testerPokemon));
     }
 
     @Test
@@ -118,18 +93,58 @@ public class GameHelperTests {
         pokemons.add(new NormalPokemon());
 
         assertEquals(" 1. Pikachu\n\r\n",  GameHelper.printListOfPokemons(pokemons));
-
     }
 
     @Test
-    public void testAddAttackToPokemon() {
-        Pokemon pokemon = new NormalPokemon();
-        PokemonAttack attack1 = new BurningJealously();
-        GameHelper.addAttackToPokemon(pokemon,attack1, 1);
-
-        assertEquals(pokemon.getAttacks()[1], attack1);
+    public void testCheckIfHumanUserAvaiablePokemonsListSizeIsLessThan3WhenAvailableListSizeIs2(){
+        // create available list with two pokemons
+        List<Pokemon> pokemons = new ArrayList<>();
+        pokemons.add(new NormalPokemon());
+        pokemons.add(new SmallPokemon());
+        HumanUser humanUser = new HumanUser("Valyo", pokemons);
+        assertTrue(GameHelper.checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(humanUser));
     }
 
+    @Test
+    public void testCheckIfHumanUserAvaiablePokemonsListSizeIsLessThan3WhenAvailableListSizeIs3(){
+        // create available list with two pokemons
+        List<Pokemon> pokemons = new ArrayList<>();
+        pokemons.add(new NormalPokemon());
+        pokemons.add(new SmallPokemon());
+        pokemons.add(new LargePokemon());
+        HumanUser humanUser = new HumanUser("Valyo", pokemons);
+        assertFalse(GameHelper.checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(humanUser));
+    }
 
+    @Test
+    public void testResetInitialPointsOfPokemonsAfterEachBattle(){
+        List<Pokemon> pokemons = new ArrayList<>();
+        Pokemon pokemon1 = new NormalPokemon();
+        pokemon1.setHp(15);
+        pokemon1.setDefencePoints(7);
+        pokemon1.setAttackPoints(4);
+        pokemons.add(pokemon1);
 
+        User humanUser = new HumanUser("Tsetska", pokemons);
+        GameHelper.resetInitialPointsOfPokemonsAfterEachBattle(humanUser);
+
+        assertEquals(100, humanUser.getAvailablePokemons().get(0).getHp());
+        assertEquals(50, humanUser.getAvailablePokemons().get(0).getDefencePoints());
+        assertEquals(15, humanUser.getAvailablePokemons().get(0).getAttackPoints());
+    }
+
+    // TODO: test doesHumanUserMeetRequirementsToContinueTheGame
+
+    @Test
+    public void testCheckIfUserIsDefeatedWhenDefeated(){
+        User user = new HumanUser("tester", null);
+        assertTrue(GameHelper.checkIfUserIsDefeated(user));
+    }
+
+    @Test
+    public void testCheckIfUserIsDefeatedWhenIsNot(){
+        User user = new HumanUser("tester", null);
+        user.setCurrentPokemonForBattle(new LargePokemon());
+        assertFalse(GameHelper.checkIfUserIsDefeated(user));
+    }
 }

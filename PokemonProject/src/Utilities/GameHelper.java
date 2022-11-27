@@ -5,6 +5,7 @@ import pokemons.Pokemon;
 import pokemons.pokemonFactory.PokemonFactory;
 import users.HumanUser;
 import users.PCUser;
+import users.User;
 import users.userFactory.PCUserFactory;
 
 import java.util.List;
@@ -64,27 +65,11 @@ public class GameHelper {
         }
     }
 
-
     // add 1 crystal to humanUser's crystals
-    public static void addCrystalAfterWin(HumanUser humanUser) {
-        humanUser.setCrystals(humanUser.getCrystals() + 1);
-        System.out.println("\uD83D\uDC8E You won one crystal");
+    public static void addCrystalAfterWin(HumanUser humanUser, int crystals) {
+        humanUser.setCrystals(humanUser.getCrystals() + crystals);
+        System.out.println("\uD83D\uDC8E You won " + crystals + " crystal");
         System.out.println("\uD83D\uDC8E ---> Available crystals: " + humanUser.getCrystals() + "\r");
-    }
-
-    public static void doLogicAfterHumanUserPokemonIsDead(HumanUser humanUser, Pokemon deadPokemon) {
-        humanUser.addPokemonToDeadList(deadPokemon);
-        humanUser.removePokemonFromAvailableList(deadPokemon);
-        if (humanUser.getCurrentPokemons().contains(deadPokemon)) {
-            humanUser.removePokemonFromCurrentList(deadPokemon);
-        } else {
-            humanUser.setCurrentPokemonForBattle(null);
-        }
-    }
-
-    public static void doLogicAfterPCUserPokemonInCurrentListIsDead(PCUser pcUser, Pokemon deadPokemon) {
-        pcUser.removePokemonFromCurrentList(deadPokemon);
-
     }
 
     public static String printListOfPokemons(List<Pokemon> pokemons) {
@@ -101,7 +86,28 @@ public class GameHelper {
         for (int i = 0; i <= 1; i++) {
             System.out.println((i + 1) + ". " + pokemon.getAttacks()[i].returnDescription());
         }
-
     }
 
+    public static boolean checkIfHumanUserAvaiablePokemonsListSizeIsLessThan3(HumanUser humanUser) {
+        if (humanUser.getAvailablePokemons().size() < 3) {
+            System.out.println("You must have 3 alive pokemons before jumping into the next battle! Please revive any pokemon!");
+            return true;
+        }
+        return false;
+    }
+
+    public static void resetInitialPointsOfPokemonsAfterEachBattle(User user) {
+        for (Pokemon pokemon : user.getAvailablePokemons()) {
+            pokemon.resetInitialPointsOfPokemon();
+        }
+    }
+
+    public static boolean doesHumanUserMeetRequirementsToContinueTheGame(HumanUser humanUser) {
+        return (humanUser.getAvailablePokemons().size() >= 2 || humanUser.getCrystals() >= 2) && (humanUser.getAvailablePokemons().size() > 2 || humanUser.getCrystals() != 0);
+    }
+
+
+    public static boolean checkIfUserIsDefeated(User user) {
+        return user.getCurrentPokemonForBattle() == null && user.getCurrentPokemons().size() == 0;
+    }
 }

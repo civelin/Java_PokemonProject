@@ -1,4 +1,3 @@
-import Utilities.GameHelper;
 import attacks.PokemonAttack;
 import attacks.fire.BurningJealously;
 import org.junit.Before;

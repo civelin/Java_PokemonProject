@@ -19,7 +19,7 @@ public class PCUser extends User implements IPCUser {
 
     @Override
     public PokemonAttack chooseAttack(Scanner scanner) {
-        int index = (int) Math.round(Math.random()); // return 0 or 1
+        int index = (int) Math.round(Math.random()); // returns 0 or 1
         PokemonAttack attack = this.getCurrentPokemonForBattle().getAttacks()[index];
         System.out.println("✔ " + this.name + " chose " + attack.getName() + " attack for this turn.");
         return attack;
@@ -49,11 +49,11 @@ public class PCUser extends User implements IPCUser {
                 // add pokemon to current list
                 flag = addPokemonToCurrentList(pokemon);
             }
+
             flag = false;
         }
         System.out.println("\uD83E\uDD14 " + this.name + " is choosing 3 pokemons for the battle ...\n" + this.name + " has chosen: ");
         System.out.println(GameHelper.printListOfPokemons(this.currentPokemons));
-
     }
 
     @Override
@@ -81,7 +81,6 @@ public class PCUser extends User implements IPCUser {
             }
         } else {
             System.out.println(this.name + "has tried unsuccessfully to change their current pokemon, because the others are defeated.");
-
         }
 
     }
